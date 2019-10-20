@@ -5,11 +5,15 @@
 
 .emphasized {
    font-size: 1.2em;
-   background-color:black;
+   background-color:red;
 }
 
-.text-red {
-  color:red;
-  font-weight:bold;
+.div1 {
+   alignment-adjust:central;
+   text-align:center;
 }
 
+.div{
+   border-image-width:5px;
+   vertical-align:central;
+}

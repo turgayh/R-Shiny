@@ -6,9 +6,9 @@ runtime: shiny
 output:
   ioslides_presentation: 
     css: styles.css
-    highlight: pygments
+    highlight: monochrome
     incremental: yes
-    logo: Rlogo.png
+    logo: shiny.png
     transition: faster
     widescreen: yes
 ---
@@ -33,7 +33,7 @@ If you still haven’t installed the Shiny package, open an R session, connect t
 install.packages("shiny")
 ```
 
-## Say Hello Shiny
+## First App in  Shiny
 
 ```r
 library(shiny)
@@ -122,7 +122,7 @@ runExample("10_download")   # file download wizard
 runExample("11_timer")      # an automated timer
 ```
 
-## Structure of a Shiny App
+## Structure of a Shiny App {.smaller}
 
 * Shiny apps are contained in a single script called app.R. The script app.R lives in a directory (for example, newdir/) and the app can be run with runApp("newdir").
 
@@ -132,4 +132,241 @@ runExample("11_timer")      # an automated timer
 
 * a call to the shinyApp function
 
-## 
+```r
+library(shiny)
+
+ui <- fluidPage(
+ 
+)
+
+server <- function(input, output, session) {
+  
+}
+
+shinyApp(ui, server)
+```
+
+## Say Hello with Shiny
+
+```r
+library(shiny)
+ui <- fluidPage(
+    "Hello Shiny Package"
+    )
+
+server <- function(input, output) {
+    
+}
+
+shinyApp(ui = ui, server = server)
+```
+#### Output {#nextsteps}
+
+```{r}
+library(shiny)
+ui <- fluidPage(
+    "Hello Shiny Package"
+    )
+
+server <- function(input, output) {
+    
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+## Inputs and Outputs
+
+Build your app around <span style="color:purple; font-weight:bold">inputs</span> and <span style="color:green; font-weight:bold">outputs</span>
+
+### output
+
+<div align ="center" >
+<img src="images/kmeans.PNG" alt="kmeans" class="center">
+</div>
+
+## Input {.smaller}
+```r
+sliderInput(inputId = "num",
+  label = "Choose a number",
+  value = 25, min = 1, max = 100)
+```
+```r
+library(shiny)
+ui <- fluidPage(
+    sliderInput(inputId = "num",
+                label = "Choose a number",
+                value = 25, min = 1, max = 100)
+    )
+
+server <- function(input, output) {
+    
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+```{r}
+library(shiny)
+ui <- fluidPage(
+    sliderInput(inputId = "num",
+                label = "Choose a number",
+                value = 25, min = 1, max = 100)
+    )
+
+server <- function(input, output) {
+    
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+## Input Syntax
+<div align="center">
+
+<img src="images/input-syntax.PNG" alt="kmeans" class="center">
+</div>
+## Outputs {.div1}
+<div align="center">
+
+<img src="images/output-syntax.PNG" alt="kmeans" class="center">
+</div>
+## Entegration Input and Output
+
+Use <span style="color:red; font-weight:bold">3 rules</span> to write the server function
+
+
+
+```r
+server <- function(input, output) {
+
+
+
+
+}
+
+```
+
+## 1 Save objects to display to output$
+
+
+
+```r
+
+server <- function(input, output) {  
+  output$hist <- # code
+}
+
+
+```
+<div align="center">
+
+<img src="images/firstRule.PNG" alt="First Rule" class="center">
+</div>
+
+## 2 Build objects to display with render*()
+
+buraya biseyler yazilabilir
+
+```r
+
+server <- function(input, output) {  
+  output$hist <- renderPlot({
+
+   #code
+
+  }) 
+}
+
+```
+## `
+
+<div align="center"  >
+  <img src="images/render.PNG" alt="First Rule"   
+  class="center">
+</div>
+
+<div style="margin-left: 40px;">
+
+```r
+
+server <- function(input, output) {
+  output$hist <- renderPlot({
+
+    title <- "100 random normal values"           
+
+    hist(rnorm(100), main = title) 
+
+  }) 
+}
+
+```
+</div>
+
+
+## 3 Access input values with input$
+<div style="margin-left: 40px;">
+
+```r
+server <- function(input, output) {  
+  
+  output$hist <- renderPlot({    
+  hist(rnorm(input$num))  
+  
+  }) 
+
+}
+
+```
+<div align="center"  >
+  <img src="images/parameter.PNG" alt="First Rule"   
+  class="center">
+</div>
+
+</div>
+
+## Result  (Reactivity) {.smaller}
+
+  Reactivity automatically occurs whenever you use an input value to render an output object
+  
+<div style="margin-left: 40px;">
+```r
+library(shiny)
+ui <- fluidPage(
+    sliderInput(inputId = "num",
+                label = "Choose a number",
+                value = 25, min = 1, max = 100),
+    plotOutput("hist")
+    )
+
+server <- function(input, output) {
+    output$hist <- renderPlot({
+        hist(rnorm(input$num))
+    })
+}
+
+shinyApp(ui = ui, server = server)
+```
+</div>
+
+## Code Output
+<div style="margin-left: 40px;">
+```{r}
+library(shiny)
+ui <- fluidPage(
+    sliderInput(inputId = "num",
+                label = "Choose a number",
+                value = 25, min = 1, max = 100),
+    plotOutput("hist")
+    )
+
+server <- function(input, output) {
+    output$hist <- renderPlot({
+        hist(rnorm(input$num))
+    })
+}
+
+shinyApp(ui = ui, server = server)
+```
+</div>
