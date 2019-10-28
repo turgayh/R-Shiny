@@ -388,7 +388,8 @@ ui <- fluidPage(
       
       
       checkboxGroupInput("dataset", "Choose a dataset:",
-                         c("rock", "pressure", "cars")),
+                         c("rock", "pressure", "cars"),
+                         selected = "rock"),
       
       numericInput(inputId = "obs",
                    label = "Number of observations to view:",
