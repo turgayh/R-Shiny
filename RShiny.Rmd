@@ -370,10 +370,86 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
+## Using Checkbox in Shiny 
+At first, we have to define UI and title
+```r
+library(shiny)
+
+# Define UI for dataset viewer app ----
+ui <- fluidPage(
+
+  # App title ----
+  titlePanel("Shiny Text"),
+```
+## Using Checkbox in Shiny {.smaller}
+
+Then, we define the sidebar panel inputs and checkbox
+```r
+ # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+
+      # Input: checkbox for choosing dataset ----
+      checkboxGroupInput("dataset", "Choose a dataset:",
+                         c("rock", "pressure", "cars"),
+                         selected = "rock"),
+
+      # Input: Numeric entry for number of obs to view ----
+      numericInput(inputId = "obs",
+                   label = "Number of observations to view:",
+                   value = 10)
+    ),
+```
+## Using Checkbox in Shiny 
+ After that, we define the main panel for displaying outputs
+
+```r   
+    mainPanel(
+
+      # Output: Verbatim text for data summary ----
+      verbatimTextOutput("summary"),
+
+      # Output: HTML table with requested number of observations ----
+      tableOutput("view")
+```
+
+## Using Checkbox in Shiny {.smaller}
+At last, we define the server logic and create the shiny app
+
+```r 
+# Define server logic to summarize and view selected dataset ----
+server <- function(input, output) {
+
+  # Return the requested dataset ----
+  datasetInput <- reactive({
+    switch(input$dataset,
+           "rock" = rock,
+           "pressure" = pressure,
+           "cars" = cars)
+  })
+
+  # Generate a summary of the dataset ----
+  output$summary <- renderPrint({
+    dataset <- datasetInput()
+    summary(dataset)
+  })
+
+  # Show the first "n" observations ----
+  output$view <- renderTable({
+    head(datasetInput(), n = input$obs)
+  })
+
+}
+
+# Create Shiny app ----
+shinyApp(ui = ui, server = server)
+```
+
 ## Checkbox Example
 ```{r}
 library(shiny)
-
  
 ui <- fluidPage(
   
@@ -405,8 +481,6 @@ ui <- fluidPage(
     )
   )
 )
-
-
 server <- function(input, output) {
   
   datasetInput <- reactive({
@@ -426,8 +500,6 @@ server <- function(input, output) {
   })
   
 }
-
 shinyApp(ui = ui, server = server)
-
-
 ```
+
