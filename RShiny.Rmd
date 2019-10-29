@@ -369,15 +369,11 @@ server <- function(input, output) {
 
 shinyApp(ui = ui, server = server)
 
-
-
-
-
-
 ```
 
 ## Using Checkbox in Shiny 
-At first, we have to define UI and title
+
+At first, we have to define user interface and title
 ```r
 library(shiny)
 
@@ -389,7 +385,7 @@ ui <- fluidPage(
 ```
 ## Using Checkbox in Shiny {.smaller}
 
-Then, we define the sidebar panel inputs and checkbox
+Secondly, we define the sidebar panel inputs and checkbox
 ```r
  # Sidebar layout with a input and output definitions ----
   sidebarLayout(
@@ -409,7 +405,8 @@ Then, we define the sidebar panel inputs and checkbox
     ),
 ```
 ## Using Checkbox in Shiny 
- After that, we define the main panel for displaying outputs
+
+ Then, we define the main panel for displaying outputs
 
 ```r   
     mainPanel(
@@ -422,10 +419,11 @@ Then, we define the sidebar panel inputs and checkbox
 ```
 
 ## Using Checkbox in Shiny {.smaller}
-At last, we define the server logic and create the shiny app
+
+After that, we define the server logic to summarize and view selected dataset
 
 ```r 
-# Define server logic to summarize and view selected dataset ----
+
 server <- function(input, output) {
 
   # Return the requested dataset ----
@@ -441,7 +439,11 @@ server <- function(input, output) {
     dataset <- datasetInput()
     summary(dataset)
   })
+```
+## Using Checkbox in Shiny {.smaller}
 
+At last, we show the first "n" observations and create the shiny app
+```r
   # Show the first "n" observations ----
   output$view <- renderTable({
     head(datasetInput(), n = input$obs)
