@@ -4,7 +4,7 @@ author: Hakan Turgay & Bertan Taylan
 date: October 19, 2019
 runtime: shiny
 output:
-  ioslides_presentation: 
+  slidy_presentation: 
     css: styles.css
     highlight: monochrome
     incremental: yes
@@ -25,8 +25,8 @@ knitr::opts_chunk$set(echo = FALSE)
 - Shiny user interfaces can be built entirely using R, or can be written directly in HTML, CSS, and JavaScript for more <span style="color:yellow; font-weight:bold">flexibility.</span>
 - Pre-built output widgets for displaying <span style="color:aqua; font-weight:bold">plots, tables, and printed output of R objects.</span>
 
-## Install Shiny Package 
 
+## Install Shiny Package {.pre}
 If you still haven’t installed the Shiny package, open an R session, connect to the internet, and run
 
 ```r
@@ -351,7 +351,7 @@ shinyApp(ui = ui, server = server)
 </div>
 
 ## Code Output
-<div style="margin-left: 40px;">
+
 ```{r}
 library(shiny)
 ui <- fluidPage(
@@ -368,6 +368,12 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
+
+
+
+
+
+
 ```
 
 ## Using Checkbox in Shiny 

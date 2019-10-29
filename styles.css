@@ -17,3 +17,11 @@
    border-image-width:5px;
    vertical-align:central;
 }
+
+.ortala {
+      font: 24pt Tahoma, Verdana;
+      font-weight:bold;
+      color: blue;
+      background-color:red;
+      
+}
