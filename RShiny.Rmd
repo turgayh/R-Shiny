@@ -6,34 +6,34 @@ runtime: shiny
 output:
   slidy_presentation: 
     css: styles.css
-    highlight: monochrome
     incremental: yes
     logo: shiny.png
-    transition: faster
-    widescreen: yes
+    biglogo: shiny.png
+    mode: selfcontained
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## What is Shiny package?
+## What is Shiny package? {.body1}
 
 - Shiny is an R package that makes it easy to build <span style="color:red; font-weight:bold">interactive web applications</span> (apps) straight from R. This lesson will get you started building Shiny apps right away.
 - Build useful web applications <span style="color:purple; font-weight:bold">with only a few lines of code</span>—no JavaScript required.
 - Shiny applications are <span style="color:green; font-weight:bold">automatically “live”</span> in the same way that spreadsheets are live. Outputs change instantly as users modify inputs, without requiring a reload of the browser.
-- Shiny user interfaces can be built entirely using R, or can be written directly in HTML, CSS, and JavaScript for more <span style="color:yellow; font-weight:bold">flexibility.</span>
+- Shiny user interfaces can be built entirely using R, or can be written directly in HTML, CSS, and JavaScript for more <span style="color:blue; font-weight:bold">flexibility.</span>
 - Pre-built output widgets for displaying <span style="color:aqua; font-weight:bold">plots, tables, and printed output of R objects.</span>
 
 
-## Install Shiny Package {.pre}
+## Install Shiny Package 
 If you still haven’t installed the Shiny package, open an R session, connect to the internet, and run
 
 ```r
 install.packages("shiny")
 ```
 
-## First App in  Shiny
+## First App in  Shiny {pre}
 
 ```r
 library(shiny)
