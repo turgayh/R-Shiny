@@ -4,26 +4,46 @@ author: Hakan Turgay & Bertan Taylan
 date: October 19, 2019
 runtime: shiny
 output:
-  slidy_presentation: 
+   slidy_presentation:
     css: styles.css
     incremental: yes
     logo: shiny.png
-    biglogo: shiny.png
-    mode: selfcontained
+    number_sections: yes
+    transition: faster
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+## Chapter 1 - Motivation, Basic R-Shiny Package and Example {.body}
 
-## What is Shiny package? {.body1}
+## Motivation 
+- Scientists mostly use R to process their analyzes
+
+- Presenting/Sharing their findings are usually done in static format
+
+- <span style="color:purple; font-weight:bold"> Problem : </span>They cannot present additional questions directly
+
+
+- <span style="color:purple; font-weight:bold"> Simple idea: </span>Immigrating ratios from a specific region of Turkey due to years and also forecasts about these ratios (e.g. Journalist)
+
+## What is Shiny package? 
 
 - Shiny is an R package that makes it easy to build <span style="color:red; font-weight:bold">interactive web applications</span> (apps) straight from R. This lesson will get you started building Shiny apps right away.
 - Build useful web applications <span style="color:purple; font-weight:bold">with only a few lines of code</span>—no JavaScript required.
 - Shiny applications are <span style="color:green; font-weight:bold">automatically “live”</span> in the same way that spreadsheets are live. Outputs change instantly as users modify inputs, without requiring a reload of the browser.
 - Shiny user interfaces can be built entirely using R, or can be written directly in HTML, CSS, and JavaScript for more <span style="color:blue; font-weight:bold">flexibility.</span>
 - Pre-built output widgets for displaying <span style="color:aqua; font-weight:bold">plots, tables, and printed output of R objects.</span>
+
+## Basically
+<div margintop= 10px align ="center"> 
+  <br>R Shiny = R + interactivity + web made easy</br>
+</div>
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="images/whats.png" alt="kmeans" class="center">
+</div>
 
 
 ## Install Shiny Package 
@@ -33,7 +53,7 @@ If you still haven’t installed the Shiny package, open an R session, connect t
 install.packages("shiny")
 ```
 
-## First App in  Shiny {pre}
+## First App in  Shiny 
 
 ```r
 library(shiny)
@@ -124,13 +144,18 @@ runExample("11_timer")      # an automated timer
 
 ## Structure of a Shiny App {.smaller}
 
-* Shiny apps are contained in a single script called app.R. The script app.R lives in a directory (for example, newdir/) and the app can be run with runApp("newdir").
+* <span style="color:red; font-weight:bold">ui: </span> Nested R functions that assemble an HTML user interface for the app
 
-* a user interface object (<span style="color:red; font-weight:bold">ui.r</span>)
+* <span style="color:red; font-weight:bold">server : </span> A function with instructions on how to build and rebuild the R objects
+displayed in the UI
 
-* a server function       (<span style="color:red; font-weight:bold">server.r</span>)
+* <span style="color:red; font-weight:bold">shinyApp : </span> Combines ui and server into a functioning app
+
+* Save the template as <span style="color:purple; font-weight:bold">app.R</span>
 
 * a call to the shinyApp function
+
+
 
 ```r
 library(shiny)
@@ -145,6 +170,10 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+## Alternatively,
+<div align="center">
+  <img src="images/alternative.PNG" alt="kmeans" class="center">
+</div>
 
 ## Say Hello with Shiny
 
@@ -160,7 +189,7 @@ server <- function(input, output) {
 
 shinyApp(ui = ui, server = server)
 ```
-#### Output {#nextsteps}
+### Output {#nextsteps}
 
 ```{r}
 library(shiny)
@@ -372,105 +401,57 @@ shinyApp(ui = ui, server = server)
 ```
 
 ## Using Checkbox in Shiny 
+```R
+library(shiny)
+runExample("02_text")
+```
+### Output Code
 
-At first, we have to define user interface and title
+<div align ="center"; padding-bottom: 25px>
+  <img src="images/checkbox.png" alt="kmeans" class="center">
+</div>
+
+
+## Starting to Code Analysis  
+<div align ="center"; padding-bottom: 25px>
+  <img src="images/analysis.png" alt="kmeans" class="center">
+</div>
+## Change code
 ```r
 library(shiny)
 
-# Define UI for dataset viewer app ----
 ui <- fluidPage(
-
-  # App title ----
   titlePanel("Shiny Text"),
-```
-## Using Checkbox in Shiny {.smaller}
-
-Secondly, we define the sidebar panel inputs and checkbox
-```r
- # Sidebar layout with a input and output definitions ----
   sidebarLayout(
-
-    # Sidebar panel for inputs ----
+    
     sidebarPanel(
-
-      # Input: checkbox for choosing dataset ----
+      
       checkboxGroupInput("dataset", "Choose a dataset:",
                          c("rock", "pressure", "cars"),
                          selected = "rock"),
-
-      # Input: Numeric entry for number of obs to view ----
+                         
       numericInput(inputId = "obs",
                    label = "Number of observations to view:",
                    value = 10)
     ),
-```
-## Using Checkbox in Shiny 
-
- Then, we define the main panel for displaying outputs
-
-```r   
+    
     mainPanel(
-
-      # Output: Verbatim text for data summary ----
       verbatimTextOutput("summary"),
-
-      # Output: HTML table with requested number of observations ----
       tableOutput("view")
+    )
+  )
+)
 ```
 
-## Using Checkbox in Shiny {.smaller}
-
-After that, we define the server logic to summarize and view selected dataset
-
-```r 
-
-server <- function(input, output) {
-
-  # Return the requested dataset ----
-  datasetInput <- reactive({
-    switch(input$dataset,
-           "rock" = rock,
-           "pressure" = pressure,
-           "cars" = cars)
-  })
-
-  # Generate a summary of the dataset ----
-  output$summary <- renderPrint({
-    dataset <- datasetInput()
-    summary(dataset)
-  })
-```
-## Using Checkbox in Shiny {.smaller}
-
-At last, we show the first "n" observations and create the shiny app
-```r
-  # Show the first "n" observations ----
-  output$view <- renderTable({
-    head(datasetInput(), n = input$obs)
-  })
-
-}
-
-# Create Shiny app ----
-shinyApp(ui = ui, server = server)
-```
-
-## Checkbox Example
+## Result
 ```{r}
 library(shiny)
  
 ui <- fluidPage(
   
-  
   titlePanel("Shiny Text"),
-  
-  
   sidebarLayout(
-    
-   
     sidebarPanel(
-      
-      
       checkboxGroupInput("dataset", "Choose a dataset:",
                          c("rock", "pressure", "cars"),
                          selected = "rock"),
@@ -483,7 +464,6 @@ ui <- fluidPage(
     mainPanel(
       
       verbatimTextOutput("summary"),
-      
       tableOutput("view")
       
     )
@@ -511,3 +491,26 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
+## server
+``` R
+server <- function(input, output) {
+  
+  datasetInput <- reactive({
+    switch(input$dataset,
+           "rock" = rock,
+           "pressure" = pressure,
+           "cars" = cars)
+  })
+  
+  output$summary <- renderPrint({
+    dataset <- datasetInput()
+    summary(dataset)
+  })
+  
+  output$view <- renderTable({
+    head(datasetInput(), n = input$obs)
+  })
+  
+}
+shinyApp(ui = ui, server = server)
+```
