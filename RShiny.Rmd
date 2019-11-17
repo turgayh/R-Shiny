@@ -536,7 +536,8 @@ shinyApp(ui = ui, server = server)
   tags$p(strong(”Istanbul Technical University”)),
   tags$p(em(”Mathematical Engineering”)),
   tags$a(href=”https://www.itu.edu.tr”, ”Website”))
- server <− function(input , output){} > shinyApp(ui = ui , server = server)
+ server <− function(input , output){} > 
+ shinyApp(ui = ui , server = server)
 ```
 
 <div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
@@ -551,8 +552,7 @@ Code Output
   tags$p(strong('Istanbul Technical University')),
   tags$p(em('Mathematical Engineering')),
   tags$a(href='https://www.itu.edu.tr', 'Website'))
- server <- function(input , output){} > shinyApp(ui = ui , server = server)
-
+ server <- function(input , output){} > 
   shinyApp(ui = ui, server = server)
 
 ```
@@ -562,3 +562,41 @@ Code Output
 <div align="center"  style = "margin-top: 20px">
   <img src="images/html_tags.PNG" alt="html tag" class="center">
 </div>
+
+## External file import (html, css , js ext)
+
+## Layout structure of the UI
+
+[ING] Combine multiple elements into a ”single element” that has its own properties with a panel function
+
+<div class="row">
+  <div class="col-md-6" markdown="1">
+  
+```r
+  ui <-
+    fluidPage (
+    wellPanel(
+    numericInput(inputId = 'n', 'Sample size', value = 25),
+    submitButton () ) , plotOutput(outputId = 'hist'))
+  server <- function(input , output ){
+    
+  } > 
+  shinyApp(ui = ui , server = server)
+```  
+  </div>
+  <div class="col-md-2" markdown="1">
+```{r}
+  ui <-
+    fluidPage (
+    wellPanel(
+    numericInput(inputId = 'n', 'Sample size', value = 25),
+    submitButton () ) , plotOutput(outputId = 'hist'))
+  server <- function(input , output ){
+    
+  } > 
+  shinyApp(ui = ui , server = server)
+```  
+  </div>
+</div>
+
+
