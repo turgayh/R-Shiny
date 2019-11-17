@@ -1,0 +1,106 @@
+---
+title: "Kullanilan Html Kaliplari"
+output:
+  html_document:
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Ortalanmis yazi yazmak 
+```html
+  <div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
+  Code Output
+  </div>
+```
+## Ornek
+```{html}
+  <div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
+  Code Output
+  </div>
+```
+
+  
+# Kodu sinirlar icine almak 
+```html
+  <div id="divCodeOutput" name="divCodeOutput" style="border:1px solid black;">
+    ```{Language}
+      #code
+    ```
+  </div>
+```
+## Ornek
+```{html}
+<div id="divCodeOutput" name="divCodeOutput" style="border:1px solid black;">
+  CODE
+</div>
+```
+
+
+# Vurgulu Kelime veya cumle Renkli 
+```html
+  <span style="color:purple; font-weight:bold">Vurgulanacak Cumle</span>
+```
+## Ornek
+```{html}
+  <span style="color:red; font-weight:bold">Vurgulanacak Cumle</span>
+```
+
+# Resim Eklemek, Ortalamak ve Boyutlarini ayarlamak
+```html
+<div align ="center" >
+<img src="images/kmeans.PNG"  width="760" height="720" alt="kmeans" class="center">
+</div>
+```
+
+## Ornek 
+```{html}
+
+<div align ="center" >
+<img src="images/kmeans.PNG"  width="760" height="720" alt="kmeans" class="center">
+</div>
+```
+
+# Resim veya Yaziyi Div clasi icine alip, Dikeyde Ortalama
+```html
+<div align="center"  style = "margin-top: 150px">
+  <img src="images/input-syntax.PNG" alt="kmeans" class="center">
+</div>
+```
+
+# Resim sagda yazi solda template yapisi kodu 
+```html
+<div class="row">
+  <div class="col-md-6" markdown="1">
+  
+  1. Assemble UI with HTML/CSS/... widgets
+  
+  2. Adjustment of the layout scheme
+  
+  </div>
+  <div class="col-md-2" markdown="1">
+  <img height="600px" class="center-block" src="images/layout.png">
+  </div>
+</div>
+```
+## Ornek
+
+class adinda yer alan sayiyi degistirerek gerekli alan ayarlamasi yapilabilir.(col-md-6)
+
+```{html}
+<div class="row">
+  <div class="col-md-6" markdown="1">
+  
+  1. Assemble UI with HTML/CSS/... widgets
+  
+  2. Adjustment of the layout scheme
+  
+  </div>
+  <div class="col-md-2" markdown="1">
+  <img height="600px" class="center-block" src="images/layout.png">
+  </div>
+</div>
+```
+
+

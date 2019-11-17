@@ -60,6 +60,11 @@ library(shiny)
 runExample("01_hello")
 ```
 
+<div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
+Code Output
+</div>
+<div id="divCodeOutput" name="divCodeOutput" style="border:1px solid black;">
+
 ```{r}
 library(shiny)
 library(shiny)
@@ -125,7 +130,7 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 
 ```
-
+</div>
 ## More Example
 
 ```r 
@@ -142,7 +147,9 @@ runExample("10_download")   # file download wizard
 runExample("11_timer")      # an automated timer
 ```
 
-## Structure of a Shiny App {.smaller}
+## Structure of a Shiny App 
+<div class="row">
+  <div class="col-md-6" markdown="1">
 
 * <span style="color:red; font-weight:bold">ui: </span> Nested R functions that assemble an HTML user interface for the app
 
@@ -154,22 +161,24 @@ displayed in the UI
 * Save the template as <span style="color:purple; font-weight:bold">app.R</span>
 
 * a call to the shinyApp function
-
-
-
-```r
-library(shiny)
-
-ui <- fluidPage(
- 
-)
-
-server <- function(input, output, session) {
   
-}
-
-shinyApp(ui, server)
-```
+  </div>
+  <div class="col-md-4" markdown="1">
+    ```r
+    library(shiny)
+    
+    ui <- fluidPage(
+     
+    )
+    
+    server <- function(input, output, session) {
+      
+    }
+    
+    shinyApp(ui, server)
+    ```
+</div>
+</div>
 ## Alternatively,
 <div align="center">
   <img src="images/alternative.PNG" alt="kmeans" class="center">
@@ -189,8 +198,10 @@ server <- function(input, output) {
 
 shinyApp(ui = ui, server = server)
 ```
-### Output {#nextsteps}
-
+<div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
+Code Output
+</div>
+  
 ```{r}
 library(shiny)
 ui <- fluidPage(
@@ -209,13 +220,11 @@ shinyApp(ui = ui, server = server)
 
 Build your app around <span style="color:purple; font-weight:bold">inputs</span> and <span style="color:green; font-weight:bold">outputs</span>
 
-### output
-
 <div align ="center" >
-<img src="images/kmeans.PNG" alt="kmeans" class="center">
+<img src="images/kmeans.PNG"  width="760" height="720" alt="kmeans" class="center">
 </div>
 
-## Input {.smaller}
+## Input 
 ```r
 sliderInput(inputId = "num",
   label = "Choose a number",
@@ -235,6 +244,10 @@ server <- function(input, output) {
 
 shinyApp(ui = ui, server = server)
 ```
+<div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
+Code Output
+</div>
+
 
 ```{r}
 library(shiny)
@@ -252,15 +265,11 @@ shinyApp(ui = ui, server = server)
 ```
 
 ## Input Syntax
-<div align="center">
+<div align="center"  style = "margin-top: 150px">
 
 <img src="images/input-syntax.PNG" alt="kmeans" class="center">
 </div>
-## Outputs {.div1}
-<div align="center">
 
-<img src="images/output-syntax.PNG" alt="kmeans" class="center">
-</div>
 ## Entegration Input and Output
 
 Use <span style="color:red; font-weight:bold">3 rules</span> to write the server function
@@ -277,7 +286,7 @@ server <- function(input, output) {
 
 ```
 
-## 1 Save objects to display to output$
+## 1- Save objects to display to output$
 
 
 
@@ -290,13 +299,18 @@ server <- function(input, output) {
 
 ```
 <div align="center">
-
 <img src="images/firstRule.PNG" alt="First Rule" class="center">
 </div>
 
-## 2 Build objects to display with render*()
+<div align="center" style = "margin-top: 20px">
+<img src="images/output-syntax.PNG" alt="kmeans" class="center">
+</div>
 
-buraya biseyler yazilabilir
+## 2- Build objects to display with render*()
+
+[ING] UI tarafinda bulunan 'hist' (histogram) objesi server tarafindaki 'RenderPlot' methodu ile uretilecek . 
+Not: hist ve RenderPlot vurgulanacak ..
+
 
 ```r
 
@@ -309,7 +323,7 @@ server <- function(input, output) {
 }
 
 ```
-## `
+## Render Method
 
 <div align="center"  >
   <img src="images/render.PNG" alt="First Rule"   
@@ -332,9 +346,14 @@ server <- function(input, output) {
 
 ```
 </div>
+## ...and more "Render Method"  example
 
+<div align="center"  >
+  <img src="images/render_methods.PNG" alt="First Rule"   
+  class="center">
+</div>
 
-## 3 Access input values with input$
+## 3- Access input values with input$
 <div style="margin-left: 40px;">
 
 ```r
@@ -491,26 +510,55 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
-## server
-``` R
-server <- function(input, output) {
+## Improve  Design {.build}
+
+<div class="row">
+  <div class="col-md-6" markdown="1">
   
-  datasetInput <- reactive({
-    switch(input$dataset,
-           "rock" = rock,
-           "pressure" = pressure,
-           "cars" = cars)
-  })
+  * Assemble UI with HTML/CSS/... widgets
   
-  output$summary <- renderPrint({
-    dataset <- datasetInput()
-    summary(dataset)
-  })
+  * Adjustment of the layout scheme
   
-  output$view <- renderTable({
-    head(datasetInput(), n = input$obs)
-  })
-  
-}
-shinyApp(ui = ui, server = server)
+  </div>
+  <div class="col-md-2" markdown="1">
+  <img height="600px" class="center-block" src="images/layout.png">
+  </div>
+</div>
+
+## HTML, CSS and Javascript Using in R Code 
+ [ING] <span style="color:purple; font-weight:bold">HTML elementleri</span> tags keyword sayesinde r icinde tanimlanabiliyor. 
+ 
+```R
+ ui <− fluidPage (
+  tags$h1(”R Shiny Introduction”) ,
+  tags$hr () ,
+  tags$br () ,
+  tags$p(strong(”Istanbul Technical University”)),
+  tags$p(em(”Mathematical Engineering”)),
+  tags$a(href=”https://www.itu.edu.tr”, ”Website”))
+ server <− function(input , output){} > shinyApp(ui = ui , server = server)
 ```
+
+<div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
+Code Output
+</div>
+  
+```{R}
+ ui <- fluidPage (
+  tags$h1('R Shiny Introduction') ,
+  tags$hr () ,
+  tags$br () ,
+  tags$p(strong('Istanbul Technical University')),
+  tags$p(em('Mathematical Engineering')),
+  tags$a(href='https://www.itu.edu.tr', 'Website'))
+ server <- function(input , output){} > shinyApp(ui = ui , server = server)
+
+  shinyApp(ui = ui, server = server)
+
+```
+
+## ...and more Html Tag
+ 
+<div align="center"  style = "margin-top: 20px">
+  <img src="images/html_tags.PNG" alt="html tag" class="center">
+</div>
