@@ -1,13 +1,5 @@
-
-library(rvest)
-library(dplyr)
-library(reshape2)
-library(RColorBrewer)
-library(ggiraph)
 library(shiny)
 library(ggiraph)
-library(readxl)
-
 
 # Define the UI
 ui = fluidPage(
