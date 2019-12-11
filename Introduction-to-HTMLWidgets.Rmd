@@ -1,0 +1,92 @@
+
+---
+title: "Introduction to HTMLWidgets"
+author: Hakan Turgay & Bertan Taylan
+date: October 19, 2019
+runtime: shiny
+output:
+   slidy_presentation:
+    css: styles.css
+    incremental: yes
+    logo: shiny.png
+    number_sections: yes
+    transition: faster
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction to HTMLWidgets Package
+## Overview
+* This package builds a framework for creating R bindings to JavaScript libraries. HTMLWidgets can be 
+    * Used at the R console for <span style="color:green; font-weight:bold"> data analysis </span>
+    * Embedded within <span style="color:blue; font-weight:bold"> R Markdown </span> documents 
+    * Incorporated into <span style="color:purple; font-weight:bold"> Shiny </span> web applications
+    
+## Creating a Widget
+
+* Three elements forms the widget:
+    
+    * <span style="color:red; font-weight:bold"> Dependencies </span>: JavaScript and CSS assets will be used by the widget 
+    * <span style="color:gray; font-weight:bold">R binding </span>: This is the function where R stuff happens
+    * <span style="color:green; font-weight:bold">JavaScript binding </span>: JavaScript code that connects everything and passes the data and the choices collected from the R binding to the JavaScript library which is (are) using in widget
+
+## Some most-used HTMLWidget Examples
+
+<div margintop= 10px align ="left"> 
+  <br>leaflet</br>
+</div>
+
+<div align ="left"; padding-bottom: 25px>
+  <img src="images/leaflet_example.png" alt="kmeans" class="left" width="550" height="250">
+</div>
+
+<div margintop= 10px align ="right"> 
+  <br>dygraph</br>
+</div>
+
+<div align ="right"; padding-bottom: 25px>
+  <img src="images/dygraph_example.png" alt="kmeans" class="right" width="500" height="250">
+</div>
+
+## Creating a widget step-by-step
+
+<h2><b>Requirements</b></h2>
+
+  * We need to create a new R package that relies on the <span style="color:green; font-weight:bold"> htmlwidgets </span> package.
+```r
+install.packages("htmlwidgets")
+```
+
+## Scaffolding
+
+To create a new widget you can call the <span style="color:purple; font-weight:bold"> scaffoldWidget </span> function to generate the basic structure for your widget. This function will:
+
+  * Create the <span style="color:blue; font-weight:bold">.R,</span> <span style="color:yellow; font-weight:bold">.js,</span> and <span style="color:green; font-weight:bold">.yaml</span> files required for your widget
+  * <b>Tip</b>: If provided, take a Bower package (which is a package manager for web) name and automatically download the JavaScript library (and its dependencies) and add the required entries to the .yaml file. This method is highly preferrable because it guarantees that you get started with the right file structure. 
+  
+## MyWidget
+
+We want to create a widget named ‘mywidget’ in a new package of the same name:
+
+```r
+devtools::create("mywidget")               # create package using devtools
+setwd("mywidget")                          # navigate to package dir
+htmlwidgets::scaffoldWidget("mywidget")    # create widget scaffolding
+devtools::install()                        # install the package so we can try it
+```
+* This creates a simple widget that takes a single text argument and displays that text within the widgets HTML element. You can try it like this:
+```r
+library(mywidget)
+mywidget("hello, world")
+```
+* This is the most minimal widget possible and doesn’t yet include a JavaScript library.
+
+## Result
+
+```{r}
+library(mywidget)
+mywidget("hello, world")
+```

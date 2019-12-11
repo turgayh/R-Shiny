@@ -1,0 +1,85 @@
+---
+title: "Using dygraph Package in Shiny"
+author: Hakan Turgay & Bertan Taylan
+date: December 11, 2019
+runtime: shiny
+output:
+   slidy_presentation:
+    css: styles.css
+    incremental: yes
+    logo: shiny.png
+    number_sections: yes
+    transition: faster
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## try
+
+```{r}
+library(dygraphs)
+library(datasets)
+
+
+shinyUI(fluidPage(
+  
+  titlePanel("Predicted Deaths from Lung Disease (UK)"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      numericInput("months", label = "Months to Predict", 
+                   value = 72, min = 12, max = 144, step = 12),
+      selectInput("interval", label = "Prediction Interval",
+                  choices = c("0.80", "0.90", "0.95", "0.99"),
+                  selected = "0.95"),
+      checkboxInput("showgrid", label = "Show Grid", value = TRUE),
+      hr(),
+      div(strong("From: "), textOutput("from", inline = TRUE)),
+      div(strong("To: "), textOutput("to", inline = TRUE)),
+      div(strong("Date clicked: "), textOutput("clicked", inline = TRUE)),
+      div(strong("Nearest point clicked: "), textOutput("point", inline = TRUE)),
+      br(),
+      helpText("Click and drag to zoom in (double click to zoom back out).")
+    ),
+    mainPanel(
+      dygraphOutput("dygraph")
+    )
+  )
+))
+
+
+shinyServer(function(input, output) {
+  
+  predicted <- reactive({
+    hw <- HoltWinters(ldeaths)
+    predict(hw, n.ahead = input$months, 
+            prediction.interval = TRUE,
+            level = as.numeric(input$interval))
+  })
+  
+  output$dygraph <- renderDygraph({
+    dygraph(predicted(), main = "Predicted Deaths/Month") %>%
+      dySeries(c("lwr", "fit", "upr"), label = "Deaths") %>%
+      dyOptions(drawGrid = input$showgrid)
+  })
+  
+  output$from <- renderText({
+    strftime(req(input$dygraph_date_window[[1]]), "%d %b %Y")      
+  })
+  
+  output$to <- renderText({
+    strftime(req(input$dygraph_date_window[[2]]), "%d %b %Y")
+  })
+  
+  output$clicked <- renderText({
+    strftime(req(input$dygraph_click$x), "%d %b %Y")
+  })
+
+  output$point <- renderText({
+    paste0('X = ', strftime(req(input$dygraph_click$x_closest_point), "%d %b %Y"), 
+         '; Y = ', req(input$dygraph_click$y_closest_point))
+  })
+})
+```
