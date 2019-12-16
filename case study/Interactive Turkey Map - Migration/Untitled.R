@@ -7,7 +7,7 @@ ui <- bootstrapPage(
   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
   leafletOutput("map", width = "100%", height = "100%"),
   absolutePanel(top = 10, right = 10,
-
+                
                 selectInput("city", "Color Scheme",mig$Month),
                 
                 checkboxInput("legend", "Show legend", TRUE)
@@ -17,17 +17,40 @@ ui <- bootstrapPage(
 server <- function(input, output, session) {
   
   filteredData <- reactive({
-    #quakes[quakes$mag >= input$range[1] & quakes$mag <= input$range[2],]
-    mig[mig$Month == input$city]
+        mig[mig$Month == input$city,]
+  })
+  
+  max_lng = 19.336
+  min_lng = 33.223
+  max_lat = 42.952
+  min_lat = 33.004
+  
+  
+  output$map <- renderLeaflet({
+    leaflet(mig) %>% addTiles() %>%
+      fitBounds(min_lng, min_lat, max_lng, max_lat)
+      #addMarkers(mig$Lng, mig$Lat, popup = ~htmlEscape(mig$Islands))
   })
   
 
+  showIslandMigInfoPopup <- function(data,lat, lng) {
+    content <- as.character(tagList(
+      tags$h4("Score:", as.character(data$Islands)),
 
+    ))
+    leafletProxy("map") %>% addPopups(lng, lat, content, layerId = zipcode)
+  }
   
-  output$map <- renderLeaflet({
-    mig = filteredData()
-    leaflet(mig) %>% addTiles() %>%
-      addMarkers(mig$Lng, mig$Lat, popup = ~htmlEscape(mig$Islands))
+  # When map is clicked, show a popup with city info
+  observe({
+    leafletProxy("map") %>% clearPopups()
+    event <- input$map_shape_click
+    if (is.null(event))
+      return()
+    
+    isolate({
+      showIslandMigInfoPopup(event$mig, event$lat, event$lng)
+    })
   })
   
 }
