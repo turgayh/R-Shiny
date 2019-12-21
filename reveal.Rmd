@@ -1,25 +1,20 @@
 ---
 title: "Introduction to R shiny package"
-author: Hakan Turgay & Bertan Taylan
-date: October 19, 2019
-runtime: shiny
+author: "Hakan Turgay & Bertan Taylan"
 output:
-   slidy_presentation:
-    css: styles.css
-    incremental: yes
-    logo: shiny.png
-    number_sections: yes
-    transition: faster
+  revealjs::revealjs_presentation: default
+
 ---
+
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
-## Chapter 1 - Motivation, Basic R-Shiny Package and Example {data-background=#ffff00}
+## <span style="font-weight:bold">  Chapter 1 </span> <br> </br> Motivation, Basic R-Shiny Package and Example {data-background=#ffff00 .center}
 
 
-## Motivation 
+## Motivation
 - Scientists mostly use R to process their analyzes
 
 - Presenting/Sharing their findings are usually done in static format
@@ -65,8 +60,8 @@ runExample("01_hello")
 Code Output
 </div>
 <div id="divCodeOutput" name="divCodeOutput" style="border:1px solid black;">
-
-```{r}
+working code:
+```r
 library(shiny)
 library(shiny)
 
@@ -147,8 +142,8 @@ runExample("09_upload")     # file upload wizard
 runExample("10_download")   # file download wizard
 runExample("11_timer")      # an automated timer
 ```
-
-## Structure of a Shiny App 
+## <span style="font-weight:bold">  Chapter 2</span> <br> </br> Structure of a Shiny App {data-background=#ff33cc .center}
+## Main Structure
 <div class="row">
   <div class="col-md-6" markdown="1">
 
@@ -180,7 +175,7 @@ displayed in the UI
     ```
 </div>
 </div>
-## Alternatively,
+## Alternative Approach
 <div align="center">
   <img src="images/alternative.PNG" alt="kmeans" class="center">
 </div>
@@ -202,8 +197,8 @@ shinyApp(ui = ui, server = server)
 <div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
 Code Output
 </div>
-  
-```{r}
+  working code:
+```r
 library(shiny)
 ui <- fluidPage(
     "Hello Shiny Package"
@@ -216,8 +211,8 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 
 ```
-
-## Inputs and Outputs
+## <span style="font-weight:bold">  Chapter 3</span> <br> </br> Inputs and Outputs {data-background=#ff3300 .center}
+## Overview
 
 Build your app around <span style="color:purple; font-weight:bold">inputs</span> and <span style="color:green; font-weight:bold">outputs</span>
 
@@ -245,12 +240,12 @@ server <- function(input, output) {
 
 shinyApp(ui = ui, server = server)
 ```
-<div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
-Code Output
-</div>
+
+## Code Output
 
 
-```{r}
+working code:
+```r
 library(shiny)
 ui <- fluidPage(
     sliderInput(inputId = "num",
@@ -287,7 +282,7 @@ server <- function(input, output) {
 
 ```
 
-## 1- Save objects to display to output$
+## 1 - Save objects to display to output$
 
 
 
@@ -307,7 +302,7 @@ server <- function(input, output) {
 <img src="images/output-syntax.PNG" alt="kmeans" class="center">
 </div>
 
-## 2- Build objects to display with render*()
+## 2 - Build objects to display with render*()
 
 [ING] UI tarafinda bulunan 'hist' (histogram) objesi server tarafindaki 'RenderPlot' methodu ile uretilecek . 
 Not: hist ve RenderPlot vurgulanacak ..
@@ -354,7 +349,7 @@ server <- function(input, output) {
   class="center">
 </div>
 
-## 3- Access input values with input$
+## 3 - Access input values with input$
 <div style="margin-left: 40px;">
 
 ```r
@@ -400,8 +395,8 @@ shinyApp(ui = ui, server = server)
 </div>
 
 ## Code Output
-
-```{r}
+working code:
+```r
 library(shiny)
 ui <- fluidPage(
     sliderInput(inputId = "num",
@@ -419,22 +414,22 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 
 ```
-
-## Using Checkbox in Shiny 
+## <span style="font-weight:bold">  Chapter 4</span> <br> </br> Using Checkbox in Shiny {data-background=#00ccff .center}
+## Reviewing an Example 
 ```R
 library(shiny)
 runExample("02_text")
 ```
-### Output Code
+
 
 <div align ="center"; padding-bottom: 25px>
   <img src="images/checkbox.png" alt="kmeans" class="center">
 </div>
 
 
-## Starting to Code Analysis  
-<div align ="center"; padding-bottom: 25px>
-  <img src="images/analysis.png" alt="kmeans" class="center">
+##  Starting to Code Analysis 
+<div align ="center"; padding-bottom: 0px>
+  <img height="600px" src="images/analysis.png" alt="kmeans" class="center">
 </div>
 ## Change code
 ```r
@@ -464,7 +459,8 @@ ui <- fluidPage(
 ```
 
 ## Result
-```{r}
+working code:
+```r
 library(shiny)
  
 ui <- fluidPage(
@@ -510,8 +506,8 @@ server <- function(input, output) {
 }
 shinyApp(ui = ui, server = server)
 ```
-
-## Improve  Design {.build}
+## <span style="font-weight:bold">  Chapter 5</span> <br> </br> Improving the Design  {data-background=#00ccff .center}
+## Design Part {.build}
 
 <div class="row">
   <div class="col-md-6" markdown="1">
@@ -525,8 +521,9 @@ shinyApp(ui = ui, server = server)
   <img height="600px" class="center-block" src="images/layout.png">
   </div>
 </div>
+## <span style="font-weight:bold">  Chapter 6</span> <br> </br> Implementations in Shiny: JavaScript, HTML and CSS {data-background=#00cc66 .center}
 
-## HTML, CSS and Javascript Using in R Code 
+## Using HTML, CSS and Javascript in R Code 
  [ING] <span style="color:purple; font-weight:bold">HTML elementleri</span> tags keyword sayesinde r icinde tanimlanabiliyor. 
  
 ```R
@@ -544,8 +541,8 @@ shinyApp(ui = ui, server = server)
 <div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
 Code Output
 </div>
-  
-```{R}
+  working code:
+```R
  ui <- fluidPage (
   tags$h1('R Shiny Introduction') ,
   tags$hr () ,
@@ -586,7 +583,8 @@ Code Output
 ```  
   </div>
   <div class="col-md-2" markdown="1">
-```{r}
+  working code:
+```r
   ui <-
     fluidPage (
     wellPanel(
