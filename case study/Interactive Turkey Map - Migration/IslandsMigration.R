@@ -37,8 +37,8 @@ server <- function(input, output, session) {
       addLayersControl(
         baseGroups = c("OSM (default)", "Toner", "Toner Lite"),
         options = layersControlOptions(collapsed = FALSE)
-      ) %>%
-      addMarkers(mig$Lng, mig$Lat, popup = ~htmlEscape(mig$Islands) , clusterOptions = markerClusterOptions())
+      ) 
+      #addMarkers(mig$Lng, mig$Lat, popup = ~htmlEscape(mig$Islands) , clusterOptions = markerClusterOptions())
   })
   
 
@@ -51,16 +51,11 @@ server <- function(input, output, session) {
   }
   
   # When map is clicked, show a popup with city info
-  observe({
-    leafletProxy("map") %>% clearPopups()
-    event <- input$map_shape_click
-    if (is.null(event))
-      return()
-    
-    isolate({
-      showIslandMigInfoPopup(event$mig, event$lat, event$lng)
-    })
-  })
+  observe(
+    leafletProxy("map",data = filteredData()) %>% 
+    clearMarkers() %>%
+    addMarkers(~Lng, ~Lat, popup = ~htmlEscape(Islands) , clusterOptions = markerClusterOptions())
+  )
   
 }
 
