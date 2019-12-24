@@ -30,9 +30,15 @@ server <- function(input, output, session) {
   
   
   output$map <- renderLeaflet({
-    leaflet(mig) %>% addTiles() %>%
+    leaflet(mig) %>% addTiles(group = "OSM (default)") %>%
+      addProviderTiles(providers$Stamen.Toner, group = "Toner") %>%
+      addProviderTiles(providers$Stamen.TonerLite, group = "Toner Lite") %>%
       fitBounds(min_lng, min_lat, max_lng, max_lat)  %>%
-      addMarkers(mig$Lng, mig$Lat, popup = ~htmlEscape(mig$Islands))
+      addLayersControl(
+        baseGroups = c("OSM (default)", "Toner", "Toner Lite"),
+        options = layersControlOptions(collapsed = FALSE)
+      ) %>%
+      addMarkers(mig$Lng, mig$Lat, popup = ~htmlEscape(mig$Islands) , clusterOptions = markerClusterOptions())
   })
   
 
