@@ -11,7 +11,7 @@ ui <- bootstrapPage(
   leafletOutput("map", width = "100%", height = "100%"),
   absolutePanel(top = 10, right = 10,
                 
-                selectInput("city", "Color Scheme",mig$Month),
+                selectInput("city", "Color Scheme",mig$Month, selected = mig$Month[12]),
                 
                 checkboxInput("legend", "Show legend", TRUE)
   )
