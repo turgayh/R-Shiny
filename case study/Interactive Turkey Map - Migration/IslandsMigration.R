@@ -11,7 +11,7 @@ ui <- bootstrapPage(
   leafletOutput("map", width = "100%", height = "100%"),
   absolutePanel(top = 10, right = 10,
                 
-                selectInput("city", "Color Scheme",mig$Month, selected = mig$Month[12]),
+                selectInput("month", "Color Scheme",mig$Month, selected = mig$Month[12]),
                 
                 checkboxInput("legend", "Show legend", TRUE)
   )
@@ -20,8 +20,10 @@ ui <- bootstrapPage(
 server <- function(input, output, session) {
   
   filteredData <- reactive({
-        mig[mig$Month == input$city,]
+        mig[mig$Month == input$month,]
+    
   })
+  
   
   max_lng = 19.336
   min_lng = 33.223
@@ -32,29 +34,28 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
     leaflet(mig) %>% addTiles(group = "OSM (default)") %>%
       addProviderTiles(providers$Stamen.Toner, group = "Toner") %>%
-      addProviderTiles(providers$Stamen.TonerLite, group = "Toner Lite") %>%
+      addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>%
       fitBounds(min_lng, min_lat, max_lng, max_lat)  %>%
       addLayersControl(
-        baseGroups = c("OSM (default)", "Toner", "Toner Lite"),
+        baseGroups = c("Esri.WorldImagery", "OSM (default)", "Toner"),
         options = layersControlOptions(collapsed = FALSE)
       ) 
-      #addMarkers(mig$Lng, mig$Lat, popup = ~htmlEscape(mig$Islands) , clusterOptions = markerClusterOptions())
   })
   
 
-  showIslandMigInfoPopup <- function(data,lat, lng) {
+  showIslandMigInfoPopup <- function(isl) {
     content <- as.character(tagList(
-      tags$h4("Score:", as.character(data$Islands)),
-
+      tags$h4("Score:", as.character(isl[2])),
     ))
-    leafletProxy("map") %>% addPopups(lng, lat, content, layerId = zipcode)
   }
   
+
+    
   # When map is clicked, show a popup with city info
   observe(
       leafletProxy("map",data = filteredData()) %>%
       clearMarkerClusters() %>%
-      addMarkers(~Lng, ~Lat, popup = ~htmlEscape(Islands) , clusterOptions = markerClusterOptions())
+      addMarkers(~Lng, lat = ~Lat, popup = showIslandMigInfoPopup(filteredData()) , clusterOptions = markerClusterOptions())
   )
   
   # observeEvent(input$city , { 
