@@ -52,10 +52,16 @@ server <- function(input, output, session) {
   
   # When map is clicked, show a popup with city info
   observe(
-    leafletProxy("map",data = filteredData()) %>% 
-    clearMarkers() %>%
-    addMarkers(~Lng, ~Lat, popup = ~htmlEscape(Islands) , clusterOptions = markerClusterOptions())
+      leafletProxy("map",data = filteredData()) %>%
+      clearMarkerClusters() %>%
+      addMarkers(~Lng, ~Lat, popup = ~htmlEscape(Islands) , clusterOptions = markerClusterOptions())
   )
+  
+  # observeEvent(input$city , { 
+  #       leafletProxy("map",data = filteredData()) %>%
+  #     clearMarkerClusters() %>%
+  #       addMarkers(~Lng, ~Lat, popup = ~htmlEscape(Islands) , clusterOptions = markerClusterOptions())
+  #   })
   
 }
 
