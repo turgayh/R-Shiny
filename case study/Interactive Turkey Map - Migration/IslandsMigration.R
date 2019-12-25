@@ -14,7 +14,17 @@ ui <- bootstrapPage(
                 selectInput("month", "Color Scheme",mig$Month, selected = mig$Month[12]),
                 
                 checkboxInput("legend", "Show legend", TRUE)
-  )
+  ),
+  absolutePanel(top = 600, right = 200,
+                
+                fluidRow(
+                  column(6, html_print("<h4>sssssss</h4>"))),
+                fluidRow(
+                  column(2, (
+"sdasd"                  )))
+                
+                )
+  
 )
 
 server <- function(input, output, session) {
@@ -45,18 +55,19 @@ server <- function(input, output, session) {
 
   showIslandMigInfoPopup <- function(isl) {
     content <- as.character(tagList(
-      tags$h4("Score:", as.character(isl[2])),
+      tags$h4("Score:", as.character(isl[1])),
     ))
   }
   
 
     
   # When map is clicked, show a popup with city info
-  observe(
+  observe({
+      x <- filteredData()
       leafletProxy("map",data = filteredData()) %>%
       clearMarkerClusters() %>%
-      addMarkers(~Lng, lat = ~Lat, popup = showIslandMigInfoPopup(filteredData()) , clusterOptions = markerClusterOptions())
-  )
+      addMarkers(~Lng, ~Lat, popup = showIslandMigInfoPopup(filteredData()) , clusterOptions = markerClusterOptions())
+  })
   
   # observeEvent(input$city , { 
   #       leafletProxy("map",data = filteredData()) %>%
