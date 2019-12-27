@@ -66,7 +66,9 @@ server <- function(input, output, session) {
       x <- filteredData()
       leafletProxy("map",data = filteredData()) %>%
       clearMarkerClusters() %>%
-      addMarkers(~Lng, ~Lat, 
+        
+      addMarkers(~Lng, ~Lat,
+                 
                  popup = ~paste(collapse = NULL,
   
           "<head><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head>",
@@ -77,10 +79,10 @@ server <- function(input, output, session) {
           "<h5  class=\"section\">" ,"Total population :      " ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Population of previous month :        " ,"<span class=\"number\">", `Population of previous month`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Change :        " ,"<span class=\"number\">", Change  ,"</span>", "</h5>"
+                  ) , 
           
-                   
-                   ) , 
-                  clusterOptions = markerClusterOptions())
+                  clusterOptions = markerClusterOptions()
+      )
   })
   
 
