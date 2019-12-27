@@ -66,9 +66,15 @@ server <- function(input, output, session) {
       x <- filteredData()
       leafletProxy("map",data = filteredData()) %>%
       clearMarkerClusters() %>%
-      addMarkers(~Lng, ~Lat, popup = showIslandMigInfoPopup(filteredData()) , clusterOptions = markerClusterOptions())
+      addMarkers(~Lng, ~Lat, 
+                 popup = ~paste("Islands" , Islands , "<br>" , 
+                                  "Transfers to mainland:" , `Transfers to mainland`
+) , 
+                  clusterOptions = markerClusterOptions())
   })
   
+
+
   # observeEvent(input$city , { 
   #       leafletProxy("map",data = filteredData()) %>%
   #     clearMarkerClusters() %>%
