@@ -1,0 +1,22 @@
+.title {
+  text-align:center;
+  color:black;
+  font-weight:bold;
+  font-size:18px;
+
+  
+}
+
+.section {
+  font-size:15;
+white-space:nowrap;
+font-weight:bold;
+  
+}
+
+.number {
+  font-weight:bold;
+  color:purple;
+  font-size:13;
+  text-align:right;
+}
