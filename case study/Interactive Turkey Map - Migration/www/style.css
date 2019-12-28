@@ -8,7 +8,10 @@
 }
 
 .panel {
-  background-color:red;
+  background-color:black;
+  opacity: 0.5;
+  text-align:center;
+  position:center;
 }
 
 
