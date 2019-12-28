@@ -4,6 +4,7 @@ library(RColorBrewer)
 library(htmltools)
 library(readxl)
 library(ggplot2)
+library(shinyWidgets)
 
 
 data <- read_excel("2018-2019_data.xlsx")
@@ -18,45 +19,40 @@ ui <- bootstrapPage(
   
   leafletOutput("map", width = "100%", height = "100%"),
   absolutePanel(id = "controls", class = "panel", fixed = TRUE,
-                              draggable = TRUE, top = "auto", left = 60, right = 60, bottom = 10,
-                              width = 600, height = 150,
+                              draggable = TRUE, top = "auto", left = 190, right = 60, bottom = 60,
+                              width = 880, height = 20,
                 
               #  selectInput("month", "Month",data$Month, selected = "November"),
               # selectInput("year", "Year",data$Year, selected = "2019"),
-              
-              fluidRow(class = "btn-group",
-                       
-                       column(3,
-                              actionButton("2019" , "2019" , class = "btn btn-primary")
-                       ),
-                       
-                       column(3,
-                              actionButton("2018" , "2018" , class = "btn btn-primary")
-                       ),
-                       
-                       column(2,
-                              actionButton("2018" , "2018" , class = "btn btn-primary")
-                       )
+              actionGroupButtons(
+                inputIds = c("January", "February","March" ,"April","May","June","July","August","September ","October","November","December"),
+                labels = list("January", "February","March" ,"April","May","June","July","August","September ","October","November","December"),
+                status = "primary"
+              ),
+
+              actionGroupButtons(
+                inputIds = c("year2019", "year2018"),
+                labels = list("2019", "2018"),
+                status = "primary"
               ),
             
-              
-                fluidRow(class = "panel2",
-                  
-                  column(1,
-                          actionButton("2019" , "2019" , class = "btn-success")
-                  ),
-                  
-                  column(2,
-                          actionButton("2018" , "2018" , class = "btn-success")
-                  )
-                )
   )
 )
 
 server <- function(input, output, session) {
   
+  # filteredData <- reactive({
+  #       data[data$Month == input$month & data$Year == input$year,] 
+  # })
   filteredData <- reactive({
-        data[data$Month == input$month & data$Year == input$year,] 
+    data[data$Year == input$year2019,]
+  })
+  filteredData <- reactive({
+    data[data$Year == input$year2018,]
+  }) 
+  
+  filteredData <- reactive({
+    data[data$Month == input$November,]
   })
   
   
@@ -64,7 +60,6 @@ server <- function(input, output, session) {
   min_lng = 33.223
   max_lat = 42.952
   min_lat = 33.004
-  
   
   output$map <- renderLeaflet({
     leaflet(mig) %>% addTiles(group = "OSM (default)") %>%
