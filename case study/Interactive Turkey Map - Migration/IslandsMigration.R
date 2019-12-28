@@ -3,6 +3,8 @@ library(leaflet)
 library(RColorBrewer)
 library(htmltools)
 library(readxl)
+library(ggplot2)
+
 
 data <- read_excel("2018-2019_data.xlsx")
 
@@ -27,8 +29,7 @@ ui <- bootstrapPage(
 server <- function(input, output, session) {
   
   filteredData <- reactive({
-        data[data$Month == input$month ,]
-    
+        data[data$Month == input$month & data$Year == input$year,] 
   })
   
   
