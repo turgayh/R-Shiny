@@ -21,8 +21,35 @@ ui <- bootstrapPage(
                               draggable = TRUE, top = "auto", left = 60, right = 60, bottom = 10,
                               width = 600, height = 150,
                 
-                selectInput("month", "Month",data$Month, selected = data$Month[1]),
-                selectInput("year", "Year",data$Year, selected = data$Year[1]),
+              #  selectInput("month", "Month",data$Month, selected = "November"),
+              # selectInput("year", "Year",data$Year, selected = "2019"),
+              
+              fluidRow(class = "btn-group",
+                       
+                       column(3,
+                              actionButton("2019" , "2019" , class = "btn btn-primary")
+                       ),
+                       
+                       column(3,
+                              actionButton("2018" , "2018" , class = "btn btn-primary")
+                       ),
+                       
+                       column(2,
+                              actionButton("2018" , "2018" , class = "btn btn-primary")
+                       )
+              ),
+            
+              
+                fluidRow(class = "panel2",
+                  
+                  column(1,
+                          actionButton("2019" , "2019" , class = "btn-success")
+                  ),
+                  
+                  column(2,
+                          actionButton("2018" , "2018" , class = "btn-success")
+                  )
+                )
   )
 )
 
