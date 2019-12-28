@@ -4,33 +4,30 @@ library(RColorBrewer)
 library(htmltools)
 library(readxl)
 
-mig <- read_excel("islands_data_october-november.xlsx")
+data <- read_excel("2018-2019_data.xlsx")
 
 ui <- bootstrapPage(
   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
-  leafletOutput("map", width = "100%", height = "100%"),
-  absolutePanel(top = 10, right = 10,
-                
-                selectInput("month", "Color Scheme",mig$Month, selected = mig$Month[12]),
-                
-                checkboxInput("legend", "Show legend", TRUE)
-  ),
-  absolutePanel(top = 600, right = 200,
-                
-                fluidRow(
-                  column(6, html_print("<h4>sssssss</h4>"))),
-                fluidRow(
-                  column(2, (
-"sdasd"                  )))
-                
-                )
   
+  tags$head(
+    # Include our custom CSS
+    includeCSS("www/style.css")
+  ),
+  
+  leafletOutput("map", width = "100%", height = "100%"),
+  absolutePanel(id = "controls", class = "panel", fixed = TRUE,
+                              draggable = TRUE, top = "auto", left = 60, right = 60, bottom = 10,
+                              width = 600, height = 150,
+                
+                selectInput("month", "Month",data$Month, selected = data$Month[1]),
+                selectInput("year", "Year",data$Year, selected = data$Year[1]),
+  )
 )
 
 server <- function(input, output, session) {
   
   filteredData <- reactive({
-        mig[mig$Month == input$month,]
+        data[data$Month == input$month ,]
     
   })
   
@@ -61,26 +58,20 @@ server <- function(input, output, session) {
   
 
     
-  # When map is clicked, show a popup with city info
   observe({
-      x <- filteredData()
       leafletProxy("map",data = filteredData()) %>%
       clearMarkerClusters() %>%
-        
       addMarkers(~Lng, ~Lat,
                  
                  popup = ~paste(collapse = NULL,
   
           "<head><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head>",
           "<h4  class=\"title\">",Islands, "</h4>" , 
-          "<h5  class=\"section\">" ,"Boats Arrived  :        " ,"<span class=\"number\">", `Boats Arrived`  ,"</span>", "</h5>",
-          "<h5  class=\"section\">" ,"Total Arrivals :        " ,"<span class=\"number\">", `Total Arrivals`  ,"</span>", "</h5>",
-          "<h5  class=\"section\">" ,"Transfers to mainland : " ,"<span class=\"number\">", `Transfers to mainland`  , "</span>","</h5>",
-          "<h5  class=\"section\">" ,"Total population :      " ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>",
-          "<h5  class=\"section\">" ,"Population of previous month :        " ,"<span class=\"number\">", `Population of previous month`  ,"</span>", "</h5>",
-          "<h5  class=\"section\">" ,"Change :        " ,"<span class=\"number\">", Change  ,"</span>", "</h5>"
-                  ) , 
-          
+          "<h5  class=\"section\">" ,"Boats Arrived  :" ,"<span class=\"number\">", `Boats Arrived`  ,"</span>", "</h5>",
+          "<h5  class=\"section\">" ,"Total Arrivals :" ,"<span class=\"number\">", `Total Arrivals`  ,"</span>", "</h5>",
+          "<h5  class=\"section\">" ,"Transfers to mainland :" ,"<span class=\"number\">", `Transfers to mainland`  , "</span>","</h5>",
+          "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>"                  ) , 
+
                   clusterOptions = markerClusterOptions()
       )
   })
