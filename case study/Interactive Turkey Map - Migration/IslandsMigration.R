@@ -19,22 +19,13 @@ ui <- bootstrapPage(
   
   leafletOutput("map", width = "100%", height = "100%"),
   absolutePanel(id = "controls", class = "panel", fixed = TRUE,
-                              draggable = TRUE, top = "auto", left = 190, right = 60, bottom = 60,
-                              width = 880, height = 20,
+                              draggable = TRUE, top = "auto", left = 190, right = 60, bottom = 70,
+                              width = 870, height = 20,
                 
               #  selectInput("month", "Month",data$Month, selected = "November"),
               # selectInput("year", "Year",data$Year, selected = "2019"),
-              actionGroupButtons(
-                inputIds = c("January", "February","March" ,"April","May","June","July","August","September ","October","November","December"),
-                labels = list("January", "February","March" ,"April","May","June","July","August","September ","October","November","December"),
-                status = "primary"
-              ),
-
-              actionGroupButtons(
-                inputIds = c("year2019", "year2018"),
-                labels = list("2019", "2018"),
-                status = "primary"
-              ),
+              radioGroupButtons(inputId = "Month", choices = c("January", "February","March" ,"April","May","June","July","August","September","October","November","December") , status = "success"),
+              radioGroupButtons(inputId = "Year", choices = c("2019", "2018") , status = "success"),
             
   )
 )
@@ -45,16 +36,10 @@ server <- function(input, output, session) {
   #       data[data$Month == input$month & data$Year == input$year,] 
   # })
   filteredData <- reactive({
-    data[data$Year == input$year2019,]
+    data[data$Year == input$Year & data$Month == input$Month,]
   })
-  filteredData <- reactive({
-    data[data$Year == input$year2018,]
-  }) 
-  
-  filteredData <- reactive({
-    data[data$Month == input$November,]
-  })
-  
+
+
   
   max_lng = 19.336
   min_lng = 33.223
