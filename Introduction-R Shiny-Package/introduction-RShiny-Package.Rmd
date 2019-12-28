@@ -63,74 +63,9 @@ runExample("01_hello")
 <div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
 Code Output
 </div>
-<div id="divCodeOutput" name="divCodeOutput" style="border:1px solid black;">
-working code:
-```r
-library(shiny)
-library(shiny)
-
-# Define UI for app that draws a histogram ----
-ui <- fluidPage(
-
-  # App title ----
-  titlePanel("Hello Shiny!"),
-
-  # Sidebar layout with input and output definitions ----
-  sidebarLayout(
-
-    # Sidebar panel for inputs ----
-    sidebarPanel(
-
-      # Input: Slider for the number of bins ----
-      sliderInput(inputId = "bins",
-                  label = "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-
-    ),
-
-    # Main panel for displaying outputs ----
-    mainPanel(
-
-      # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
-
-    )
-  )
-)
-
-
-
-
-# Define server logic required to draw a histogram ----
-server <- function(input, output) {
-
-  # Histogram of the Old Faithful Geyser Data ----
-  # with requested number of bins
-  # This expression that generates a histogram is wrapped in a call
-  # to renderPlot to indicate that:
-  #
-  # 1. It is "reactive" and therefore should be automatically
-  #    re-executed when inputs (input$bins) change
-  # 2. Its output type is a plot
-  output$distPlot <- renderPlot({
-
-    x    <- faithful$waiting
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-    hist(x, breaks = bins, col = "#75AADB", border = "white",
-         xlab = "Waiting time to next eruption (in mins)",
-         main = "Histogram of waiting times")
-
-    })
-
-}
-
-shinyApp(ui = ui, server = server)
-
-```
-</div>
+<div align ="center"; padding-bottom: 10px>
+  <img src="../images/first app in shiny.PNG" alt="firstapp" class="center" width="700" height="400">
+    </div>
 ## More Example
 
 ```r 
@@ -202,26 +137,18 @@ shinyApp(ui = ui, server = server)
 Code Output
 </div>
   working code:
-```r
-library(shiny)
-ui <- fluidPage(
-    "Hello Shiny Package"
-    )
 
-server <- function(input, output) {
-    
-}
-
-shinyApp(ui = ui, server = server)
-
-```
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/hello shiny.PNG" alt="helloshiny" 
+  class="center" width="200" height="40"> 
+    </div>
 # <span style="font-weight:bold">  Chapter 3</span> <br> </br> Inputs and Outputs {data-background=#ff3300 .center}
 ## Overview
 
 Build your app around <span style="color:purple; font-weight:bold">inputs</span> and <span style="color:green; font-weight:bold">outputs</span>
 
 <div align ="center" >
-<img src="../images/kmeans.PNG"  width="760" height="720" alt="kmeans" class="center">
+<img src="../images/kmeans.PNG" alt="kmeans" class="center" style="width:512px;height:512px">
 </div>
 
 ## Input 
@@ -249,20 +176,11 @@ shinyApp(ui = ui, server = server)
 
 
 working code:
-```r
-library(shiny)
-ui <- fluidPage(
-    sliderInput(inputId = "num",
-                label = "Choose a number",
-                value = 25, min = 1, max = 100)
-    )
 
-server <- function(input, output) {
-    
-}
-
-shinyApp(ui = ui, server = server)
-```
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/input.PNG" alt="input" 
+  class="center" width="500" height="200"> 
+    </div>
 
 ## Input Syntax
 <div align="center"  style = "margin-top: 150px">
@@ -400,24 +318,12 @@ shinyApp(ui = ui, server = server)
 
 ## Code Output
 working code:
-```r
-library(shiny)
-ui <- fluidPage(
-    sliderInput(inputId = "num",
-                label = "Choose a number",
-                value = 25, min = 1, max = 100),
-    plotOutput("hist")
-    )
 
-server <- function(input, output) {
-    output$hist <- renderPlot({
-        hist(rnorm(input$num))
-    })
-}
-
-shinyApp(ui = ui, server = server)
-
-```
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/reactivity result.PNG" alt="res" 
+  class="center" width="1000" height="550"> 
+    </div>
+    
 # <span style="font-weight:bold">  Chapter 4</span> <br> </br> Using Checkbox in Shiny {data-background=#00ccff .center}
 ## Reviewing an Example 
 ```R
@@ -464,52 +370,12 @@ ui <- fluidPage(
 
 ## Result
 working code:
-```r
-library(shiny)
- 
-ui <- fluidPage(
-  
-  titlePanel("Shiny Text"),
-  sidebarLayout(
-    sidebarPanel(
-      checkboxGroupInput("dataset", "Choose a dataset:",
-                         c("rock", "pressure", "cars"),
-                         selected = "rock"),
-      
-      numericInput(inputId = "obs",
-                   label = "Number of observations to view:",
-                   value = 10)
-    ),
-    
-    mainPanel(
-      
-      verbatimTextOutput("summary"),
-      tableOutput("view")
-      
-    )
-  )
-)
-server <- function(input, output) {
-  
-  datasetInput <- reactive({
-    switch(input$dataset,
-           "rock" = rock,
-           "pressure" = pressure,
-           "cars" = cars)
-  })
-  
-  output$summary <- renderPrint({
-    dataset <- datasetInput()
-    summary(dataset)
-  })
-  
-  output$view <- renderTable({
-    head(datasetInput(), n = input$obs)
-  })
-  
-}
-shinyApp(ui = ui, server = server)
-```
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/workingcode checkbox.PNG" alt="check" 
+  class="center" width="1000" height="550"> 
+    </div>
+
 # <span style="font-weight:bold">  Chapter 5</span> <br> </br> Improving the Design  {data-background=#00ccff .center}
 ## Design Part {.build}
 
