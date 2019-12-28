@@ -7,6 +7,12 @@
   
 }
 
+.panel {
+  background-color:red;
+}
+
+
+
 .section {
   font-size:15;
 white-space:nowrap;
