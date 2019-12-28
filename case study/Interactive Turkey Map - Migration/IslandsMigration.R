@@ -9,26 +9,55 @@ library(shinyWidgets)
 
 
 data <- read_excel("2018-2019_data.xlsx")
+#Boats-Arrived <- sum(as.numeric(mig$`Boats Arrived`), na.rm = TRUE)
+
 
 ui <- bootstrapPage(
   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
   
-  tags$head(
-    # Include our custom CSS
-    includeCSS("www/style.css")
-  ),
+  
+  tags$head(includeCSS("www/style.css")), 
   
   #Map fullscrenn
   leafletOutput("map", width = "100%", height = "100%"),
   
   #Date Filter Menu
-  absolutePanel(id = "controls", class = "panel", fixed = TRUE,
-                              draggable = TRUE, top = "auto", left = 190, right = 60, bottom = 70,
-                              width = "68%", height = 20,
-
-              radioGroupButtons(inputId = "Month", choices = c("January", "February","March" ,"April","May","June","July","August","September","October","November","December") , status = "success"),
-              radioGroupButtons(inputId = "Year", choices = c("2019", "2018") , status = "success"),
-            
+  absolutePanel(
+    id = "controls",
+    class = "panel",
+    fixed = TRUE,
+    draggable = TRUE,
+    top = "auto",
+    left = 190,
+    right = 60,
+    bottom = 70,
+    width = "68%",
+    height = 20,
+    
+    radioGroupButtons(
+      inputId = "Month",
+      choices = c(
+        "January",
+        "February",
+        "March" ,
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ) ,
+      status = "success"
+    ),
+    radioGroupButtons(
+      inputId = "Year",
+      choices = c("2019", "2018") ,
+      status = "success"
+    ), 
+    
   )
   
   #Panel show graphical 
@@ -37,10 +66,13 @@ ui <- bootstrapPage(
 )
 
 server <- function(input, output, session) {
-  
   filteredData <- reactive({
     data[data$Year == input$Year & data$Month == input$Month,]
   })
+  
+  # filteredData2 <- reactive({
+  #   mig[mig$Year == mig$Year]
+  # })
   
   max_lng = 19.336
   min_lng = 33.223
@@ -55,21 +87,19 @@ server <- function(input, output, session) {
       addLayersControl(
         baseGroups = c("Esri.WorldImagery", "OSM (default)", "Toner"),
         options = layersControlOptions(collapsed = FALSE)
-      ) 
+      )
   })
   
 
   showIslandMigInfoPopup <- function(isl) {
-    content <- as.character(tagList(
-      tags$h4("Score:", as.character(isl[1])),
-    ))
+    content <- as.character(tagList(tags$h4("Score:", as.character(isl[1])),))
   }
   
 
-    
+  
   observe({
-      leafletProxy("map",data = filteredData()) %>%
-      clearMarkerClusters() %>%
+    leafletProxy("map", data = filteredData()) %>%
+      clearMarkerClusters() %>% 
       addMarkers(~Lng, ~Lat,
                  
                  popup = ~paste(collapse = NULL,
@@ -80,14 +110,9 @@ server <- function(input, output, session) {
           "<h5  class=\"section\">" ,"Total Arrivals :" ,"<span class=\"number\">", `Total Arrivals`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Transfers to mainland :" ,"<span class=\"number\">", `Transfers to mainland`  , "</span>","</h5>",
           "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>"                  ) , 
-
-                  clusterOptions = markerClusterOptions()
+          clusterOptions = markerClusterOptions()
       )
   })
-  
-
-
-  
 }
 
 shinyApp(ui, server)
