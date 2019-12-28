@@ -20,7 +20,7 @@ ui <- bootstrapPage(
   leafletOutput("map", width = "100%", height = "100%"),
   absolutePanel(id = "controls", class = "panel", fixed = TRUE,
                               draggable = TRUE, top = "auto", left = 190, right = 60, bottom = 70,
-                              width = 870, height = 20,
+                              width = "68%", height = 20,
                 
               #  selectInput("month", "Month",data$Month, selected = "November"),
               # selectInput("year", "Year",data$Year, selected = "2019"),
@@ -47,7 +47,7 @@ server <- function(input, output, session) {
   min_lat = 33.004
   
   output$map <- renderLeaflet({
-    leaflet(mig) %>% addTiles(group = "OSM (default)") %>%
+    leaflet(data) %>% addTiles(group = "OSM (default)") %>%
       addProviderTiles(providers$Stamen.Toner, group = "Toner") %>%
       addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>%
       fitBounds(min_lng, min_lat, max_lng, max_lat)  %>%
