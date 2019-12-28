@@ -7,6 +7,7 @@ library(ggplot2)
 library(shinyWidgets)
 
 
+
 data <- read_excel("2018-2019_data.xlsx")
 
 ui <- bootstrapPage(
@@ -17,29 +18,29 @@ ui <- bootstrapPage(
     includeCSS("www/style.css")
   ),
   
+  #Map fullscrenn
   leafletOutput("map", width = "100%", height = "100%"),
+  
+  #Date Filter Menu
   absolutePanel(id = "controls", class = "panel", fixed = TRUE,
                               draggable = TRUE, top = "auto", left = 190, right = 60, bottom = 70,
                               width = "68%", height = 20,
-                
-              #  selectInput("month", "Month",data$Month, selected = "November"),
-              # selectInput("year", "Year",data$Year, selected = "2019"),
+
               radioGroupButtons(inputId = "Month", choices = c("January", "February","March" ,"April","May","June","July","August","September","October","November","December") , status = "success"),
               radioGroupButtons(inputId = "Year", choices = c("2019", "2018") , status = "success"),
             
   )
+  
+  #Panel show graphical 
+
+  
 )
 
 server <- function(input, output, session) {
   
-  # filteredData <- reactive({
-  #       data[data$Month == input$month & data$Year == input$year,] 
-  # })
   filteredData <- reactive({
     data[data$Year == input$Year & data$Month == input$Month,]
   })
-
-
   
   max_lng = 19.336
   min_lng = 33.223
@@ -86,11 +87,6 @@ server <- function(input, output, session) {
   
 
 
-  # observeEvent(input$city , { 
-  #       leafletProxy("map",data = filteredData()) %>%
-  #     clearMarkerClusters() %>%
-  #       addMarkers(~Lng, ~Lat, popup = ~htmlEscape(Islands) , clusterOptions = markerClusterOptions())
-  #   })
   
 }
 
