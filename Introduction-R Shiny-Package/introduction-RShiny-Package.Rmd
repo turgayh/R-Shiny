@@ -396,61 +396,61 @@ working code:
 ## Using HTML, CSS and Javascript in R Code 
 
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
- {
-  box-sizing: border-box;
+  <style>
+  .item3 { grid-area: main; }
+.item4 { grid-area: right; }
+
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    
+    
+    'main right';
+  grid-gap: 10px;
+  background-color: #ffffff;
+    padding: 10px;
 }
 
-
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-
-}
-  .left {
-  width: 80%;
-}
-
-.right {
-  width: 20%;
-}
-
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.grid-container > div {
+  background-color: #ffffff;
+    text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
 }
 </style>
-</head>
- 
-
-<br></br>In R, <span style="color:purple; font-weight:bold">HTML elements</span> can be defined by <span style="color:green; font-weight:bold">tags</span> keyword.
-
-<div class="row">
-  <div class="column" style="background-color:#ffffff;">
- ```r
- ui <− fluidPage (
+  </head>
+  <body>
+  
+  <center>  <br>In R, <span style="color:purple; font-weight:bold">HTML elements</span> can be defined by <span style="color:green; font-weight:bold">tags</span> keyword.
+</center>
+  
+  <div class="grid-container">
+  
+  <div class="item3">
+  ```r
+ui <− fluidPage (
   tags$h1(”R Shiny Introduction”) ,
   tags$hr () ,
   tags$br () ,
   tags$p(strong(”Istanbul Technical University”)),
   tags$p(em(”Mathematical Engineering”)),
   tags$a(href=”https://www.itu.edu.tr”, ”Website”))
- server <− function(input , output){} > 
- shinyApp(ui = ui , server = server)
+server <− function(input , output){} > 
+  shinyApp(ui = ui , server = server)
 ```
-  </div>
-  <div class="column" style="background-color:#ffffff;">
   
-    
- <img src="../images/html tags.PNG" alt="tags" 
-  class="center" width="500" height="300"> 
-    </div>
-    
+  </div>  
+  
+  <div class="item4">
+  
+  <img src="../images/html tags.PNG" alt="tags" 
+class="center" width="500" height="300"> 
+  
   </div>
+  </div>
+  
+  </body>
 
 ## ...and more Html Tag
  
