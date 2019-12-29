@@ -1,0 +1,40 @@
+---
+title: "Case Study of Migration"
+author: "Hakan Turgay & Bertan Taylan"
+output:
+  revealjs::revealjs_presentation: 
+      incremental: true
+      reveal_options:
+        slideNumber: true
+        previewLinks: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Retrieving Data
+
+ * We used Aegean Boat Report's data from: https://aegeanboatreport.com/reports/ 
+ * By using Excel, we shaped this data to make it useful for our research.
+ 
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/excel.PNG" alt="excel" class="center">
+  </div>
+  
+## Using Leaflet
+
+* For creating a map we used Leaflet library.
+* Leaflet is a open source JavaScript library for creating interactive maps.
+* It can be implemented and used in Shiny easily.
+* Leaflet gives the opportunity of adding informational popups to particular part of maps.
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/leaflet.PNG" alt="leaflet" class="center">
+  </div>
+
+## Result
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/case study result.PNG" alt="result" width="1500" height="400" class="center">
+  </div>
