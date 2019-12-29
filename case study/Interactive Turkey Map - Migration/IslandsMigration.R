@@ -5,7 +5,7 @@ library(htmltools)
 library(readxl)
 library(ggplot2)
 library(shinyWidgets)
-
+library(ggplot2)
 
 
 data <- read_excel("2018-2019_data.xlsx")
@@ -22,17 +22,6 @@ ui <- bootstrapPage(
   #Map fullscrenn
   leafletOutput("map", width = "100%", height = "100%"),
  
-
-    # Sidebar with a slider input
-
-    
-    # Show a plot of the generated distribution
-
-  
-
-
-  
-    
   #Date Filter Menu
   absolutePanel(
     id = "controls",
@@ -75,8 +64,8 @@ ui <- bootstrapPage(
   #Panel show graphical 
   absolutePanel(
     id = "controls", class = "panel2", fixed = TRUE,
-    draggable = TRUE, top = 100, left = "auto", right = 20, bottom = "auto",
-    width = 330, height = "auto",
+    draggable = TRUE, top = 0, left = "auto", right = 0, bottom = "auto",
+    width = 270, height = "auto",
     tags$div(id = 'overview',  class="panel3",
           
              plotOutput("plot")
@@ -89,10 +78,11 @@ server <- function(input, output, session) {
     data[data$Year == input$Year & data$Month == input$Month,]
   })
   output$plot <- renderPlot({
-    input$newplot
-    # Add a little noise to the cars data
-    cars2 <- cars + rnorm(nrow(cars))
-    plot(cars2)
+    data2 <- data.frame(x=rnorm(100))
+    ggplot( data=data2, aes(x=x)) + 
+      geom_histogram(fill="skyblue", alpha=0.5) +
+      ggtitle("A blue Histogram") +
+      theme_minimal()
   })  
   # filteredData2 <- reactive({
   #   mig[mig$Year == mig$Year]
@@ -108,7 +98,7 @@ server <- function(input, output, session) {
       addProviderTiles(providers$Stamen.Toner, group = "Toner") %>%
       addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>%
       fitBounds(min_lng, min_lat, max_lng, max_lat)  %>%
-      addLayersControl(
+      addLayersControl(position = "bottomright",
         baseGroups = c("Esri.WorldImagery", "OSM (default)", "Toner"),
         options = layersControlOptions(collapsed = FALSE)
       )
@@ -134,7 +124,7 @@ server <- function(input, output, session) {
           "<h5  class=\"section\">" ,"Total Arrivals :" ,"<span class=\"number\">", `Total Arrivals`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Transfers to mainland :" ,"<span class=\"number\">", `Transfers to mainland`  , "</span>","</h5>",
           "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>" ,
-          "<button class=\"btn btn-primary\" data-toggle=\"collapse\" data-target=\"#overview\">More Information</button>"
+          "<button class=\"btn btn-success\" data-toggle=\"collapse\" data-target=\"#overview\">More Information</button>"
           ) , 
           clusterOptions = markerClusterOptions()
       )
