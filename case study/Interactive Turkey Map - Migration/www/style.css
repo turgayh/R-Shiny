@@ -3,10 +3,26 @@
   color:black;
   font-weight:bold;
   font-size:18px;
-
+  
   
 }
 
+.panel2{
+  background-color:white;
+  text-align:right;
+  border-radius:10;
+  
+}
+.panel3{
+  background-color:white;
+  text-align:left;
+}
+.divd {
+  width:100;
+  height:200;
+  margin-top:20;
+  position:relative;
+}
 .panel {
   background-color:black;
   text-align:center;
