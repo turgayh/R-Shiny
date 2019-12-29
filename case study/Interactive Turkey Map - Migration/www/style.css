@@ -16,6 +16,7 @@
 .panel3{
   background-color:white;
   text-align:left;
+  display:none;
 }
 .divd {
   width:100;
