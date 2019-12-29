@@ -15,7 +15,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
-# <span style="font-weight:bold">  Chapter 1 </span> <br> </br> Motivation, Basic R-Shiny Package and Example {data-background=#ffff00 .center}
+# <span style="font-weight:bold">  Chapter 1 </span> <br> </br> Motivation, Basic R-Shiny Package and Example {data-background=#00ccff .center}
 
 
 ## Motivation
@@ -81,7 +81,7 @@ runExample("09_upload")     # file upload wizard
 runExample("10_download")   # file download wizard
 runExample("11_timer")      # an automated timer
 ```
-# <span style="font-weight:bold">  Chapter 2</span> <br> </br> Structure of a Shiny App {data-background=#ff33cc .center}
+# <span style="font-weight:bold">  Chapter 2</span> <br> </br> Structure of a Shiny App {data-background=#00cc66 .center}
 ## Main Structure
 <div class="row">
   <div class="col-md-6" markdown="1">
@@ -142,7 +142,7 @@ Code Output
   <img src="../images/hello shiny.PNG" alt="helloshiny" 
   class="center" width="200" height="40"> 
     </div>
-# <span style="font-weight:bold">  Chapter 3</span> <br> </br> Inputs and Outputs {data-background=#ff3300 .center}
+# <span style="font-weight:bold">  Chapter 3</span> <br> </br> Inputs and Outputs {data-background=#00ccff .center}
 ## Overview
 
 Build your app around <span style="color:purple; font-weight:bold">inputs</span> and <span style="color:green; font-weight:bold">outputs</span>
@@ -324,7 +324,7 @@ working code:
   class="center" width="1000" height="550"> 
     </div>
     
-# <span style="font-weight:bold">  Chapter 4</span> <br> </br> Using Checkbox in Shiny {data-background=#00ccff .center}
+# <span style="font-weight:bold">  Chapter 4</span> <br> </br> Using Checkbox in Shiny {data-background=#00cc66 .center}
 ## Reviewing an Example 
 ```R
 library(shiny)
@@ -388,7 +388,7 @@ working code:
   
   </div>
   <div class="col-md-2" markdown="1">
-  <img height="600px" class="center-block" src="../images/layout.png">
+  <img height="450px" class="center-block" src="../images/layout.png">
   </div>
 </div>
 # <span style="font-weight:bold">  Chapter 6</span> <br> </br> Implementations in Shiny: JavaScript, HTML and CSS {data-background=#00cc66 .center}
