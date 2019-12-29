@@ -14,13 +14,21 @@ data <- read_excel("2018-2019_data.xlsx")
 
 ui <- bootstrapPage(
   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
-  
-  
   tags$head(includeCSS("www/style.css")), 
-  
   #Map fullscrenn
   leafletOutput("map", width = "100%", height = "100%"),
+ 
+
+    # Sidebar with a slider input
+
+    
+    # Show a plot of the generated distribution
+
   
+
+
+  
+    
   #Date Filter Menu
   absolutePanel(
     id = "controls",
@@ -58,10 +66,17 @@ ui <- bootstrapPage(
       status = "success"
     ), 
     
-  )
+  ),
   
   #Panel show graphical 
-
+  absolutePanel(
+    id = "controls", class = "panel2", fixed = TRUE,
+    draggable = TRUE, top = 100, left = "auto", right = 20, bottom = "auto",
+    width = 330, height = "auto",
+    tags$div(id = 'overview',  class="panel3",
+          
+             plotOutput("plot")
+    ))
   
 )
 
@@ -69,7 +84,12 @@ server <- function(input, output, session) {
   filteredData <- reactive({
     data[data$Year == input$Year & data$Month == input$Month,]
   })
-  
+  output$plot <- renderPlot({
+    input$newplot
+    # Add a little noise to the cars data
+    cars2 <- cars + rnorm(nrow(cars))
+    plot(cars2)
+  })  
   # filteredData2 <- reactive({
   #   mig[mig$Year == mig$Year]
   # })
@@ -109,7 +129,9 @@ server <- function(input, output, session) {
           "<h5  class=\"section\">" ,"Boats Arrived  :" ,"<span class=\"number\">", `Boats Arrived`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Total Arrivals :" ,"<span class=\"number\">", `Total Arrivals`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Transfers to mainland :" ,"<span class=\"number\">", `Transfers to mainland`  , "</span>","</h5>",
-          "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>"                  ) , 
+          "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>" ,
+          "<button class=\"btn btn-primary\" data-toggle=\"collapse\" data-target=\"#overview\">More Information</button>"
+          ) , 
           clusterOptions = markerClusterOptions()
       )
   })
