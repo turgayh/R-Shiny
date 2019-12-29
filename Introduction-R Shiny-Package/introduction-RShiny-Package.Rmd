@@ -394,9 +394,44 @@ working code:
 # <span style="font-weight:bold">  Chapter 6</span> <br> </br> Implementations in Shiny: JavaScript, HTML and CSS {data-background=#00cc66 .center}
 
 ## Using HTML, CSS and Javascript in R Code 
- [ING] <span style="color:purple; font-weight:bold">HTML elementleri</span> tags keyword sayesinde r icinde tanimlanabiliyor. 
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ {
+  box-sizing: border-box;
+}
+
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+
+}
+  .left {
+  width: 80%;
+}
+
+.right {
+  width: 20%;
+}
+
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
  
-```R
+
+<br></br>In R, <span style="color:purple; font-weight:bold">HTML elements</span> can be defined by <span style="color:green; font-weight:bold">tags</span> keyword.
+
+<div class="row">
+  <div class="column" style="background-color:#ffffff;">
+ ```r
  ui <− fluidPage (
   tags$h1(”R Shiny Introduction”) ,
   tags$hr () ,
@@ -407,23 +442,15 @@ working code:
  server <− function(input , output){} > 
  shinyApp(ui = ui , server = server)
 ```
-
-<div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
-Code Output
-</div>
-  working code:
-```R
- ui <- fluidPage (
-  tags$h1('R Shiny Introduction') ,
-  tags$hr () ,
-  tags$br () ,
-  tags$p(strong('Istanbul Technical University')),
-  tags$p(em('Mathematical Engineering')),
-  tags$a(href='https://www.itu.edu.tr', 'Website'))
- server <- function(input , output){} > 
-  shinyApp(ui = ui, server = server)
-
-```
+  </div>
+  <div class="column" style="background-color:#ffffff;">
+  
+    
+ <img src="../images/html tags.PNG" alt="tags" 
+  class="center" width="500" height="300"> 
+    </div>
+    
+  </div>
 
 ## ...and more Html Tag
  
@@ -433,13 +460,82 @@ Code Output
 
 ## External file import (html, css , js ext)
 
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ {
+  box-sizing: border-box;
+}
+
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  
+}
+
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+
+Method of importing depends on type of the file;
+
+<div class="row">
+
+  <div class="column" style="background-color:#ffffff;">
+    
+  <h4>To include a <span style="color:orange; font-weight:bold">CSS</span> file</h4>
+<br> <small> use <span style="font-weight:bold">includeCSS()</span> or 
+<br> <span style="font-weight:bold">1.</span> Place the file in the <span style="font-weight:bold">www</span> subdirectory 
+<br><span style="font-weight:bold">2.</span> Link to it with: 
+</small>
+```r 
+tags$head(tags$link(rel = "stylesheet",
+type = "text/css", href = "<file name>"))
+```
+    
+  </div>
+  
+  <div class="column" style="background-color:#ffffff;">
+    
+  <h4>To include <span style="color:green; font-weight:bold">JavaScript</span></h4>
+<br> <small> use <span style="font-weight:bold">includeScript()</span> or 
+<br> <span style="font-weight:bold">1.</span> Place the file in the <span style="font-weight:bold">www</span> subdirectory 
+<br><span style="font-weight:bold">2.</span> Link to it with: 
+</small>
+```r 
+tags$head(tags$script(src = "<file name>"))
+```     
+  </div>
+  
+  <div class="column" style="background-color:#ffffff;">
+  
+<h4>To include <span style="color:blue; font-weight:bold">HTML file</span></h4>
+    
+```r
+includeHTML("include.html")
+```
+
+  </div>
+  
+</div>
+
+</body>
+
+
 ## Layout structure of the UI
 
-[ING] Combine multiple elements into a ”single element” that has its own properties with a panel function
+Combine multiple elements into a ”single element” that has its own properties with a panel function
 
 <div class="row">
   <div class="col-md-6" markdown="1">
-  
 ```r
   ui <-
     fluidPage (
@@ -447,25 +543,24 @@ Code Output
     numericInput(inputId = 'n', 'Sample size', value = 25),
     submitButton () ) , plotOutput(outputId = 'hist'))
   server <- function(input , output ){
-    
   } > 
   shinyApp(ui = ui , server = server)
 ```  
   </div>
   <div class="col-md-2" markdown="1">
   working code:
-```r
-  ui <-
-    fluidPage (
-    wellPanel(
-    numericInput(inputId = 'n', 'Sample size', value = 25),
-    submitButton () ) , plotOutput(outputId = 'hist'))
-  server <- function(input , output ){
-    
-  } > 
-  shinyApp(ui = ui , server = server)
-```  
+  
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/submit button.PNG" alt="submit" 
+  class="center" width="550" height="150"> 
+    </div>
   </div>
 </div>
+
+
+    
+
+ 
+
 
 
