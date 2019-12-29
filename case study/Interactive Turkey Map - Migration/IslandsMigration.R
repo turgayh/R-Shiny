@@ -10,10 +10,19 @@ library(ggplot2)
 
 data <- read_excel("2018-2019_data.xlsx")
 graphData <- data
-BoatsArrived <- sum(as.numeric(data$`Boats Arrived`), na.rm = TRUE)
-TotalArrivals <- sum(as.numeric(data$`Total Arrivals`), na.rm = TRUE)
-TransfersMainland <- sum(as.numeric(data$`Transfers to mainland`), na.rm = TRUE)
-TotalPopulation <- sum(as.numeric(data$`Total population`), na.rm = TRUE)
+## 2019 Data
+data2019 <- data[data$Year == "2019",]
+BoatsArrived2019 <- sum(as.numeric(data2019$`Boats Arrived`), na.rm = TRUE)
+TotalArrivals2019 <- sum(as.numeric(data2019$`Total Arrivals`), na.rm = TRUE)
+TransfersMainland2019 <- sum(as.numeric(data2019$`Transfers to mainland`), na.rm = TRUE)
+TotalPopulation2019 <- sum(as.numeric(data2019$`Total population`), na.rm = TRUE)
+
+## 2018 Data
+data2018 <- data[data$Year == "2018",]
+BoatsArrived2018 <- sum(as.numeric(data2018$`Boats Arrived`), na.rm = TRUE)
+TotalArrivals2018 <- sum(as.numeric(data2018$`Total Arrivals`), na.rm = TRUE)
+TransfersMainland2018 <- sum(as.numeric(data2018$`Transfers to mainland`), na.rm = TRUE)
+TotalPopulation2018 <- sum(as.numeric(data2018$`Total population`), na.rm = TRUE)
 
 
 
@@ -24,17 +33,8 @@ ui <- bootstrapPage(
   leafletOutput("map", width = "100%", height = "100%"),
  
   #Date Filter Menu
-  absolutePanel(
-    id = "controls",
-    class = "panel",
-    fixed = TRUE,
-    draggable = TRUE,
-    top = "auto",
-    left = 190,
-    right = 60,
-    bottom = 70,
-    width = "68%",
-    height = 20,
+  absolutePanel(id = "controls",class = "panel",fixed = TRUE,draggable = TRUE,
+                top = "auto",left = 190,right = 60,bottom = 70,width = "68%",height = 20,
     
     radioGroupButtons(
       inputId = "Month",
@@ -73,21 +73,58 @@ ui <- bootstrapPage(
   #Overview Year Data TOP
   
   absolutePanel(
-    id = "topData", class = "panel2", fixed = TRUE,
-    draggable = FALSE, top = 0, left = "10%", right = "auto", bottom = "auto",
+    id = "topData", class = "panel4", fixed = TRUE,
+    draggable = FALSE, top = 13, left = "3%", right = "auto", bottom = "auto",
     width = 600, height = "auto",
-    fluidRow(
-      
-      column(2,
-             wellPanel(
-               HTML(paste("<h6>ddddd</h6>"))
-             )       
-      ),
-      
-      column(8,
-             plotOutput("distPlot")
+      fluidRow(
+        conditionalPanel(condition = "input.Year == 2019",
+                         column(2,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Year</h4>" , "<br><span class = \"yearText\"> 2019 </span>")
+                                )),
+                         column(2,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Boats Arrived</h4>" , "<span class = \"yearText\">" ,BoatsArrived2019, "</span>")
+                                )),
+                         column(2,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Total Arrivals</h4>" , "<span class = \"yearText\">" ,TotalArrivals2019, "</span>")
+                                )),
+                         column(3,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Transfers to Mainland</h4>" , "<span class = \"yearText\">" ,TransfersMainland2019, "</span>")
+                                )),
+                         column(3,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Total Population</h4>" , "<span class = \"yearText\">" ,TotalPopulation2019, "</span>")
+                                ))
+                         
+                         ),
+        
+        conditionalPanel(condition = "input.Year == 2018",
+                         column(2,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Year</h4>" , "<br><span class = \"yearText\"> 2018 </span>")
+                                )),
+                         column(2,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Boats Arrived</h4>" , "<span class = \"yearText\">" ,BoatsArrived2018, "</span>")
+                                )),
+                         column(2,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Total Arrivals</h4>" , "<span class = \"yearText\">" ,TotalArrivals2018, "</span>")
+                                )),
+                         column(3,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Transfers to Mainland</h4>" , "<span class = \"yearText\">" ,TransfersMainland2018, "</span>")
+                                )),
+                         column(3,
+                                HTML(
+                                  paste("<h4 class = \"yearText\">Total Population</h4>" , "<span class = \"yearText\">" ,TotalPopulation2018, "</span>")
+                                ))
+                         
+                         )
       )
-    )
     )
   
 )
