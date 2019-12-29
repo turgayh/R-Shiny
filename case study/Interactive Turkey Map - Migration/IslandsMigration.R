@@ -9,7 +9,7 @@ library(ggplot2)
 
 
 data <- read_excel("2018-2019_data.xlsx")
-Islands <- data[1]
+graphData <- data
 BoatsArrived <- sum(as.numeric(data$`Boats Arrived`), na.rm = TRUE)
 TotalArrivals <- sum(as.numeric(data$`Total Arrivals`), na.rm = TRUE)
 TransfersMainland <- sum(as.numeric(data$`Transfers to mainland`), na.rm = TRUE)
@@ -38,19 +38,7 @@ ui <- bootstrapPage(
     
     radioGroupButtons(
       inputId = "Month",
-      choices = c(
-        "January",
-        "February",
-        "March" ,
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+      choices = c("January","February","March" ,"April","May","June","July","August","September","October","November","December"
       ) ,
       status = "success"
     ),
@@ -70,10 +58,37 @@ ui <- bootstrapPage(
     width = 320, height = "auto",
     
    
-      radioGroupButtons(inputId = "Islands",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "xs",status = "dark"),
-      plotOutput("plot")
+      radioGroupButtons(inputId = "Islands",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "xs",status = "warning"),
+    tabsetPanel(
+      tabPanel("Boats Arrived", plotOutput("BoatsArrived")),
+      tabPanel("Total Arrivals", plotOutput("TotalArrivals")),
+      tabPanel("Transfers to mainland", plotOutput("TransfersMainland")),
+      tabPanel("Total population", plotOutput("TotalPopulation"))
+      
+    ),
+
     
-  ))
+  )),
+  
+  #Overview Year Data TOP
+  
+  absolutePanel(
+    id = "topData", class = "panel2", fixed = TRUE,
+    draggable = FALSE, top = 0, left = "10%", right = "auto", bottom = "auto",
+    width = 600, height = "auto",
+    fluidRow(
+      
+      column(2,
+             wellPanel(
+               HTML(paste("<h6>ddddd</h6>"))
+             )       
+      ),
+      
+      column(8,
+             plotOutput("distPlot")
+      )
+    )
+    )
   
 )
 
@@ -82,14 +97,16 @@ server <- function(input, output, session) {
     data[data$Year == input$Year & data$Month == input$Month,]
   })
   
+  filteredDataGraph <- reactive({
+    graphData[graphData$Islands == input$Islands & graphData$Year == input$Year]
+  })
+  
   observeEvent(input$Islands,{
-    output$plot <- renderPlot({
-      ggplot(data, aes(x=Islands, y=`Boats Arrived`)) +
-        geom_line(colour = "#3E4E68") +
-        geom_line(stat="smooth", method="loess", colour = "red", alpha = 0.4) +
-        labs(title = "Mean Monthly Temperature In Oshawa",
-             y = "Temp (Celsius)",
-             x = "Measure Date")
+    output$BoatsArrived <- renderPlot({
+      ggplot(graphData, aes(x=Month, y=`Boats Arrived`)) +
+        theme(axis.text.x = element_text(angle = 75)) +
+        geom_bar(stat="identity") + 
+        labs(title = "Boats Arrived ")
     })    
   })
   
@@ -132,9 +149,9 @@ server <- function(input, output, session) {
           "<h5  class=\"section\">" ,"Boats Arrived  :" ,"<span class=\"number\">", `Boats Arrived`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Total Arrivals :" ,"<span class=\"number\">", `Total Arrivals`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Transfers to mainland :" ,"<span class=\"number\">", `Transfers to mainland`  , "</span>","</h5>",
-          "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>" ,
-          "<button class=\"btn btn-success\" data-toggle=\"collapse\" data-target=\"#overview\">More Information</button>",
-         actionBttn(inputId = Islands,label = "More Information")
+          "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>" 
+          #"<button class=\"btn btn-success\" data-toggle=\"collapse\" data-target=\"#overview\">More Information</button>"
+         
           ) , 
           clusterOptions = markerClusterOptions()
       )
