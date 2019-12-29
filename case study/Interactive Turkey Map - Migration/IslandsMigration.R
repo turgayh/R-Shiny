@@ -9,6 +9,7 @@ library(ggplot2)
 
 
 data <- read_excel("2018-2019_data.xlsx")
+Islands <- data[1]
 BoatsArrived <- sum(as.numeric(data$`Boats Arrived`), na.rm = TRUE)
 TotalArrivals <- sum(as.numeric(data$`Total Arrivals`), na.rm = TRUE)
 TransfersMainland <- sum(as.numeric(data$`Transfers to mainland`), na.rm = TRUE)
@@ -61,15 +62,18 @@ ui <- bootstrapPage(
     
   ),
   
-  #Panel show graphical 
+  #Panel show graphical [More Information]
+  conditionalPanel(condition = "1==1",
   absolutePanel(
     id = "controls", class = "panel2", fixed = TRUE,
     draggable = TRUE, top = 0, left = "auto", right = 0, bottom = "auto",
-    width = 270, height = "auto",
-    tags$div(id = 'overview',  class="panel3",
-          
-             plotOutput("plot")
-    ))
+    width = 320, height = "auto",
+    
+   
+      radioGroupButtons(inputId = "Islands",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "xs",status = "dark"),
+      plotOutput("plot")
+    
+  ))
   
 )
 
@@ -77,13 +81,18 @@ server <- function(input, output, session) {
   filteredData <- reactive({
     data[data$Year == input$Year & data$Month == input$Month,]
   })
-  output$plot <- renderPlot({
-    data2 <- data.frame(x=rnorm(100))
-    ggplot( data=data2, aes(x=x)) + 
-      geom_histogram(fill="skyblue", alpha=0.5) +
-      ggtitle("A blue Histogram") +
-      theme_minimal()
-  })  
+  
+  observeEvent(input$Islands,{
+    output$plot <- renderPlot({
+      ggplot(data, aes(x=Islands, y=`Boats Arrived`)) +
+        geom_line(colour = "#3E4E68") +
+        geom_line(stat="smooth", method="loess", colour = "red", alpha = 0.4) +
+        labs(title = "Mean Monthly Temperature In Oshawa",
+             y = "Temp (Celsius)",
+             x = "Measure Date")
+    })    
+  })
+  
   # filteredData2 <- reactive({
   #   mig[mig$Year == mig$Year]
   # })
@@ -124,7 +133,8 @@ server <- function(input, output, session) {
           "<h5  class=\"section\">" ,"Total Arrivals :" ,"<span class=\"number\">", `Total Arrivals`  ,"</span>", "</h5>",
           "<h5  class=\"section\">" ,"Transfers to mainland :" ,"<span class=\"number\">", `Transfers to mainland`  , "</span>","</h5>",
           "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>" ,
-          "<button class=\"btn btn-success\" data-toggle=\"collapse\" data-target=\"#overview\">More Information</button>"
+          "<button class=\"btn btn-success\" data-toggle=\"collapse\" data-target=\"#overview\">More Information</button>",
+         actionBttn(inputId = Islands,label = "More Information")
           ) , 
           clusterOptions = markerClusterOptions()
       )
