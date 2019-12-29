@@ -9,7 +9,11 @@ library(shinyWidgets)
 
 
 data <- read_excel("2018-2019_data.xlsx")
-#Boats-Arrived <- sum(as.numeric(mig$`Boats Arrived`), na.rm = TRUE)
+BoatsArrived <- sum(as.numeric(data$`Boats Arrived`), na.rm = TRUE)
+TotalArrivals <- sum(as.numeric(data$`Total Arrivals`), na.rm = TRUE)
+TransfersMainland <- sum(as.numeric(data$`Transfers to mainland`), na.rm = TRUE)
+TotalPopulation <- sum(as.numeric(data$`Total population`), na.rm = TRUE)
+
 
 
 ui <- bootstrapPage(
