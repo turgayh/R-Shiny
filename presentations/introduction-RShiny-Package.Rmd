@@ -83,6 +83,16 @@ runExample("11_timer")      # an automated timer
 ```
 # <span style="font-weight:bold">  Chapter 2</span> <br> </br> Structure of a Shiny App {data-background=#00cc66 .center}
 ## Main Structure
+<head>
+<style>
+div .row{
+    font-size:75%;
+}
+</style>
+</head>
+
+<body>
+
 <div class="row">
   <div class="col-md-6" markdown="1">
 
@@ -97,9 +107,11 @@ displayed in the UI
 
 * a call to the shinyApp function
   
-  </div>
+</div>
+
   <div class="col-md-4" markdown="1">
-    ```r
+   
+```r
     library(shiny)
     
     ui <- fluidPage(
@@ -111,9 +123,10 @@ displayed in the UI
     }
     
     shinyApp(ui, server)
-    ```
+```
 </div>
 </div>
+</body>
 ## Alternative Approach
 <div align="center">
   <img src="../images/alternative.PNG" alt="kmeans" class="center">
@@ -206,8 +219,28 @@ server <- function(input, output) {
 
 ## 1 - Save objects to display to output$
 
+<head>
+  <style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    background-color: #ffffff;
+      padding: 10px;
+  }
 
-
+.grid-container > div {
+  background-color: #ffffff;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+</style>
+  </head>
+  <body>
+  
+  <div class="grid-container">
+  <div>
 ```r
 
 server <- function(input, output) {  
@@ -216,13 +249,22 @@ server <- function(input, output) {
 
 
 ```
-<div align="center">
-<img src="../images/firstRule.PNG" alt="First Rule" class="center">
 </div>
-
-<div align="center" style = "margin-top: 20px">
-<img src="../images/output-syntax.PNG" alt="kmeans" class="center">
-</div>
+  
+  <div>
+  <div align="center">
+  <img src="../images/firstRule.PNG" alt="First Rule" class="center">
+  </div></div>
+  
+  <div>
+  <div style="text-align: center;">
+  <img src="../images/output-syntax.PNG" alt="kmeans" class="center">
+  
+  </div></div>
+  
+  </div>
+  
+  </body>
 
 ## 2 - Build objects to display with render*()
 
