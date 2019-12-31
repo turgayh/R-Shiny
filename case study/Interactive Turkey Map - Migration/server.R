@@ -1,9 +1,7 @@
 library(shiny)
 library(leaflet)
-library(RColorBrewer)
 library(htmltools)
 library(readxl)
-library(ggplot2)
 library(shinyWidgets)
 library(ggplot2)
 
