@@ -164,6 +164,12 @@ Build your app around <span style="color:purple; font-weight:bold">inputs</span>
 <img src="../images/kmeans.PNG" alt="kmeans" class="center" style="width:512px;height:512px">
 </div>
 
+## Input Syntax
+<div align="center"  style = "margin-top: 150px">
+
+<img src="../images/input-syntax.PNG" alt="kmeans" class="center">
+</div>
+
 ## Input 
 ```r
 sliderInput(inputId = "num",
@@ -187,19 +193,10 @@ shinyApp(ui = ui, server = server)
 
 ## Code Output
 
-
-working code:
-
 <div align ="center"; padding-bottom: 25px>
   <img src="../images/input.PNG" alt="input" 
   class="center" width="500" height="200"> 
     </div>
-
-## Input Syntax
-<div align="center"  style = "margin-top: 150px">
-
-<img src="../images/input-syntax.PNG" alt="kmeans" class="center">
-</div>
 
 ## Entegration Input and Output
 
@@ -306,12 +303,6 @@ server <- function(input, output) {
 
 ```
 </div>
-## ...and more "Render Method"  example
-
-<div align="center"  >
-  <img src="../images/render_methods.PNG" alt="First Rule"   
-  class="center">
-</div>
 
 ## 3 - Access input values with input$
 <div style="margin-left: 40px;">
@@ -332,6 +323,13 @@ server <- function(input, output) {
   class="center">
 </div>
 
+</div>
+
+## ...and more "Render Method"  example
+
+<div align="center"  >
+  <img src="../images/render_methods.PNG" alt="First Rule"   
+  class="center">
 </div>
 
 ## Result  (Reactivity) {.smaller}
