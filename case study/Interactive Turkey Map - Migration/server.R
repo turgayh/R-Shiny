@@ -1,11 +1,11 @@
+# load the required packages
 library(shiny)
-library(leaflet)
-library(htmltools)
-library(readxl)
-library(shinyWidgets)
+require(shinydashboard)
 library(ggplot2)
+library(dplyr)
+library(leaflet)
 
-
+# create the server functions for the dashboard  
 shinyServer(function(input, output, session) {
   filteredData <- reactive({
     data[data$Year == input$Year & data$Month == input$Month,]
@@ -46,7 +46,7 @@ shinyServer(function(input, output, session) {
   
   
   showIslandMigInfoPopup <- function(isl) {
-    content <- as.character(tagList(tags$h4("Score:", as.character(isl[1])),))
+    content <- as.character(tagList(tags$h4("Score:", as.character(isl[1]))))
   }
   
   
@@ -70,4 +70,67 @@ shinyServer(function(input, output, session) {
                  clusterOptions = markerClusterOptions()
       )
   })
-})
+  yazi <-function(str){
+    tags$p(str, style = "font-size: 25;")
+  }
+  
+  output$BoatsArrived2019 <- renderValueBox({
+    valueBox(
+      yazi("Boats Arrived"),
+      BoatsArrived2019,
+      color = "purple"
+    )
+  })
+  output$TotalArrivals2019 <- renderValueBox({
+    valueBox(
+      yazi("Total Arrivals"),
+      TotalArrivals2019,
+      color = "purple"
+    )
+  })  
+  
+  output$TransfersMainland2019 <- renderValueBox({
+    valueBox(
+      yazi("Transfers  to Mainland"),
+      TransfersMainland2019,
+      color = "purple"
+    )
+  })
+  output$TotalPopulation2019 <- renderValueBox({
+    valueBox(
+      yazi("Total Population"),
+      TotalPopulation2019,
+      color = "purple"
+    )
+  })
+  output$BoatsArrived2018 <- renderValueBox({
+    valueBox(
+      yazi("Boats Arrived"),
+      BoatsArrived2018,
+      color = "green"
+    )
+  })
+  output$TotalArrivals2018 <- renderValueBox({
+    valueBox(
+      yazi("Total Arrivals"),
+      TotalArrivals2018,
+      color = "green"
+    )
+  })
+  output$TransfersMainland2018 <- renderValueBox({
+    valueBox(
+      yazi("Transfers to Mainland"),
+      TransfersMainland2018,
+      color = "green"
+    )
+  }) 
+  output$TotalPopulation2018 <- renderValueBox({
+    valueBox(
+      yazi("Total Population"),
+      TotalPopulation2018,
+      color = "green"
+    )
+  })
+  
+}
+)
