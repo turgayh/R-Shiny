@@ -1,9 +1,10 @@
 # load the required packages
 library(shiny)
-require(shinydashboard)
 library(ggplot2)
 library(dplyr)
 library(leaflet)
+library(htmltools)
+
 
 # create the server functions for the dashboard  
 shinyServer(function(input, output, session) {
