@@ -2,7 +2,7 @@ library(shiny)
 library(leaflet)
 require(shinydashboard)
 library(shinyWidgets)
-url <- "https://twitter.com/intent/tweet?url=https%3A%2F%2Fitu-thesis-rshiny.shinyapps.io%2FInteractive-Turkey-Map-Migration%2F&text=Turkey%20Interactive%20Map%20-%20Migration%20to%20Greece%20Island%20"
+source("global.R")
 # header board
 header <- dashboardHeader(
   title = 'Interactive Turkey Map - Migration'
@@ -23,7 +23,11 @@ sidebar <- dashboardSidebar(
   actionButton("twitter_share",
                label = "Share",
                icon = icon("twitter"),
-               onclick = sprintf("window.open('%s')", url))
+               onclick = sprintf("window.open('%s')", urlTwitter)),
+  actionButton("facebook_share",
+               label = "Share",
+               icon = icon("facebook"),
+               onclick = sprintf("window.open('%s')", urlFacebook))
   
 )
 # Body board
