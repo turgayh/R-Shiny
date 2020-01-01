@@ -11,23 +11,7 @@ shinyServer(function(input, output, session) {
   filteredData <- reactive({
     data[data$Year == input$Year & data$Month == input$Month,]
   })
-  
-  filteredDataGraph <- reactive({
-    graphData[graphData$Islands == input$Islands & graphData$Year == input$Year]
-  })
-  
-  observeEvent(input$Islands,{
-    output$BoatsArrived <- renderPlot({
-      ggplot(graphData, aes(x=Month, y=`Boats Arrived`)) +
-        theme(axis.text.x = element_text(angle = 75)) +
-        geom_bar(stat="identity") + 
-        labs(title = "Boats Arrived ")
-    })    
-  })
-  
-  # filteredData2 <- reactive({
-  #   mig[mig$Year == mig$Year]
-  # })
+
   
   max_lng = 19.336
   min_lng = 33.223
@@ -131,6 +115,20 @@ shinyServer(function(input, output, session) {
       TotalPopulation2018,
       color = "green"
     )
+  })
+  filter2019 <-reactive({
+    data2019[data2019$Islands == input$Islands2019,]
+  })
+  filter2018 <-reactive({
+    data2018[data2018$Islands == input$Islands2018,]
+  })
+  output$BoatsArrived2019 <- renderPlot({
+    ggplot(data = filter2019, 
+           aes(x=Month, y=`Boats Arrived`, fill=factor(Region))) + 
+      geom_bar(position = "dodge", stat = "identity") + ylab("Revenue (in Euros)") + 
+      xlab("Product") + theme(legend.position="bottom" 
+                              ,plot.title = element_text(size=15, face="bold")) + 
+      ggtitle("Revenue by Product") + labs(fill = "Region")
   })
   
 }

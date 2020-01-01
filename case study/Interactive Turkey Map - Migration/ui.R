@@ -15,8 +15,7 @@ sidebar <- dashboardSidebar(
     , menuItem('Migration Map', tabName = 'MigrationMap')
     , menuItem('Statistics - 2019', tabName = '2019Statistics')
     , menuItem('Statistics - 2018', tabName = '2018Statistics')
-    
-    
+    , menuItem('Introduction to RShiny', tabName = 'slider')
   )
 )
 # Body board
@@ -59,7 +58,8 @@ body <- dashboardBody(
       valueBoxOutput("BoatsArrived2019",width = 2),
       valueBoxOutput("TotalArrivals2019",width = 2),
       valueBoxOutput("TransfersMainland2019",width = 3),
-      valueBoxOutput("TotalPopulation2019",width = 2)
+      valueBoxOutput("TotalPopulation2019",width = 2),
+      graph2019()
       
     ),
     
@@ -69,8 +69,14 @@ body <- dashboardBody(
       valueBoxOutput("BoatsArrived2018",width = 2),
       valueBoxOutput("TotalArrivals2018",width = 2),
       valueBoxOutput("TransfersMainland2018",width = 3),
-      valueBoxOutput("TotalPopulation2018",width = 2)
+      valueBoxOutput("TotalPopulation2018",width = 2),
+      graph2018()
       
+    ),
+    tabItem(
+      tabName = 'slider'
+      ,
+      includeHTML("./www/slider.html")
     )
   )
 )
