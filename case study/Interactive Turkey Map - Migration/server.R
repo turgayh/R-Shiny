@@ -4,6 +4,7 @@ library(ggplot2)
 library(dplyr)
 library(leaflet)
 library(htmltools)
+library(hrbrthemes)
 
 
 # create the server functions for the dashboard  
@@ -58,6 +59,7 @@ shinyServer(function(input, output, session) {
   yazi <-function(str){
     tags$p(str, style = "font-size: 25;")
   }
+  #--------------------------------------------------------------------------------------------------
   
   output$BoatsArrived2019 <- renderValueBox({
     valueBox(
@@ -88,6 +90,9 @@ shinyServer(function(input, output, session) {
       color = "purple"
     )
   })
+  
+  #--------------------------------------------------------------------------------------------------
+  
   output$BoatsArrived2018 <- renderValueBox({
     valueBox(
       yazi("Boats Arrived"),
@@ -116,20 +121,84 @@ shinyServer(function(input, output, session) {
       color = "green"
     )
   })
+  #--------------------------------------------------------------------------------------------------
+  
   filter2019 <-reactive({
-    data2019[data2019$Islands == input$Islands2019,]
+    data[data$Islands == input$Islands2019 & data$Year == "2019",]
   })
   filter2018 <-reactive({
-    data2018[data2018$Islands == input$Islands2018,]
+    data[data$Islands == input$Islands2018 & data$Year == "2018",]
   })
-  output$BoatsArrived2019 <- renderPlot({
-    ggplot(data = filter2019, 
-           aes(x=Month, y=`Boats Arrived`, fill=factor(Region))) + 
-      geom_bar(position = "dodge", stat = "identity") + ylab("Revenue (in Euros)") + 
-      xlab("Product") + theme(legend.position="bottom" 
-                              ,plot.title = element_text(size=15, face="bold")) + 
-      ggtitle("Revenue by Product") + labs(fill = "Region")
-  })
+  #--------------------------------------------------------------------------------------------------
   
+    #2019 graph render
+  output$GraphBoatsArrived2019 <- renderPlot({
+    ggplot(data = filter2019(), 
+           aes(x=Month, y=`Boats Arrived`)) + 
+      geom_bar(position = "dodge", stat = "identity") + ylab("Boats Arrived to Islands") + 
+      xlab("Month") 
+  })
+  output$GraphTotalArrivals2019 <- renderPlot({
+    ggplot(data = filter2019(), 
+           aes(x=Month, y=`Total Arrivals`)) + 
+      geom_bar(position = "dodge", stat = "identity") + ylab("Total Arrivals to Islands") + 
+      xlab("Month") 
+  })
+  output$GraphTransferMaindland2019 <- renderPlot({
+    ggplot(data = filter2019(), 
+           aes(x=Month, y=`Transfers to mainland`)) + 
+      geom_bar(position = "dodge", stat = "identity") + ylab("Transfer to mainland") + 
+      xlab("Month") 
+  })
+  output$GraphTotalPopulation2019 <- renderPlot({
+    ggplot(data = filter2019(), 
+           aes(x=Month, y=`Total population`)) + 
+      geom_bar(position = "dodge", stat = "identity") + ylab("Islands - Total Populations") + 
+      xlab("Month") 
+  })
+  #--------------------------------------------------------------------------------------------------
+  #--------------------------------------------------------------------------------------------------
+  
+  #2018 graph render
+  output$GraphBoatsArrived2018 <- renderPlot({
+    ggplot(data = filter2018(), 
+           aes(x=Month, y=`Boats Arrived`)) + 
+      geom_line() +
+      geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
+      theme_ipsum() +
+      ggtitle("Boats Arrived to Islands")
+  }
+  )
+  output$GraphTotalArrivals2018 <- renderPlot({
+    ggplot(data = filter2018(), 
+           aes(x=Month, y=`Total Arrivals`)) + 
+      geom_line() +
+      geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
+      theme_ipsum() +
+      ggtitle("Total Arrivals to Islands")
+  }
+  )
+  output$GraphTransferMaindland2018 <- renderPlot({
+    ggplot(data = filter2018(), 
+           aes(x=Month, y=`Transfers to mainland`)) + 
+      geom_line() +
+      geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
+      theme_ipsum() +
+      ggtitle("Transfer to mainland")
+  }
+  )
+  
+  output$GraphTotalPopulation2018 <- renderPlot({
+    ggplot(data = filter2018(), 
+           aes(x=Month, y=`Total population`)) + 
+      geom_line() +
+      geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
+      theme_ipsum() +
+      ggtitle("Total population Islands")
+    }
+  )
+  
+  
+
 }
 )
