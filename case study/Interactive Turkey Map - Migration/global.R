@@ -44,3 +44,5 @@ graph2018 <-function(){
     )
   )
 }
+
+url <- "https://twitter.com/home?status=https://itu-thesis-rshiny.shinyapps.io/Interactive-Turkey-Map-Migration/ Turkey Interactive Map - Migration to Greece Islands"

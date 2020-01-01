@@ -2,12 +2,13 @@ library(shiny)
 library(leaflet)
 require(shinydashboard)
 library(shinyWidgets)
-
+url <- "https://twitter.com/home?status=https://itu-thesis-rshiny.shinyapps.io/Interactive-Turkey-Map-Migration/ Turkey Interactive Map - Migration to Greece Islands"
 # header board
 header <- dashboardHeader(
   title = 'Interactive Turkey Map - Migration'
   # task list for status of data processing
-  , dropdownMenuOutput('task_menu'))
+  , dropdownMenuOutput('task_menu')
+  )
 # Side bar boardy
 sidebar <- dashboardSidebar(
   sidebarMenu(
@@ -16,7 +17,14 @@ sidebar <- dashboardSidebar(
     , menuItem('Statistics - 2019', tabName = '2019Statistics')
     , menuItem('Statistics - 2018', tabName = '2018Statistics')
     , menuItem('Introduction to RShiny', tabName = 'slider')
-  )
+  ) # Combine text with url variable
+  
+  ,
+  actionButton("twitter_share",
+               label = "Share",
+               icon = icon("twitter"),
+               onclick = sprintf("window.open('%s')", url))
+  
 )
 # Body board
 body <- dashboardBody(
