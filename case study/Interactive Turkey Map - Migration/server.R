@@ -38,24 +38,31 @@ shinyServer(function(input, output, session) {
   #--------------------------------------------------------------------------------------------------
   #----------------------------    Makers by filter -------------------------------------------------
   #--------------------------------------------------------------------------------------------------
+  labels <- function(islands,boatsArrived,totalArrivals,tranfersMainland,totalPopulation){sprintf(
+    "<strong text-align=\"center\">%s</strong>
+    <br/> <h5  class=\"section\"> Boats Arrived  :    <span class=\"number\">%s</span></h5>
+     <h5  class=\"section\"> Total Arrivals  :    <span class=\"number\">%s</span></h5>
+     <h5  class=\"section\"> Transfers to mainland  :    <span class=\"number\">%s</span></h5>
+     <h5  class=\"section\"> Total population  :    <span class=\"number\">%s</span></h5>
+
+     ",
+    islands,boatsArrived,totalArrivals,tranfersMainland,totalPopulation 
+
+  ) %>% 
+    lapply(htmltools::HTML)
+  }
   
   observe({
     leafletProxy("map", data = filteredData()) %>%
       clearMarkerClusters() %>% 
       addMarkers(~Lng, ~Lat,
                  
-                 popup = ~paste(collapse = NULL,
-                                
-                                "<head><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head>",
-                                "<h4  class=\"title\">",Islands, "</h4>" , 
-                                "<h5  class=\"section\">" ,"Boats Arrived  :" ,"<span class=\"number\">", `Boats Arrived`  ,"</span>", "</h5>",
-                                "<h5  class=\"section\">" ,"Total Arrivals :" ,"<span class=\"number\">", `Total Arrivals`  ,"</span>", "</h5>",
-                                "<h5  class=\"section\">" ,"Transfers to mainland :" ,"<span class=\"number\">", `Transfers to mainland`  , "</span>","</h5>",
-                                "<h5  class=\"section\">" ,"Total population :" ,"<span class=\"number\">", `Total population`  ,"</span>", "</h5>" 
-                                #"<button class=\"btn btn-success\" data-toggle=\"collapse\" data-target=\"#overview\">More Information</button>"
-                                
-                 ) , 
-                 clusterOptions = markerClusterOptions()
+                 label = ~labels(Islands,`Boats Arrived`,`Total Arrivals`,`Transfers to mainland`,`Total population`)
+                   , 
+                 labelOptions = labelOptions(style = list("font-weight" = "normal", 
+                                                          padding = "3px 8px"),
+                                             textsize = "15px",
+                                             direction = "auto"),                 clusterOptions = markerClusterOptions()
       )
   })
   
