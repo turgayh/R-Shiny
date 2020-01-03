@@ -40,7 +40,6 @@ graph2018 <-function(){
       tabPanel("Total Arrivals", plotOutput("GraphTotalArrivals2018")),
       tabPanel("Transfer to Mainland", plotOutput("GraphTransferMaindland2018")),
       tabPanel("Total Population", plotOutput("GraphTotalPopulation2018"))
-      
     )
   )
 }

@@ -5,8 +5,7 @@ library(shinyWidgets)
 source("global.R")
 # header board
 header <- dashboardHeader(
-  title = 'Interactive Turkey Map - Migration'
-  # task list for status of data processing
+  title = "Interactive Turkey Map - Migration"
   , dropdownMenuOutput('task_menu')
   )
 # Side bar boardy
@@ -67,10 +66,12 @@ body <- dashboardBody(
     tabItem(
       tabName = '2019Statistics'
       , 
+      fluidPage(
       valueBoxOutput("BoatsArrived2019",width = 2),
       valueBoxOutput("TotalArrivals2019",width = 2),
       valueBoxOutput("TransfersMainland2019",width = 3),
       valueBoxOutput("TotalPopulation2019",width = 2),
+      ),
       graph2019()
       
     ),
@@ -78,11 +79,14 @@ body <- dashboardBody(
     tabItem(
       tabName = '2018Statistics'
       , 
+      
+      fluidPage(
+        
       valueBoxOutput("BoatsArrived2018",width = 2),
       valueBoxOutput("TotalArrivals2018",width = 2),
       valueBoxOutput("TransfersMainland2018",width = 3),
       valueBoxOutput("TotalPopulation2018",width = 2),
-      graph2018()
+      ),graph2018()
       
     ),
     tabItem(
