@@ -157,26 +157,34 @@ shinyServer(function(input, output, session) {
   output$GraphBoatsArrived2019 <- renderPlot({
     ggplot(data = filter2019(), 
            aes(x=Month, y=`Boats Arrived`)) + 
-      geom_bar(position = "dodge", stat = "identity") + ylab("Boats Arrived to Islands") + 
-      xlab("Month") 
+      geom_bar(stat="identity", fill = "#52de97") + ylab("Boats Arrived to Islands") + 
+      xlab("Month") +
+      theme(axis.title.x = element_text(colour = "black",size = "22"),
+            axis.title.y = element_text(colour = "black",size = "22"))
   })
   output$GraphTotalArrivals2019 <- renderPlot({
     ggplot(data = filter2019(), 
            aes(x=Month, y=`Total Arrivals`)) + 
-      geom_bar(position = "dodge", stat = "identity") + ylab("Total Arrivals to Islands") + 
-      xlab("Month") 
+      geom_bar(stat="identity", fill = "#52de97") + ylab("Total Arrivals to Islands") + 
+      xlab("Month")  +
+      theme(axis.title.x = element_text(colour = "black",size = "22"),
+            axis.title.y = element_text(colour = "black",size = "22"))
   })
   output$GraphTransferMaindland2019 <- renderPlot({
     ggplot(data = filter2019(), 
            aes(x=Month, y=`Transfers to mainland`)) + 
-      geom_bar(position = "dodge", stat = "identity") + ylab("Transfer to mainland") + 
-      xlab("Month") 
+      geom_bar(stat="identity", fill = "#52de97") + ylab("Transfer to mainland") + 
+      xlab("Month")  +
+      theme(axis.title.x = element_text(colour = "black",size = "22"),
+            axis.title.y = element_text(colour = "black",size = "22"))
   })
   output$GraphTotalPopulation2019 <- renderPlot({
     ggplot(data = filter2019(), 
            aes(x=Month, y=`Total population`)) + 
-      geom_bar(position = "dodge", stat = "identity") + ylab("Islands - Total Populations") + 
-      xlab("Month") 
+      geom_bar(stat="identity", fill = "#52de97") + ylab("Islands - Total Populations") + 
+      xlab("Month")  +
+      theme(axis.title.x = element_text(colour = "black",size = "22"),
+            axis.title.y = element_text(colour = "black",size = "22"))
   })
   
   #------------------------------2018 ---------------------------------------------------------------
