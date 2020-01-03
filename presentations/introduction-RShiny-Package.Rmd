@@ -598,9 +598,106 @@ Combine multiple elements into a ”single element” that has its own propertie
 </div>
 
 
-    
+# <span style="font-weight:bold">  Chapter 7</span> <br> </br> Case Studies: Predicted Deaths from Lung Disease {data-background=#00ccff .center} 
 
+## Using DyGraph Package in Shiny
+
+Ui part of the code:
+
+<div style="font-size:25px">
+
+```r
+ui <- fluidPage(
+  
+  titlePanel("Predicted Deaths from Lung Disease (UK)"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      numericInput("months", label = "Months to Predict", 
+                   value = 72, min = 12, max = 144, step = 12),
+      selectInput("interval", label = "Prediction Interval",
+                  choices = c("0.80", "0.90", "0.95", "0.99"),
+                  selected = "0.95"),
+      checkboxInput("showgrid", label = "Show Grid", value = TRUE),
+      hr(),
+      div(strong("From: "), textOutput("from", inline = TRUE)),
+      div(strong("To: "), textOutput("to", inline = TRUE)),
+      div(strong("Date clicked: "), textOutput("clicked", inline = TRUE)),
+      div(strong("Nearest point clicked: "), textOutput("point", inline = TRUE)),
+      br(),
+      helpText("Click and drag to zoom in (double click to zoom back out).")
+    ),
+    mainPanel(
+      dygraphOutput("dygraph")
+    )
+```
+</div>
+
+## Server part of the code {.small}
+
+<div style="font-size:23px">
+
+```r
+server <- function(input, output) {
+  
+  predicted <- reactive({
+    hw <- HoltWinters(ldeaths)
+    predict(hw, n.ahead = input$months, 
+            prediction.interval = TRUE,
+            level = as.numeric(input$interval))
+  })
+  output$dygraph <- renderDygraph({
+    dygraph(predicted(), main = "Predicted Deaths/Month") %>%
+      dySeries(c("lwr", "fit", "upr"), label = "Deaths") %>%
+      dyOptions(drawGrid = input$showgrid)
+  })
+  output$from <- renderText({
+    strftime(req(input$dygraph_date_window[[1]]), "%d %b %Y")      
+  })
+  output$to <- renderText({
+    strftime(req(input$dygraph_date_window[[2]]), "%d %b %Y")
+  })
+  output$clicked <- renderText({
+    strftime(req(input$dygraph_click$x), "%d %b %Y")
+  })
+  output$point <- renderText({
+    paste0('X = ', strftime(req(input$dygraph_click$x_closest_point), "%d %b %Y"), 
+           '; Y = ', req(input$dygraph_click$y_closest_point))
+  })
+```
+</div>
+
+## Result
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/dygraph slide .PNG" alt="check" 
+  class="center" width="1000" height="550"> 
+    </div>
+
+# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies: Migration {data-background=#00cc66 .center} 
+
+## Retrieving Data
+
+ * We used Aegean Boat Report's data from: https://aegeanboatreport.com/reports/ 
+ * By using Excel, we shaped this data to make it useful for our research.
  
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/excel.PNG" alt="excel" class="center">
+  </div>
+  
+## Using Leaflet
 
+* For creating a map we used <span style="color:green; font-weight:bold">Leaflet</span> library.
+* <span style="color:green; font-weight:bold">Leaflet</span> is a open source <span style="color:yellow; font-weight:bold">JavaScript</span> library for creating interactive maps.
+* It can be implemented and used in <span style="color:blue; font-weight:bold">Shiny</span> easily.
+* <span style="color:green; font-weight:bold">Leaflet</span> gives the opportunity of adding informational popups to particular part of maps.
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/leaflet.PNG" alt="leaflet" class="center">
+  </div>
 
+## Result
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/case study result.PNG" alt="result" width="1500" height="400" class="center">
+  </div>
 
