@@ -228,6 +228,9 @@ shinyServer(function(input, output, session) {
     }
   )
   
+  output$uia <- renderUI(includeMarkdown(path = file.path("./www/slider.Rmd")))
+  
+  
   
 
 }

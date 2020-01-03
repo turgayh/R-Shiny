@@ -92,7 +92,7 @@ body <- dashboardBody(
     tabItem(
       tabName = 'slider'
       ,
-      includeHTML("./www/slider.html")
+      uiOutput(outputId = "uib")
     )
   )
 )

@@ -19,7 +19,7 @@ graph2019 <-function(){
   wellPanel(
     
     
-    radioGroupButtons(inputId = "Islands2019",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "s",status = "info"),
+    radioGroupButtons(inputId = "Islands2019",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "s",status = "primary"),
     tabsetPanel(
       tabPanel("Boats Arrived", plotOutput("GraphBoatsArrived2019")),
       tabPanel("Total Arrivals", plotOutput("GraphTotalArrivals2019")),
@@ -34,7 +34,7 @@ graph2018 <-function(){
   wellPanel(
     
     
-    radioGroupButtons(inputId = "Islands2018",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "s",status = "info"),
+    radioGroupButtons(inputId = "Islands2018",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "s",status = "primary"),
     tabsetPanel(
       tabPanel("Boats Arrived", plotOutput("GraphBoatsArrived2018")),
       tabPanel("Total Arrivals", plotOutput("GraphTotalArrivals2018")),
