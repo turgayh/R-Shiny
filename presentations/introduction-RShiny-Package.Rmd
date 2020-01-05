@@ -682,10 +682,9 @@ mywidget("hello, world")
 ```
 * This is the most minimal widget possible and doesn’t yet include a JavaScript library.
 
+# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00cc66 .center}
 
-# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies: Predicted Deaths from Lung Disease {data-background=#00cc66 .center} 
-
-## Using DyGraph Package in Shiny
+## Case Study: Predicted Deaths from Lung Disease by Using dygraph Package
 
 Ui part of the code:
 
@@ -759,9 +758,7 @@ server <- function(input, output) {
   class="center" width="1000" height="550"> 
     </div>
 
-# <span style="font-weight:bold">  Chapter 9</span> <br> </br> Case Studies: Migration {data-background=#00ccff .center} 
-
-## Retrieving Data
+## Case Study: Migration by Using Leaflet Package
 
  * We used Aegean Boat Report's data from: https://aegeanboatreport.com/reports/ 
  * By using Excel, we shaped this data to make it useful for our research.
@@ -787,4 +784,139 @@ server <- function(input, output) {
   </div>
 
 
+## Case Study: Childlessness and Gender Gap by Using ggraph Package
 
+* In this section, we will build interactive world maps and show these in the form of an Shiny app.
+* At first, we're going to start with <span style="color:purple; font-weight:bold">importing, exploring and cleaning the data</span> that datasets we're going to use. Since the data sets are dirty, we have to get them in a better shape to make more useful for us.  
+* Final forms of our datasets will be like this:
+<div align="center"  style = "margin-top: 20px">
+  <img src="../images/dataset_example.PNG" alt="example" class="center">
+</div>
+<div align="center"  style = "margin-top: 20px">
+  <img src="../images/dataset_example2.PNG" alt="example" class="center">
+</div>
+
+## Creating a function to build map 
+* Next, it’s time to define the <span style="color:blue; font-weight:bold">function</span> that we’ll use for building our world maps. The inputs to this function are the merged data frame, the world data containing geographical coordinates, and the data type, period and indicator the user will select in the R Shiny app. 
+ ```r
+worldMaps <- function(df, world_data, data_type, period, indicator){
+  
+  # Function for setting the aesthetics of the plot
+  my_theme <- function () { 
+    theme_bw() + theme(axis.text = element_text(size = 14),
+                       axis.title = element_text(size = 14),
+                       strip.text = element_text(size = 14),
+                       panel.grid.major = element_blank(), 
+                       panel.grid.minor = element_blank(),
+                       panel.background = element_blank(), 
+                       legend.position = "bottom",
+                       panel.border = element_blank(), 
+                       strip.background = element_rect(fill = 'white', colour = 'white'))
+  }
+  
+  # Select only the data that the user has selected to view
+  plotdf <- df[df$Indicator == indicator & df$DataType == data_type & df$Period == period,]
+  plotdf <- plotdf[!is.na(plotdf$ISO3), ]
+  
+  # Add the data the user wants to see to the geographical world data
+  world_data['DataType'] <- rep(data_type, nrow(world_data))
+  world_data['Period'] <- rep(period, nrow(world_data))
+  world_data['Indicator'] <- rep(indicator, nrow(world_data))
+  world_data['Value'] <- plotdf$Value[match(world_data$ISO3, plotdf$ISO3)]
+  
+  # Create caption with the data source to show underneath the map
+  capt <- paste0("Source: ", ifelse(data_type == "Childlessness", "United Nations" , "World Bank"))
+  
+  # Specify the plot for the world map
+  library(RColorBrewer)
+  library(ggiraph)
+  g <- ggplot() + 
+    geom_polygon_interactive(data = world_data, color = 'gray70', size = 0.1,
+                                    aes(x = long, y = lat, fill = Value, group = group, 
+                                        tooltip = sprintf("%s<br/>%s", ISO3, Value))) + 
+    scale_fill_gradientn(colours = brewer.pal(5, "RdBu"), na.value = 'white') + 
+    labs(fill = data_type, color = data_type, title = NULL, x = NULL, y = NULL, caption = capt) + 
+    my_theme()
+  
+  return(g)
+}
+```
+## Last Step: Building the Shiny App
+
+* Now we put our data in a good shape and world mapping function ready and specified.
+* Let's start with UI.
+
+```r
+# Define the UI
+ui = fluidPage(
+  
+  # App title
+  titlePanel("Childlessness and Gender Gap Index Data"),
+  
+  # Sidebar layout with input and output definitions
+  sidebarLayout(
+    
+    # Sidebar panel for inputs 
+    sidebarPanel(
+      
+      # First input: Type of data
+      selectInput(inputId = "data_type",
+                  label = "Choose the type of data you want to see:",
+                  choices = list("Childlessness" = "Childlessness", "Gender Gap Index" = "Gender Gap Index")),
+      
+      # Second input (choices depend on the choice for the first input)
+      uiOutput("secondSelection"),
+      
+      # Third input (choices depend on the choice for the first and second input)
+      uiOutput("thirdSelection")
+      
+    ),
+    
+    # Main panel for displaying outputs
+    mainPanel(
+      
+      # Hide errors
+      tags$style(type = "text/css",
+                 ".shiny-output-error { visibility: hidden; }",
+                 ".shiny-output-error:before { visibility: hidden; }"),
+      
+      # Output: interactive world map
+      girafeOutput("distPlot")
+      
+    )
+  )
+)
+```
+## Server side of the app
+
+```r
+# Define the server
+server = function(input, output) {
+  
+  # Create the interactive world map
+  output$distPlot <- renderGirafe({
+    ggiraph(code = print(worldMaps(df, world_data, input$data_type, input$period, input$indicator)))
+  })
+  
+  # Change the choices for the second selection on the basis of the input to the first selection
+  output$secondSelection <- renderUI({
+    choice_second <- as.list(unique(df$Period[which(df$DataType == input$data_type)]))
+    selectInput(inputId = "period", choices = choice_second,
+                label = "Choose the period for which you want to see the data:")
+  })
+  
+  # Change the choices for the third selection on the basis of the input to the first and second selections
+  output$thirdSelection <- renderUI({
+    lab <- ifelse(input$data_type == "Childlessness", "age group", "indicator")
+    choice_third <- as.list(unique(df$Indicator[df$DataType == input$data_type & df$Period == input$period]))
+    selectInput(inputId = "indicator", choices = choice_third,
+                label = paste0("Choose the type of ", lab, " you want to explore:"))
+  })
+}
+```
+
+## Result
+
+<div align="center"  style = "margin-top: 20px">
+  <img src="../images/ggraph case study.PNG" alt="example" class="center">
+</div>
