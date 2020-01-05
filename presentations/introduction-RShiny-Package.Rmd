@@ -684,7 +684,7 @@ mywidget("hello, world")
 
 # <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00cc66 .center}
 
-## Case Study: Predicted Deaths from Lung Disease by Using dygraph Package
+## Case Study: Predicted Deaths From Lung Disease By Using Dygraph Package
 
 Ui part of the code:
 
@@ -758,7 +758,7 @@ server <- function(input, output) {
   class="center" width="1000" height="550"> 
     </div>
 
-## Case Study: Migration by Using Leaflet Package
+## Case Study: Migration By Using Leaflet Package
 
  * We used Aegean Boat Report's data from: https://aegeanboatreport.com/reports/ 
  * By using Excel, we shaped this data to make it useful for our research.
@@ -784,7 +784,7 @@ server <- function(input, output) {
   </div>
 
 
-## Case Study: Childlessness and Gender Gap by Using ggraph Package
+## Case Study: Childlessness and Gender Gap By Using Ggraph Package
 
 * In this section, we will build interactive world maps and show these in the form of an Shiny app.
 * At first, we're going to start with <span style="color:purple; font-weight:bold">importing, exploring and cleaning the data</span> that datasets we're going to use. Since the data sets are dirty, we have to get them in a better shape to make more useful for us.  
@@ -796,7 +796,9 @@ server <- function(input, output) {
   <img src="../images/dataset_example2.PNG" alt="example" class="center">
 </div>
 
-## Creating a function to build map 
+## Creating a function to build map
+<div style="font-size:25px">
+
 * Next, it’s time to define the <span style="color:blue; font-weight:bold">function</span> that we’ll use for building our world maps. The inputs to this function are the merged data frame, the world data containing geographical coordinates, and the data type, period and indicator the user will select in the R Shiny app. 
  ```r
 worldMaps <- function(df, world_data, data_type, period, indicator){
@@ -813,11 +815,16 @@ worldMaps <- function(df, world_data, data_type, period, indicator){
                        panel.border = element_blank(), 
                        strip.background = element_rect(fill = 'white', colour = 'white'))
   }
-  
+```
+</div>
+
+## Function Continues:
+<div style="font-size:25px">
+
+```r
   # Select only the data that the user has selected to view
   plotdf <- df[df$Indicator == indicator & df$DataType == data_type & df$Period == period,]
   plotdf <- plotdf[!is.na(plotdf$ISO3), ]
-  
   # Add the data the user wants to see to the geographical world data
   world_data['DataType'] <- rep(data_type, nrow(world_data))
   world_data['Period'] <- rep(period, nrow(world_data))
@@ -826,8 +833,7 @@ worldMaps <- function(df, world_data, data_type, period, indicator){
   
   # Create caption with the data source to show underneath the map
   capt <- paste0("Source: ", ifelse(data_type == "Childlessness", "United Nations" , "World Bank"))
-  
-  # Specify the plot for the world map
+ # Specify the plot for the world map
   library(RColorBrewer)
   library(ggiraph)
   g <- ggplot() + 
@@ -837,12 +843,12 @@ worldMaps <- function(df, world_data, data_type, period, indicator){
     scale_fill_gradientn(colours = brewer.pal(5, "RdBu"), na.value = 'white') + 
     labs(fill = data_type, color = data_type, title = NULL, x = NULL, y = NULL, caption = capt) + 
     my_theme()
-  
   return(g)
 }
 ```
+</div>
 ## Last Step: Building the Shiny App
-
+<div style="font-size:25px">
 * Now we put our data in a good shape and world mapping function ready and specified.
 * Let's start with UI.
 
@@ -869,10 +875,14 @@ ui = fluidPage(
       
       # Third input (choices depend on the choice for the first and second input)
       uiOutput("thirdSelection")
-      
     ),
-    
-    # Main panel for displaying outputs
+```
+</div>
+
+## Ui Continues with Main Panel:
+
+```r
+ # Main panel for displaying outputs
     mainPanel(
       
       # Hide errors
@@ -888,7 +898,7 @@ ui = fluidPage(
 )
 ```
 ## Server side of the app
-
+<div style="font-size:25px">
 ```r
 # Define the server
 server = function(input, output) {
@@ -914,9 +924,154 @@ server = function(input, output) {
   })
 }
 ```
-
+</div>
 ## Result
 
 <div align="center"  style = "margin-top: 20px">
   <img src="../images/ggraph case study.PNG" alt="example" class="center">
 </div>
+
+## Case Study: Earthquake Map By Using Leaflet Package
+<div style="font-size:25px">
+
+* We used USGS's data from: https://earthquake.usgs.gov/earthquakes/search/
+ * By using filtering options, we took the <span style="color:red; font-weight:bold">data</span> of a specific <span style="color:blue; font-weight:bold">time period</span> for specific <span style="color:green; font-weight:bold">locations</span> in order to use in our research.
+</div> 
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/earthquake website.PNG" alt="screenshot" class="center">
+  </div>
+  
+## Distinguishing Depths
+
+
+```r
+library(shiny)
+library(leaflet)
+library(dplyr)
+library(leaflet.extras)
+
+data <- read.csv("./data/data.csv")
+country <- data["place"]
+
+data$depth_type <-      ## 
+    ifelse(
+        data$depth <= 70,
+        "shallow",
+        ifelse(
+            data$depth <= 300 | data$depth > 70,
+            "intermediate",
+            ifelse(data$depth > 300, "deep", "other")
+```
+
+## Forming the UI
+
+```r
+ui <- fluidPage(mainPanel(
+    #this will create a space for us to display our map
+    leafletOutput(outputId = "mymap"),
+    #this allows us to put the checkmarks on top of the map to
+    #allow people to view earthquake depth or overlay a heatmap.
+    absolutePanel(
+        top = 250,
+        left = 30,
+        checkboxInput("markers", "Depth", FALSE),
+        checkboxInput("heat", "Heatmap", FALSE)
+    )
+))
+```
+
+## Server part
+
+```r
+server <- function(input, output, session) {
+    #define the color palette for the magnitude of the earthquake
+    pal <- colorNumeric(
+        palette = c(
+            'gold',
+            'orange',
+            'dark orange',
+            'orange red',
+            'red',
+            'dark red'
+        ),
+        domain = data$mag
+    )
+    #define the color of for the depth of the earthquakes
+    pal2 <- colorFactor(palette = c('blue', 'yellow', 'red'),
+                        domain = data$depth_type)
+```
+
+## Creating the Map
+
+```r
+output$mymap <- renderLeaflet({
+leaflet(data) %>%
+  addTiles() %>%
+  addFullscreenControl(position = "topleft", pseudoFullscreen = TRUE) %>%
+    setView(lng = 35, lat = 42, zoom = 5)  %>% #setting the view over
+      addTiles() %>%
+      addCircles(
+          data = data,
+          lat = ~ latitude,
+          lng = ~ longitude,
+          weight = 0.5,
+          radius = ~ sqrt(mag) * 15000,
+          popup = ~ as.character(mag),
+          label = ~ as.character(paste0("Magnitude: ", sep = " ", mag)),
+          color = ~ pal(mag),
+          fillOpacity = 0.5
+```
+
+## Making Checkboxes Dynamic With observe Function
+<div style="font-size:27px">
+```r
+observe({
+        proxy <- leafletProxy("mymap", data = data)
+        proxy %>% clearMarkers()
+        if (input$markers) {
+            proxy %>% addCircleMarkers(
+                stroke = FALSE,
+                color = ~ pal2(depth_type),
+                fillOpacity = 0.2,
+                label = ~ as.character(paste0("Magnitude: ", sep = " ", mag))
+            ) %>%
+                addLegend(
+                    "bottomright",
+                    pal = pal2,
+                    values = data$depth_type,
+                    title = "Depth Type",
+                    opacity = 1
+                )
+        }
+        else {
+            proxy %>% clearMarkers() %>% clearControls()
+        }
+```
+</div>
+
+## Map Adjustments with Using leafletproxy Function
+
+```r
+observe({
+        proxy <- leafletProxy("mymap", data = data)
+        proxy %>% clearMarkers()
+        if (input$heat) {
+            proxy %>%  addHeatmap(
+                lng =  ~ longitude,
+                lat =  ~ latitude,
+                intensity = ~ mag,
+                blur =  10,
+                max = 0.05,
+                radius = 15
+            )
+        }
+        else{
+            proxy %>% clearHeatmap()
+        }
+```
+
+## Result
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/earthquake case study.PNG" alt="screenshot" class="center">
+  </div>
