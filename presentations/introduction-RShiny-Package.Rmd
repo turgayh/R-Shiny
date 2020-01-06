@@ -382,6 +382,7 @@ runExample("02_text")
   <img height="600px" src="../images/analysis.png" alt="kmeans" class="center">
 </div>
 ## Change code
+<div style="font-size:28px">
 ```r
 library(shiny)
 
@@ -403,11 +404,8 @@ ui <- fluidPage(
     mainPanel(
       verbatimTextOutput("summary"),
       tableOutput("view")
-    )
-  )
-)
 ```
-
+</div>
 ## Result
 working code:
 
@@ -431,6 +429,20 @@ working code:
   <img height="450px" class="center-block" src="../images/layout.png">
   </div>
 </div>
+
+## Sidebar Layout
+
+* The sidebar layout is a basic model for starting to develop applications.
+* This layout gives a sidebar for inputs and a big area for printing outputs.
+
+## Grid Layout
+
+## Tabsets
+
+## Navlists
+
+## Navbar Pages
+
 # <span style="font-weight:bold">  Chapter 6</span> <br> </br> Implementations in Shiny: JavaScript, HTML and CSS {data-background=#00cc66 .center}
 
 ## Using HTML, CSS and Javascript in R Code 
@@ -475,7 +487,7 @@ ui <− fluidPage (
   tags$br () ,
   tags$p(strong(”Istanbul Technical University”)),
   tags$p(em(”Mathematical Engineering”)),
-  tags$a(href=”https://www.itu.edu.tr”, ”Website”))
+  tags$a(href=”https://www.itu.edu.tr”,”Website”))
 server <− function(input , output){} > 
   shinyApp(ui = ui , server = server)
 ```
@@ -938,7 +950,7 @@ server = function(input, output) {
  * By using filtering options, we took the <span style="color:red; font-weight:bold">data</span> of a specific <span style="color:blue; font-weight:bold">time period</span> for specific <span style="color:green; font-weight:bold">locations</span> in order to use in our research.
 </div> 
 * <div align ="center"; padding-bottom: 25px>
-  <img src="../images/earthquake website.PNG" alt="screenshot" class="center">
+  <img src="../images/earthquake website.PNG" alt="screenshot" class="center"  width="900" height="460">
   </div>
   
 ## Distinguishing Depths
