@@ -431,17 +431,45 @@ working code:
 </div>
 
 ## Sidebar Layout
-
+<div style="font-size:27px">
 * The sidebar layout is a basic model for starting to develop applications.
-* This layout gives a sidebar for inputs and a big area for printing outputs.
-
+* This layout gives a sidebar for inputs and a big area for printing outputs. </div>
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/sidebar layout.PNG" alt="sidebar" 
+  class="center" > 
+    </div>
+    
 ## Grid Layout
-
+* Rows are created by the fluidRow() function and columns defined by the column() function.
+* First parameter of column function is its width (which can take values between 1 and 12).
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/grid layout.PNG" alt="grid" 
+  class="center" > 
+    </div>
+    
 ## Tabsets
-
+<div style="font-size:27px">
+* Tabsets are good alternatives in need of subdividing the user interface into discrete sections.
+* tabsetPanel function can be used for creating Tabsets.
+</div>
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/tabset layout.PNG" alt="tabset" 
+  class="center" > 
+    </div>
+    
 ## Navlists
-
+* navlistPanel function  provides the ability of listing components on sidebar.
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/navlist layout.PNG" alt="navlist" 
+  class="center" > 
+    </div>
+    
 ## Navbar Pages
+* With navbarPage function, we can create different tabs which contains different sub-elements.
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/navbar layout.PNG" alt="navbar" 
+  class="center"> 
+    </div>
 
 # <span style="font-weight:bold">  Chapter 6</span> <br> </br> Implementations in Shiny: JavaScript, HTML and CSS {data-background=#00cc66 .center}
 
