@@ -439,7 +439,7 @@ working code:
   </div>
 </div>
 
-## Sidebar Layout
+## A Sidebar Component: Sidebar Layout
 <div style="font-size:27px">
 * The sidebar layout is a basic model for starting to develop applications.
 * This layout gives a sidebar for inputs and a big area for printing outputs. </div>
@@ -449,6 +449,7 @@ working code:
     </div>
     
 ## Grid Layout
+* This feature is a component of <span style="color:purple; font-weight:bold">content</span> part.
 * Rows are created by the fluidRow() function and columns defined by the column() function.
 * First parameter of column function is its width (which can take values between 1 and 12).
 * <div align ="center"; padding-bottom: 25px>
@@ -458,7 +459,7 @@ working code:
     
 ## Tabsets
 <div style="font-size:27px">
-* Tabsets are good alternatives in need of subdividing the user interface into discrete sections.
+* Tabsets are good alternatives in need of subdividing the user interface into discrete sections and are components of <span style="color:purple; font-weight:bold">content</span> part.
 * tabsetPanel function can be used for creating Tabsets.
 </div>
 * <div align ="center"; padding-bottom: 25px>
@@ -475,6 +476,7 @@ working code:
     
 ## Navbar Pages
 * With navbarPage function, we can create different tabs which contains different sub-elements.
+* Navbar pages are components of <span style="color:purple; font-weight:bold">navigation</span> part.
 * <div align ="center"; padding-bottom: 25px>
   <img src="../images/navbar layout.PNG" alt="navbar" 
   class="center"> 
@@ -683,42 +685,7 @@ document.body.style.backgroundColor = "skyblue";
   
 </body>
 
-## Creating a widget step-by-step
-
-<h2><b>Requirements</b></h2>
-
-  * We need to create a new R package that relies on the <span style="color:green; font-weight:bold"> htmlwidgets </span> package.
-```r
-install.packages("htmlwidgets")
-```
-
-## Scaffolding
-
-To create a new widget you can call the <span style="color:purple; font-weight:bold"> scaffoldWidget </span> function to generate the basic structure for your widget. This function will:
-
-  * Create the <span style="color:blue; font-weight:bold">.R,</span> <span style="color:yellow; font-weight:bold">.js,</span> and <span style="color:green; font-weight:bold">.yaml</span> files required for your widget
-  * <b>Tip</b>: If provided, take a Bower package (which is a package manager for web) name and automatically download the JavaScript library (and its dependencies) and add the required entries to the .yaml file. This method is highly preferrable because it guarantees that you get started with the right file structure. 
-  
-## MyWidget
-
-We want to create a widget named ‘mywidget’ in a new package of the same name:
-
-```r
-devtools::create("mywidget")               # create package using devtools
-setwd("mywidget")                          # navigate to package dir
-htmlwidgets::scaffoldWidget("mywidget")    # create widget scaffolding
-devtools::install()                        # install the package so we can try it
-```
-* This creates a simple widget that takes a single text argument and displays that text within the widgets HTML element. You can try it like this:
-```r
-library(mywidget)
-mywidget("hello, world")
-```
-* This is the most minimal widget possible and doesn’t yet include a JavaScript library.
-
-# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00cc66 .center}
-
-## Case Study: Predicted Deaths From Lung Disease By Using Dygraph Package
+## A Small Case Study: Predicted Deaths From Lung Disease By Using Dygraph Package
 
 Ui part of the code:
 
@@ -792,30 +759,48 @@ server <- function(input, output) {
   class="center" width="1000" height="550"> 
     </div>
 
-## Case Study: Migration By Using Leaflet Package
 
- * We used Aegean Boat Report's data from: https://aegeanboatreport.com/reports/ 
- * By using Excel, we shaped this data to make it useful for our research.
- 
-* <div align ="center"; padding-bottom: 25px>
-  <img src="../images/excel.PNG" alt="excel" class="center">
-  </div>
+
+
+## Creating a widget step-by-step
+
+<h2><b>Requirements</b></h2>
+
+  * We need to create a new R package that relies on the <span style="color:green; font-weight:bold"> htmlwidgets </span> package.
+```r
+install.packages("htmlwidgets")
+```
+
+## Scaffolding
+
+To create a new widget you can call the <span style="color:purple; font-weight:bold"> scaffoldWidget </span> function to generate the basic structure for your widget. This function will:
+
+  * Create the <span style="color:blue; font-weight:bold">.R,</span> <span style="color:grey; font-weight:bold">.js,</span> and <span style="color:green; font-weight:bold">.yaml</span> files required for your widget
+  * <b>Tip</b>: If provided, take a Bower package (which is a package manager for web) name and automatically download the JavaScript library (and its dependencies) and add the required entries to the .yaml file. This method is highly preferrable because it guarantees that you get started with the right file structure. 
   
-## Using Leaflet
+## MyWidget
 
-* For creating a map we used <span style="color:green; font-weight:bold">Leaflet</span> library.
-* <span style="color:green; font-weight:bold">Leaflet</span> is a open source <span style="color:yellow; font-weight:bold">JavaScript</span> library for creating interactive maps.
-* It can be implemented and used in <span style="color:blue; font-weight:bold">Shiny</span> easily.
-* <span style="color:green; font-weight:bold">Leaflet</span> gives the opportunity of adding informational popups to particular part of maps.
-* <div align ="center"; padding-bottom: 25px>
-  <img src="../images/leaflet.PNG" alt="leaflet" class="center">
-  </div>
+We want to create a widget named ‘mywidget’ in a new package of the same name:
 
-## Result
+```r
+devtools::create("mywidget")               # create package using devtools
+setwd("mywidget")                          # navigate to package dir
+htmlwidgets::scaffoldWidget("mywidget")    # create widget scaffolding
+devtools::install()                        # install the package so we can try it
+```
+<div style="font-size:27px">
+* This creates a simple widget that takes a single text argument and displays that text within the widgets HTML element. You can try it like this:
+</div>
+```r
+library(mywidget)
+mywidget("hello, world")
+```
+<div style="font-size:27px">
+* This is the most minimal widget possible and doesn’t yet include a JavaScript library.
+</div>
 
-<div align ="center"; padding-bottom: 25px>
-  <img src="../images/case study result.PNG" alt="result" width="1500" height="400" class="center">
-  </div>
+# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00cc66 .center}
+
 
 
 ## Case Study: Childlessness and Gender Gap By Using Ggraph Package
@@ -1108,4 +1093,30 @@ observe({
 
 <div align ="center"; padding-bottom: 25px>
   <img src="../images/earthquake case study.PNG" alt="screenshot" class="center">
+  </div>
+  
+  
+## Case Study: Migration By Using Leaflet Package
+
+ * We used Aegean Boat Report's data from: https://aegeanboatreport.com/reports/ 
+ * By using Excel, we shaped this data to make it useful for our research.
+ 
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/excel.PNG" alt="excel" class="center">
+  </div>
+  
+## Using Leaflet
+
+* For creating a map we used <span style="color:green; font-weight:bold">Leaflet</span> library.
+* <span style="color:green; font-weight:bold">Leaflet</span> is a open source <span style="color:grey; font-weight:bold">JavaScript</span> library for creating interactive maps.
+* It can be implemented and used in <span style="color:blue; font-weight:bold">Shiny</span> easily.
+* <span style="color:green; font-weight:bold">Leaflet</span> gives the opportunity of adding informational popups to particular part of maps.
+* <div align ="center"; padding-bottom: 25px>
+  <img src="../images/leaflet.PNG" alt="leaflet" class="center">
+  </div>
+
+## Result
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/case study result.PNG" alt="result" width="1500" height="400" class="center">
   </div>
