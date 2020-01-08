@@ -332,6 +332,15 @@ server <- function(input, output) {
   class="center">
 </div>
 
+## ...and more Input functions  example
+
+<div align="center"  >
+  <img src="../images/input-more.PNG" alt="First Rule"   
+  class="center">
+</div>
+
+
+
 ## Result  (Reactivity) {.smaller}
 
   Reactivity automatically occurs whenever you use an input value to render an output object
