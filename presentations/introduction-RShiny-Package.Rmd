@@ -540,10 +540,6 @@ class="center" width="500" height="300">
   </div>
   
   </body>
-## Include HTML , Text, and Markdown File
-   
-    <img src="../images/includeFile.PNG" alt="tags" 
-    class="center" width="500" height="300"> 
     
 ## ...and more Html Tag
  
@@ -623,32 +619,17 @@ includeHTML("include.html")
 </body>
 
 
-## Layout structure of the UI
+## An Example on Include Javascript 
 
-Combine multiple elements into a ”single element” that has its own properties with a panel function
+```javascript
+//myscripts.js file
+document.body.style.backgroundColor = "skyblue";
+```
+<img src="../images/js-example.png" alt="javascript" class="left" width="650" height="490">
 
-<div class="row">
-  <div class="col-md-6" markdown="1">
-```r
-  ui <-
-    fluidPage (
-    wellPanel(
-    numericInput(inputId = 'n', 'Sample size', value = 25),
-    submitButton () ) , plotOutput(outputId = 'hist'))
-  server <- function(input , output ){
-  } > 
-  shinyApp(ui = ui , server = server)
-```  
-  </div>
-  <div class="col-md-2" markdown="1">
-  working code:
-  
-<div align ="center"; padding-bottom: 25px>
-  <img src="../images/submit button.PNG" alt="submit" 
-  class="center" width="550" height="150"> 
-    </div>
-  </div>
-</div>
+## Result 
+
+<img src="../images/js-effect.png" alt="kmeans" class="left" width="650" height="500">
 
 # <span style="font-weight:bold">  Chapter 7</span> <br> </br> Introduction to HTMLWidgets Package {data-background=#00ccff .center}
 
