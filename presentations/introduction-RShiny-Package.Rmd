@@ -482,7 +482,7 @@ working code:
 
 # <span style="font-weight:bold">  Chapter 6</span> <br> </br> Implementations in Shiny: JavaScript, HTML and CSS {data-background=#00cc66 .center}
 
-## Using HTML, CSS and Javascript in R Code 
+## Using HTML in R Shiny 
 
 <head>
   <style>
@@ -540,7 +540,11 @@ class="center" width="500" height="300">
   </div>
   
   </body>
-
+## Include HTML , Text, and Markdown File
+   
+    <img src="../images/includeFile.PNG" alt="tags" 
+    class="center" width="500" height="300"> 
+    
 ## ...and more Html Tag
  
 <div align="center"  style = "margin-top: 20px">
