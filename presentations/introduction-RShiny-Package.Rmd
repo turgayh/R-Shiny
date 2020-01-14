@@ -1118,5 +1118,5 @@ observe({
 ## Result
 
 <div align ="center"; padding-bottom: 25px>
-  <img src="../images/case study result.PNG" alt="result" width="1500" height="400" class="center">
+  <img src="../images/case study result.PNG" alt="result"  class="center">
   </div>
