@@ -156,221 +156,164 @@ Code Output
   class="center" width="200" height="40"> 
     </div>
 # <span style="font-weight:bold">  Chapter 3</span> <br> </br> Inputs and Outputs {data-background=#00ccff .center}
-## Overview
 
-Build your app around <span style="color:purple; font-weight:bold">inputs</span> and <span style="color:green; font-weight:bold">outputs</span>
+## Input and Project Template
+Input basit olarak kullanıcı tarafından saglanan herhangi bir degerdir.  Bu degeri Rshiny componentleri vasitasiyla onyuzden almayi ve bu bilgilerle server tarafından bir “output” üretmeyi, bu output ile de tekrar onyuz(UI) tarafında birseyleri tetiklemeyi calisacagiz.
 
-<div align ="center" >
-<img src="../images/kmeans.PNG" alt="kmeans" class="center" style="width:512px;height:512px">
+> - Rshiny kod şablonlarından asagidakini  kullanicaz.
+
+```R
+library(shiny)
+
+ui <-  fluidPage()
+
+server <- function(input,output){
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+## Define Input Component 
+> - Herhangi bir input components oluşturalım . 
+> - Bu anlatım icin radioButtons components sectik .
+
+```R
+
+library(shiny)
+
+ui <-  fluidPage(
+  radioButtons(inputId = "university", label = "Choose an university",
+                choices =  c("ITU" = "Istabul Teknik",
+                                    "BOUN" = "Bogazici",
+                                    "ODTU" = "Ortadogu Teknik")),
+  
+)
+
+server <- function(input,output){
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+
+## and More Input Component
+
+<div align="center"  >
+  <img src="../images/input-output/input-type.PNG" alt="Input Types"   
+  class="center">
 </div>
+
+> - fig: [https://github.com/rstudio-education/shiny.rstudio.com-tutorial/blob/master/how-to-start-shiny-part-1.pdf]
 
 ## Input Syntax
-<div align="center"  style = "margin-top: 150px">
-
-<img src="../images/input-syntax.PNG" alt="kmeans" class="center">
+<div align="center"  >
+  <img src="../images/input-output/input-syntax.PNG" alt="Input syntax"   
+  class="center">
 </div>
 
-## Input 
-```r
-sliderInput(inputId = "num",
-  label = "Choose a number",
-  value = 25, min = 1, max = 100)
-```
-```r
-library(shiny)
-ui <- fluidPage(
-    sliderInput(inputId = "num",
-                label = "Choose a number",
-                value = 25, min = 1, max = 100)
-    )
+## Define Output
 
-server <- function(input, output) {
-    
+> - Ana kurgu inputta alinan üniversite bilgisi neticesinde onyuzde belirtilen bir alanda o üniversiteye ait logoyu ekrana basicagiz.
+
+```R
+library(shiny)
+
+ui <-  fluidPage(
+  radioButtons(inputId = "university", label = "Choose an university",
+                choices =  c("ITU" = "Istabul Teknik",
+                              "BOUN" = "Bogazici",
+                              "ODTU" = "Ortadogu Teknik")),
+  imageOutput("universityLogo",height = 300,width = 300),
+  
+  
+)
+
+server <- function(input,output){
+  
 }
 
 shinyApp(ui = ui, server = server)
 ```
+## and More Output Options
+> - Farklı output seçenekleri burdan incelenebiliriz. 
 
-## Code Output
+<div align="center"  >
+  <img src="../images/input-output/output-types.PNG" alt="Output types"   
+  class="center">
+</div>
 
+[fig: [https://github.com/rstudio-education/shiny.rstudio.com-tutorial/blob/master/how-to-start-shiny-part-1.pdf]
+
+## Define Render on Server Side
+> - Input degeri okunup server tarafında render fonksiyonu ile output alanini guncelleyecegiz. 
+
+```R
+ library(shiny)
+
+ui <-  fluidPage(
+  radioButtons(inputId = "university", label = "Choose an university",
+                choices =  c("Istabul Technical University" = "ITU",
+                             "Bogazici University" = "BOUN",
+                             "Middle East Technical University" = "ODTU" )),
+  imageOutput("universityLogo",height = 600,width = 600),
+  
+  
+)
+
+server <- function(input,output){
+  output$universityLogo <- renderImage({
+    if (is.null(input$university))
+      return(NULL)
+    
+    if (input$university == "ITU") {
+      return(list(
+        src = "./images/university/itu.png",
+        contentType = "image/png",
+        alt = "ITU"
+      ))
+    } else if (input$university == "BOUN") {
+      return(list(
+        src = "./images/university/boun.png",
+        filetype = "image/png",
+        alt = "Bogazici"
+      ))
+    } else if (input$university == "ODTU") {
+      return(list(
+        src = "./images/university/odtu.png",
+        filetype = "image/pnd",
+        alt = "Ortadogu Teknik"
+      ))
+    }
+    
+    
+  }, deleteFile = FALSE)
+  
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+## Overview UI
 <div align ="center"; padding-bottom: 25px>
-  <img src="../images/input.PNG" alt="input" 
-  class="center" width="500" height="200"> 
+  <img src="../images/input-output/ui.PNG" alt="res" 
+  class="center"> 
     </div>
 
-## Entegration Input and Output
+## Overview Server
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/input-output/server.PNG" alt="res" 
+  class="center"  > 
+    </div>
 
-Use <span style="color:red; font-weight:bold">3 rules</span> to write the server function
-
-
-
-```r
-server <- function(input, output) {
-
-
-
-
-}
-
-```
-
-## 1 - Save objects to display to output$
-
-<head>
-  <style>
-  .grid-container {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 10px;
-    background-color: #ffffff;
-      padding: 10px;
-  }
-
-.grid-container > div {
-  background-color: #ffffff;
-  text-align: center;
-  padding: 20px 0;
-  font-size: 30px;
-}
-</style>
-  </head>
-  <body>
-  
-  <div class="grid-container">
-  <div>
-```r
-
-server <- function(input, output) {  
-  output$hist <- # code
-}
-
-
-```
-</div>
-  
-  <div>
-  <div align="center">
-  <img src="../images/firstRule.PNG" alt="First Rule" class="center">
-  </div></div>
-  
-  <div>
-  <div style="text-align: center;">
-  <img src="../images/output-syntax.PNG" alt="kmeans" class="center">
-  
-  </div></div>
-  
-  </div>
-  
-  </body>
-
-## 2 - Build objects to display with render*()
-
-[ING] UI tarafinda bulunan 'hist' (histogram) objesi server tarafindaki 'RenderPlot' methodu ile uretilecek . 
-Not: hist ve RenderPlot vurgulanacak ..
-
-
-```r
-
-server <- function(input, output) {  
-  output$hist <- renderPlot({
-
-   #code
-
-  }) 
-}
-
-```
-## Render Method
-
-<div align="center"  >
-  <img src="../images/render.PNG" alt="First Rule"   
-  class="center">
-</div>
-
-<div style="margin-left: 40px;">
-
-```r
-
-server <- function(input, output) {
-  output$hist <- renderPlot({
-
-    title <- "100 random normal values"           
-
-    hist(rnorm(100), main = title) 
-
-  }) 
-}
-
-```
-</div>
-
-## 3 - Access input values with input$
-<div style="margin-left: 40px;">
-
-```r
-server <- function(input, output) {  
-  
-  output$hist <- renderPlot({    
-  hist(rnorm(input$num))  
-  
-  }) 
-
-}
-
-```
-<div align="center"  >
-  <img src="../images/parameter.PNG" alt="First Rule"   
-  class="center">
-</div>
-
-</div>
-
-## ...and more "Render Method"  example
-
-<div align="center"  >
-  <img src="../images/render_methods.PNG" alt="First Rule"   
-  class="center">
-</div>
-
-## ...and more Input functions  example
-
-<div align="center"  >
-  <img src="../images/input-more.PNG" alt="First Rule"   
-  class="center">
-</div>
-
-
-
-## Result  (Reactivity) {.smaller}
-
-  Reactivity automatically occurs whenever you use an input value to render an output object
-  
-<div style="margin-left: 40px;">
-```r
-library(shiny)
-ui <- fluidPage(
-    sliderInput(inputId = "num",
-                label = "Choose a number",
-                value = 25, min = 1, max = 100),
-    plotOutput("hist")
-    )
-
-server <- function(input, output) {
-    output$hist <- renderPlot({
-        hist(rnorm(input$num))
-    })
-}
-
-shinyApp(ui = ui, server = server)
-```
-</div>
 
 ## Code Output
-working code:
+> - Sonuc olarak onyuzden alinan bilgiler bir logoyu secmemize ve server tarafından imageRender fonksiyonu sayesinde onyuzde bu logoyu aktarma işlemini yaptık .
 
 <div align ="center"; padding-bottom: 25px>
-  <img src="../images/reactivity result.PNG" alt="res" 
-  class="center" width="1000" height="550"> 
+  <img src="../images/input-output/result.PNG" alt="res" 
+  class="center"  height="450"> 
     </div>
     
 # <span style="font-weight:bold">  Chapter 4</span> <br> </br> Using Checkbox in Shiny {data-background=#00cc66 .center}
