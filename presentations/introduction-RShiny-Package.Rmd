@@ -7,7 +7,6 @@ output:
       reveal_options:
         slideNumber: true
         previewLinks: true
-
 ---
 
 
@@ -741,6 +740,67 @@ mywidget("hello, world")
 <div style="font-size:27px">
 * This is the most minimal widget possible and doesn’t yet include a JavaScript library.
 </div>
+
+# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Publish Project {data-background=#00cc66 .center}
+
+## Github'ta Barindirma
+
+> - R shiny ile olusturulan projeler dinamik yapida olduklari icin birer R kodu calistiracak makineye ihtiyac duyar. Bu da aylik bir maliyet demektir.
+> - Egerki  proje bir yerde dursun ve gormek isteyenler localinde tek satir ile calistirsin istiyorsaniz, projeyi githuba atip (App.R veya Server.R kesinlikle icermeli) kullanicinin R konsol ekraninda sirasiyla su kadlari yazmasini saglalisiniz.
+
+```R
+library(shiny)
+```
+
+```R
+runGithub("<proje repo adi>","<proje sahibinin github username>")
+```
+
+## Web site olarak yayimlama
+> - Web site olarak yayimlamak icin server ve domaine ihtiyaciniz var. Her ikisi icin ucretli ve ucretsiz(sinirli) kaynaklar bulunmakta. R studio gelistiricilerinin sagladigi 3 secenek sirasiyla .   
+> - shinyapps.io
+> - Shiny Server
+> - RStudio Connect
+
+## Projeyi shinyapp.io yayinlama
+> - Ortam ucretli bir platformdur fakat 1 uygulamayi ucretsiz olarak host etmenize olanak tanimakta.
+> - Bu ortam kullanmasi kolay ve hizlidir .. 
+> - Yapmaniz gereken https://www.shinyapps.io adresinden kullanici olusturmak.
+> - Giris yaptiktan sonra sag ust kosede bulunan token sekmesinden token bilgisini almak. 
+> - Bu token bilgisini , actigimiz r shiny projesinde console ekraninda sirasiyla yazmak .
+
+```R
+library(rsconnect)
+```
+
+```R
+rsconnect::setAccountInfo(name="<ACCOUNT>", token="<TOKEN>", secret="<SECRET>")
+```
+> -  Deploy edebilmek icin 
+
+```R
+deployApp()
+```
+## Rstudiodan shinyapp.io 
+> - Token basarili bir sekilde verildi ise artik tek tusla yaptiklarimizi paylasabilecegiz. 
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/deploy.PNG" alt="check" 
+  class="center"> 
+    </div>
+
+
+## Shiny Server ve RStudio Connect
+
+> - Shiny Server : Diyelimki fiziksel bir makine(bilgisayar, vps) kiraladiniz ve burda projemizi besleyen R kodlarini calistiricaz . Bu durumda kiraladigimiz makineye Shiny Server sanal sunucuyu(image) atmamiz gerek. 
+> - Shiny Server ucretsiz acik kaynak gelistirilen bir projedir. 
+> - Projenin backend kismi bu sekilde halledilibilinir iken onyuz tarafinda domain(web site adi) satin almaniz gerekecek .
+
+> - RStudio Connect: Yine R studio tarafindan gelistirilen bu ortam  ucretli bir servistir. Eger uygulamaniz gelir getirme amacli bir proje ise bu servisi kullanarak bazi hazir servislere erisebilirsiniz . 
+
+> - 
+
+[https://shiny.rstudio.com/tutorial/written-tutorial/lesson7/]
 
 # <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00cc66 .center}
 
