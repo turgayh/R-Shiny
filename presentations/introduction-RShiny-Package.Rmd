@@ -315,7 +315,6 @@ shinyApp(ui = ui, server = server)
   class="center"  height="450"> 
     </div>
     
-# <span style="font-weight:bold">  Chapter 4</span> <br> </br> Using Checkbox in Shiny {data-background=#00cc66 .center}
 ## Reviewing an Example 
 ```R
 library(shiny)
@@ -365,7 +364,7 @@ ui <- fluidPage(
   class="center" width="1000" height="550"> 
     </div>
 
-# <span style="font-weight:bold">  Chapter 5</span> <br> </br> Improving the Design  {data-background=#00ccff .center}
+# <span style="font-weight:bold">  Chapter 4</span> <br> </br> Improving the Design  {data-background=#00cc66 .center}
 ## Design Part {.build}
 
 <div class="row">
@@ -424,7 +423,7 @@ ui <- fluidPage(
   class="center"> 
     </div>
 
-# <span style="font-weight:bold">  Chapter 6</span> <br> </br> Implementations in Shiny: JavaScript, HTML and CSS {data-background=#00cc66 .center}
+# <span style="font-weight:bold">  Chapter 5</span> <br> </br> Implementations in Shiny: JavaScript, HTML and CSS {data-background=#00ccff .center}
 
 ## Using HTML in R Shiny 
 
@@ -575,7 +574,7 @@ document.body.style.backgroundColor = "skyblue";
 
 <img src="../images/js-effect.png" alt="kmeans" class="left" width="650" height="500">
 
-# <span style="font-weight:bold">  Chapter 7</span> <br> </br> Introduction to HTMLWidgets Package {data-background=#00ccff .center}
+# <span style="font-weight:bold">  Chapter 6</span> <br> </br> Introduction to HTMLWidgets Package {data-background=#00cc66 .center}
 
 ## Overview
 * This package builds a framework for creating R bindings to JavaScript libraries. HTMLWidgets can be 
@@ -741,7 +740,7 @@ mywidget("hello, world")
 * This is the most minimal widget possible and doesn’t yet include a JavaScript library.
 </div>
 
-# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Publishing Project {data-background=#00cc66 .center}
+# <span style="font-weight:bold">  Chapter 7</span> <br> </br> Publishing Project {data-background=#00ccff .center}
 
 ## Keeping Project in Github
 
@@ -799,7 +798,7 @@ deployApp()
 * <span style="color:blue; font-weight:bold">R Studio Connect</span> : is a paid service also developed by R Studio. If we plan to make profits from our applications, we can access some ready to use services by this platform.
 
 
-# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00ccff .center}
+# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00cc66 .center}
 
 
 
