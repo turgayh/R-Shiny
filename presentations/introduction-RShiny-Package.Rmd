@@ -381,7 +381,7 @@ ui <- fluidPage(
   </div>
 </div>
 
-## A Sidebar Component: Sidebar Layout
+## Sidebar Layout
 <div style="font-size:27px">
 * The sidebar layout is a basic model for starting to develop applications.
 * This layout gives a sidebar for inputs and a big area for printing outputs. </div>
