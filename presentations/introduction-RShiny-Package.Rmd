@@ -1,5 +1,5 @@
 ---
-title: "Introduction to R shiny package"
+title: "Introduction to R Shiny Package"
 author: "Hakan Turgay & Bertan Taylan"
 output:
   revealjs::revealjs_presentation: 
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - <span style="color:purple; font-weight:bold"> Simple idea: </span>Immigrating ratios from a specific region of Turkey due to years and also forecasts about these ratios (e.g. Journalist)
 
-## What is Shiny package? 
+## What is Shiny Package? 
 
 - Shiny is an R package that makes it easy to build <span style="color:red; font-weight:bold">interactive web applications</span> (apps) straight from R. This lesson will get you started building Shiny apps right away.
 - Build useful web applications <span style="color:purple; font-weight:bold">with only a few lines of code</span>—no JavaScript required.
@@ -148,7 +148,7 @@ shinyApp(ui = ui, server = server)
 <div id="CodeOutput" name="CodeOutput" style="text-align: center; vertical-align: middle;">
 Code Output
 </div>
-  working code:
+  
 
 <div align ="center"; padding-bottom: 25px>
   <img src="../images/hello shiny.PNG" alt="helloshiny" 
@@ -157,9 +157,8 @@ Code Output
 # <span style="font-weight:bold">  Chapter 3</span> <br> </br> Inputs and Outputs {data-background=#00ccff .center}
 
 ## Input and Project Template
-Input basit olarak kullanıcı tarafından saglanan herhangi bir degerdir.  Bu degeri Rshiny componentleri vasitasiyla onyuzden almayi ve bu bilgilerle server tarafından bir “output” üretmeyi, bu output ile de tekrar onyuz(UI) tarafında birseyleri tetiklemeyi calisacagiz.
-
-> - Rshiny kod şablonlarından asagidakini  kullanicaz.
+* Basically, inputs are values which are provided by users. We will try to get this value from UI with components of R-Shiny and with these information, we are going to create an “output” from server side. After that we will try to trigger something on UI with this output.
+* First, we will start with one of the R Shiny’s templates.
 
 ```R
 library(shiny)
@@ -174,8 +173,7 @@ shinyApp(ui = ui, server = server)
 ```
 
 ## Define Input Component 
-> - Herhangi bir input components oluşturalım . 
-> - Bu anlatım icin radioButtons components sectik .
+* Let’s form an input component. We chose radioButtons component for this explanation.
 
 ```R
 
@@ -186,7 +184,6 @@ ui <-  fluidPage(
                 choices =  c("ITU" = "Istabul Teknik",
                                     "BOUN" = "Bogazici",
                                     "ODTU" = "Ortadogu Teknik")),
-  
 )
 
 server <- function(input,output){
@@ -204,7 +201,6 @@ shinyApp(ui = ui, server = server)
   class="center">
 </div>
 
-> - fig: [https://github.com/rstudio-education/shiny.rstudio.com-tutorial/blob/master/how-to-start-shiny-part-1.pdf]
 
 ## Input Syntax
 <div align="center"  >
@@ -214,7 +210,7 @@ shinyApp(ui = ui, server = server)
 
 ## Define Output
 
-> - Ana kurgu inputta alinan üniversite bilgisi neticesinde onyuzde belirtilen bir alanda o üniversiteye ait logoyu ekrana basicagiz.
+* Our aim on this example is printing university logo on specific location on UI according to information was retrieved with input.
 
 ```R
 library(shiny)
@@ -228,25 +224,21 @@ ui <-  fluidPage(
   
   
 )
-
 server <- function(input,output){
-  
-}
 
+}
 shinyApp(ui = ui, server = server)
 ```
 ## and More Output Options
-> - Farklı output seçenekleri burdan incelenebiliriz. 
+* Different output options can be seen from this table:
 
 <div align="center"  >
   <img src="../images/input-output/output-types.PNG" alt="Output types"   
   class="center">
 </div>
 
-[fig: [https://github.com/rstudio-education/shiny.rstudio.com-tutorial/blob/master/how-to-start-shiny-part-1.pdf]
-
 ## Define Render on Server Side
-> - Input degeri okunup server tarafında render fonksiyonu ile output alanini guncelleyecegiz. 
+* Now we will read the input value and update output area with render function on server side.
 
 ```R
  library(shiny)
@@ -294,6 +286,14 @@ server <- function(input,output){
 shinyApp(ui = ui, server = server)
 
 ```
+## and More Render Method Examples
+
+<div align ="center"; padding-bottom: 25px>
+  <img src="../images/render_methods.png" alt="render" 
+  class="center"> 
+    </div>
+
+
 ## Overview UI
 <div align ="center"; padding-bottom: 25px>
   <img src="../images/input-output/ui.PNG" alt="res" 
@@ -308,7 +308,7 @@ shinyApp(ui = ui, server = server)
 
 
 ## Code Output
-> - Sonuc olarak onyuzden alinan bilgiler bir logoyu secmemize ve server tarafından imageRender fonksiyonu sayesinde onyuzde bu logoyu aktarma işlemini yaptık .
+* As result, we retrieved a selection of a university from UI and we passed this information to imageRender function to print the university’s logo again on UI.
 
 <div align ="center"; padding-bottom: 25px>
   <img src="../images/input-output/result.PNG" alt="res" 
@@ -358,7 +358,7 @@ ui <- fluidPage(
 ```
 </div>
 ## Result
-working code:
+
 
 <div align ="center"; padding-bottom: 25px>
   <img src="../images/workingcode checkbox.PNG" alt="check" 
@@ -371,7 +371,7 @@ working code:
 <div class="row">
   <div class="col-md-6" markdown="1">
   
-  * Assemble UI with HTML/CSS/... widgets
+  * Assemble UI with HTML/CSS/... 
   
   * Adjustment of the layout scheme
   
@@ -563,7 +563,7 @@ includeHTML("include.html")
 </body>
 
 
-## An Example on Include Javascript 
+## Example of Including Javascript 
 
 ```javascript
 //myscripts.js file
@@ -627,9 +627,9 @@ document.body.style.backgroundColor = "skyblue";
   
 </body>
 
-## A Small Case Study: Predicted Deaths From Lung Disease By Using Dygraph Package
+## Small Case Study: Predicted Deaths From Lung Disease By Using Dygraph Package
 
-Ui part of the code:
+UI part of the code:
 
 <div style="font-size:25px">
 
@@ -708,7 +708,7 @@ server <- function(input, output) {
 
 <h2><b>Requirements</b></h2>
 
-  * We need to create a new R package that relies on the <span style="color:green; font-weight:bold"> htmlwidgets </span> package.
+* In order to create a new widget, first we have to install<span style="color:green; font-weight:bold"> htmlwidgets </span>package. To install it from R console;
 ```r
 install.packages("htmlwidgets")
 ```
@@ -741,68 +741,65 @@ mywidget("hello, world")
 * This is the most minimal widget possible and doesn’t yet include a JavaScript library.
 </div>
 
-# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Publish Project {data-background=#00cc66 .center}
+# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Publishing Project {data-background=#00cc66 .center}
 
-## Github'ta Barindirma
+## Keeping Project in Github
 
-> - R shiny ile olusturulan projeler dinamik yapida olduklari icin birer R kodu calistiracak makineye ihtiyac duyar. Bu da aylik bir maliyet demektir.
-> - Egerki  proje bir yerde dursun ve gormek isteyenler localinde tek satir ile calistirsin istiyorsaniz, projeyi githuba atip (App.R veya Server.R kesinlikle icermeli) kullanicinin R konsol ekraninda sirasiyla su kadlari yazmasini saglalisiniz.
+* Because of their dynamic structure, projects created with R Shiny need platforms which can run R codes. This means, by its nature, extra costs.
+
+* If we choose to keep our project on a specific location and provide the ability of running the project on users’ locals, first we have to put our project to Github (it must definitely have app.r or server.R files) and guide the users to run these codes on their R console:
 
 ```R
 library(shiny)
 ```
 
 ```R
-runGithub("<proje repo adi>","<proje sahibinin github username>")
+runGithub("<repo name of project>","<github username of project owner>")
 ```
 
-## Web site olarak yayimlama
-> - Web site olarak yayimlamak icin server ve domaine ihtiyaciniz var. Her ikisi icin ucretli ve ucretsiz(sinirli) kaynaklar bulunmakta. R studio gelistiricilerinin sagladigi 3 secenek sirasiyla .   
-> - shinyapps.io
-> - Shiny Server
-> - RStudio Connect
+## Publishing as a Web Site
+* We need a server and a domain to publish our project as a website. There are many paid and considerably less unpaid services to make it happen. Also, R Studio provides following options to its developers:
+  * shinyapps.io
+  * Shiny Server
+  * R Studio Connect
 
-## Projeyi shinyapp.io yayinlama
-> - Ortam ucretli bir platformdur fakat 1 uygulamayi ucretsiz olarak host etmenize olanak tanimakta.
-> - Bu ortam kullanmasi kolay ve hizlidir .. 
-> - Yapmaniz gereken https://www.shinyapps.io adresinden kullanici olusturmak.
-> - Giris yaptiktan sonra sag ust kosede bulunan token sekmesinden token bilgisini almak. 
-> - Bu token bilgisini , actigimiz r shiny projesinde console ekraninda sirasiyla yazmak .
+## Using shinyapps.io
+<div style="font-size:25px">
+* This platform is a paid service, but we have the chance to host one application for free. 
+* It is easy to use and works pretty fast.
+* To use this platform, first we have to create user account from this link: https://www.shinyapps.io
 
+* After logging in, we should get token information from token tab located on up-right corner of the page.
+* Then, we should write token info and following code on our R Shiny projects console panel, respectively:
 ```R
 library(rsconnect)
+rsconnect::setAccountInfo(name="<ACCOUNT>",token="<TOKEN>",secret="<SECRET>")
 ```
-
-```R
-rsconnect::setAccountInfo(name="<ACCOUNT>", token="<TOKEN>", secret="<SECRET>")
-```
-> -  Deploy edebilmek icin 
+* And to deploy:
 
 ```R
 deployApp()
 ```
-## Rstudiodan shinyapp.io 
-> - Token basarili bir sekilde verildi ise artik tek tusla yaptiklarimizi paylasabilecegiz. 
+</div>
+## shinyapp.io From R Studio
+
+* If we give token properly, now we can share our work with just one click.
 
 <div align ="center"; padding-bottom: 25px>
   <img src="../images/deploy.PNG" alt="check" 
-  class="center"> 
+  class="center" width="900" height="500"> 
     </div>
 
 
-## Shiny Server ve RStudio Connect
+## Using Shiny Server ve R Studio Connect
 
-> - Shiny Server : Diyelimki fiziksel bir makine(bilgisayar, vps) kiraladiniz ve burda projemizi besleyen R kodlarini calistiricaz . Bu durumda kiraladigimiz makineye Shiny Server sanal sunucuyu(image) atmamiz gerek. 
-> - Shiny Server ucretsiz acik kaynak gelistirilen bir projedir. 
-> - Projenin backend kismi bu sekilde halledilibilinir iken onyuz tarafinda domain(web site adi) satin almaniz gerekecek .
+*  <span style="color:green; font-weight:bold">Shiny Server</span> : It is a free project being developed open source. Let’s assume we rented a physical machine (e.g. computers) and we want to run R codes which feed our project. In this case we have to send the Shiny Server’s (R) virtual image to our rented machine.
+* Back-end part of the project can be done by this method, but to create front-end, we will need to purchase a domain (website name).
 
-> - RStudio Connect: Yine R studio tarafindan gelistirilen bu ortam  ucretli bir servistir. Eger uygulamaniz gelir getirme amacli bir proje ise bu servisi kullanarak bazi hazir servislere erisebilirsiniz . 
+* <span style="color:blue; font-weight:bold">R Studio Connect</span> : is a paid service also developed by R Studio. If we plan to make profits from our applications, we can access some ready to use services by this platform.
 
-> - 
 
-[https://shiny.rstudio.com/tutorial/written-tutorial/lesson7/]
-
-# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00cc66 .center}
+# <span style="font-weight:bold">  Chapter 8</span> <br> </br> Case Studies {data-background=#00ccff .center}
 
 
 
@@ -811,11 +808,15 @@ deployApp()
 * In this section, we will build interactive world maps and show these in the form of an Shiny app.
 * At first, we're going to start with <span style="color:purple; font-weight:bold">importing, exploring and cleaning the data</span> that datasets we're going to use. Since the data sets are dirty, we have to get them in a better shape to make more useful for us.  
 * Final forms of our datasets will be like this:
-<div align="center"  style = "margin-top: 20px">
-  <img src="../images/dataset_example.PNG" alt="example" class="center">
-</div>
-<div align="center"  style = "margin-top: 20px">
-  <img src="../images/dataset_example2.PNG" alt="example" class="center">
+<div align="left"  style = "margin-top: 20px">
+  <img src="../images/dataset_example.PNG" alt="example" class="left">
+</div> 
+
+## Datasets
+
+
+<div align="right"  style = "margin-top: 20px">
+  <img src="../images/dataset_example2.PNG" alt="example" class="right">
 </div>
 
 ## Creating a function to build map
@@ -901,7 +902,7 @@ ui = fluidPage(
 ```
 </div>
 
-## Ui Continues with Main Panel:
+## UI Continues with Main Panel:
 
 ```r
  # Main panel for displaying outputs
