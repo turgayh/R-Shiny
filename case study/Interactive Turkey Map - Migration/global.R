@@ -18,7 +18,6 @@ TotalPopulation2018 <- sum(as.numeric(data2018$`Total population`), na.rm = TRUE
 graph2019 <-function(){
   wellPanel(
     
-    
     radioGroupButtons(inputId = "Islands2019",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "s",status = "primary"),
     tabsetPanel(
       tabPanel("Boats Arrived", plotOutput("GraphBoatsArrived2019")),
@@ -43,5 +42,6 @@ graph2018 <-function(){
     )
   )
 }
+
 urlFacebook <- "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fitu-thesis-rshiny.shinyapps.io%2FInteractive-Turkey-Map-Migration%2F"
 urlTwitter <- "https://twitter.com/intent/tweet?url=https%3A%2F%2Fitu-thesis-rshiny.shinyapps.io%2FInteractive-Turkey-Map-Migration%2F&text=Turkey%20Interactive%20Map%20-%20Migration%20to%20Greece%20Island%20"

@@ -227,11 +227,6 @@ shinyServer(function(input, output, session) {
       ggtitle("Total population Islands")
     }
   )
-  
-  output$uia <- renderUI(includeMarkdown(path = file.path("./www/slider.Rmd")))
-  
-  
-  
 
 }
 )
