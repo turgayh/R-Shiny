@@ -7,7 +7,6 @@ source("global.R")
 header <- dashboardHeader(
   titleWidth = 350,
   title = "Interactive Turkey Map - Migration"
-  , dropdownMenuOutput('task_menu')
   )
 # Side bar boardy
 sidebar <- dashboardSidebar(
@@ -94,6 +93,7 @@ body <- dashboardBody(
 
 shinyUI(
   dashboardPage(
+    skin = "green",
     title = 'Interactive Turkey Map - Migration',
     header,
     sidebar,
