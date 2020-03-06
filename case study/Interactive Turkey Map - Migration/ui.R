@@ -5,6 +5,7 @@ library(shinyWidgets)
 source("global.R")
 # header board
 header <- dashboardHeader(
+  titleWidth = 350,
   title = "Interactive Turkey Map - Migration"
   , dropdownMenuOutput('task_menu')
   )
@@ -15,7 +16,6 @@ sidebar <- dashboardSidebar(
     , menuItem('Migration Map', tabName = 'MigrationMap')
     , menuItem('Statistics - 2019', tabName = '2019Statistics')
     , menuItem('Statistics - 2018', tabName = '2018Statistics')
-    , menuItem('Introduction to RShiny', tabName = 'slider')
   ) # Combine text with url variable
   
   ,
@@ -88,11 +88,6 @@ body <- dashboardBody(
       valueBoxOutput("TotalPopulation2018",width = 2),
       ),graph2018()
       
-    ),
-    tabItem(
-      tabName = 'slider'
-      ,
-      uiOutput(outputId = "uib")
     )
   )
 )
@@ -100,7 +95,7 @@ body <- dashboardBody(
 shinyUI(
   dashboardPage(
     title = 'Interactive Turkey Map - Migration',
-    dashboardHeader(),
+    header,
     sidebar,
     body
   )
