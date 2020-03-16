@@ -5,8 +5,26 @@ library(shinyWidgets)
 source("global.R")
 # header board
 header <- dashboardHeader(
-  titleWidth = 350,
-  title = "Interactive Turkey Map - Migration"
+  
+  title = "Migration Map",
+  dropdownMenu(type = "messages",
+               messageItem(
+                 from = "Sales Dept",
+                 message = "Sales are steady this month."
+               ),
+               messageItem(
+                 from = "New User",
+                 message = "How do I register?",
+                 icon = icon("question"),
+                 time = "13:45"
+               ),
+               messageItem(
+                 from = "Support",
+                 message = "The new server is ready.",
+                 icon = icon("life-ring"),
+                 time = "2014-12-01"
+               )
+  )
   )
 # Side bar boardy
 sidebar <- dashboardSidebar(
@@ -18,25 +36,41 @@ sidebar <- dashboardSidebar(
   ) # Combine text with url variable
   
   ,
-  actionButton("twitter_share",
-               label = "Share",
-               icon = icon("twitter"),
-               onclick = sprintf("window.open('%s')", urlTwitter)),
+
+  
   actionButton("facebook_share",
                label = "Share",
                icon = icon("facebook"),
-               onclick = sprintf("window.open('%s')", urlFacebook))
+               
+               onclick = sprintf("window.open('%s')", urlFacebook)),
+  
+  actionButton("twitter_share",
+               label = "Share",
+               icon = icon("twitter"),
+               
+               onclick = sprintf("window.open('%s')", urlTwitter))
   
 )
 # Body board
 body <- dashboardBody(
   tags$head(includeCSS("www/style.css")), 
-  
   tabItems(
     
     tabItem(
       tags$style(type = "text/css", "#map {height: calc(100vh - 30px) !important;}"),
       tags$head(tags$style(HTML(".content { padding-top: 0;padding-right:0;padding-left:0;margin-bottom:0;}"))),
+      
+      ### Navbar text start ####################################################################################
+      tags$head(tags$style(HTML(".myClass {font-size: 20px;font-weight:bold;line-height: 50px;text-align: left;font-family: \"Helvetica Neue\",Helvetica,Arial,sans-serif;padding: 0 12px;overflow: hidden;color: black;}"))),
+      tags$script(HTML('
+      $(document).ready(function() {
+        $("header").find("nav").append(\'<span class="myClass"> Interactive Turkey Map - Migration </span>\');
+      })
+     ')),
+      
+      ### Navbar text ended ####################################################################################
+      
+      
       tags$style(
         HTML(".content-wrapper{margin-bottom:0px;}")
       ),
@@ -91,9 +125,11 @@ body <- dashboardBody(
   )
 )
 
+
+
 shinyUI(
   dashboardPage(
-    skin = "green",
+    #skin = "green",
     title = 'Interactive Turkey Map - Migration',
     header,
     sidebar,
