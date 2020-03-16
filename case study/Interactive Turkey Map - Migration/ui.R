@@ -129,7 +129,7 @@ body <- dashboardBody(
 
 shinyUI(
   dashboardPage(
-    #skin = "green",
+    skin = "black",
     title = 'Interactive Turkey Map - Migration',
     header,
     sidebar,
