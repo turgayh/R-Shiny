@@ -5,14 +5,13 @@ library(dplyr)
 library(leaflet)
 library(htmltools)
 library(hrbrthemes)
-
+library(dygraphs)
 
 # create the server functions for the dashboard  
 shinyServer(function(input, output, session) {
   filteredData <- reactive({
     data[data$Year == input$Year & data$Month == input$Month,]
   })
-
   #--------------------------------------------------------------------------------------------------
   #----------------------------    MAP  -------------------------------------------------------------
   #--------------------------------------------------------------------------------------------------
@@ -227,6 +226,19 @@ shinyServer(function(input, output, session) {
       ggtitle("Total population Islands")
     }
   )
-
+    set.seed(12) %>%
+    dummy.df <- as.data.frame(matrix(ss$`Boats Arrived`), ncol = 12) %>%
+    rownames(dummy.df) <- seq(2018, 2019) %>%
+    colnames(dummy.df) <- month.abb %>%
+    datatimeSeries <- ts(as.vector(t(as.matrix(dummy.df))), %>%
+                         start=c(2018,1), end=c(2019,12), frequency=12) 
+    
+  
+  output$dygraphdeneme1 <- renderDygraph({
+    dygraph(datatimeSeries) %>%
+      dyOptions(stackedGraph = TRUE) %>%
+      dyRangeSelector(height = 20)
+  }
+  )
 }
 )

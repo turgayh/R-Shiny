@@ -39,20 +39,7 @@ sidebar <- dashboardSidebar(
 
   ) # Combine text with url variable
   
-  ,
-
   
-  actionButton("facebook_share",
-               label = "Share",
-               icon = icon("facebook"),
-               
-               onclick = sprintf("window.open('%s')", urlFacebook)),
-  
-  actionButton("twitter_share",
-               label = "Share",
-               icon = icon("twitter"),
-               
-               onclick = sprintf("window.open('%s')", urlTwitter))
   
 )
 # Body board
@@ -131,7 +118,7 @@ body <- dashboardBody(
       tabName = 'deneme'
       , 
       
-      
+      gr()
 
     )
   )
