@@ -7,22 +7,22 @@ source("global.R")
 header <- dashboardHeader(
   
   title = "Migration Map",
-  dropdownMenu(type = "messages",
-               messageItem(
-                 from = "Sales Dept",
-                 message = "Sales are steady this month."
+  dropdownMenu(
+               notificationItem(
+                 text = " Share on Facebook",
+                 icon = icon("facebook"),
+                 href = urlFacebook
+                 
                ),
-               messageItem(
-                 from = "New User",
-                 message = "How do I register?",
-                 icon = icon("question"),
-                 time = "13:45"
+               notificationItem(
+                 text = " Share on Twitter",
+                 icon = icon("twitter"),
+                 href = urlTwitter
                ),
-               messageItem(
-                 from = "Support",
-                 message = "The new server is ready.",
-                 icon = icon("life-ring"),
-                 time = "2014-12-01"
+               notificationItem(
+                 text = " View on Github",
+                 icon = icon("github"),
+                 href = urlGithub
                )
   )
   )
