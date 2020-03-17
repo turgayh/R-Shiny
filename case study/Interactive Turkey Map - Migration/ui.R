@@ -33,9 +33,8 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     id = 'menu_tabs'
     , menuItem('Migration Map', tabName = 'MigrationMap')
-    , menuItem('Statistics - 2019', tabName = '2019Statistics')
-    , menuItem('Statistics - 2018', tabName = '2018Statistics')
     , menuItem('Statistics', tabName = 'Statistics')
+    , menuItem('Comparable Statistics' , tabName = "ComparableStatistics")
 
   ) # Combine text with url variable
   
@@ -45,83 +44,94 @@ sidebar <- dashboardSidebar(
 # Body board
 body <- dashboardBody(
   tags$head(includeCSS("www/style.css")), 
+  
+  
   tabItems(
-    
     tabItem(
       tags$style(type = "text/css", "#map {height: calc(100vh - 30px) !important;}"),
-      tags$head(tags$style(HTML(".content { padding-top: 0;padding-right:0;padding-left:0;margin-bottom:0;}"))),
+      tags$head(tags$style(
+        HTML(
+          ".content { padding-top: 0;padding-right:0;padding-left:0;margin-bottom:0;}"
+        )
+      )),
       
       ### Navbar text start ####################################################################################
-      tags$head(tags$style(HTML(".myClass {font-size: 20px;font-weight:bold;line-height: 50px;text-align: left;font-family: \"Helvetica Neue\",Helvetica,Arial,sans-serif;padding: 0 12px;overflow: hidden;color: black;}"))),
-      tags$script(HTML('
+      tags$head(tags$style(
+        HTML(
+          ".myClass {font-size: 20px;font-weight:bold;line-height: 50px;text-align: left;font-family: \"Helvetica Neue\",Helvetica,Arial,sans-serif;padding: 0 12px;overflow: hidden;color: black;}"
+        )
+      )),
+      tags$script(
+        HTML(
+          '
       $(document).ready(function() {
         $("header").find("nav").append(\'<span class="myClass"> Interactive Turkey Map - Migration </span>\');
       })
-     ')),
+     '
+        )
+      ),
       
       ### Navbar text ended ####################################################################################
       
       
-      tags$style(
-        HTML(".content-wrapper{margin-bottom:0px;}")
-      ),
+      tags$style(HTML(".content-wrapper{margin-bottom:0px;}")),
       
       tabName = 'MigrationMap'
-      , leafletOutput('map')
-      , verbatimTextOutput('summary')
-      ,  absolutePanel(id = "controls",class = "panel",fixed = TRUE,draggable = TRUE,
-                       top = "auto",left = "20%",right = "auto",bottom = "8%",width = 820,height = 20,
-                       
-                       radioGroupButtons(
-                         inputId = "Month",
-                         choices = c("January","February","March" ,"April","May","June","July","August","September","October","November","December"
-                         ) ,
-                         status = "success"
-                       ),
-                       radioGroupButtons(
-                         inputId = "Year",
-                         choices = c("2019", "2018") ,
-                         status = "success"
-                       ), 
-                       
-      ),
-    ),
-    
-    tabItem(
-      tabName = '2019Statistics'
-      , 
-      fluidPage(
-      valueBoxOutput("BoatsArrived2019",width = 2),
-      valueBoxOutput("TotalArrivals2019",width = 2),
-      valueBoxOutput("TransfersMainland2019",width = 3),
-      valueBoxOutput("TotalPopulation2019",width = 2),
-      ),
-      graph2019()
-      
-    ),
-    
-    tabItem(
-      tabName = '2018Statistics'
-      , 
-      
-      fluidPage(
+      ,
+      leafletOutput('map')
+      ,
+      verbatimTextOutput('summary')
+      ,
+      absolutePanel(
+        id = "controls",
+        class = "panel",
+        fixed = TRUE,
+        draggable = TRUE,
+        top = "auto",
+        left = "20%",
+        right = "auto",
+        bottom = "8%",
+        width = 820,
+        height = 20,
         
-      valueBoxOutput("BoatsArrived2018",width = 2),
-      valueBoxOutput("TotalArrivals2018",width = 2),
-      valueBoxOutput("TransfersMainland2018",width = 3),
-      valueBoxOutput("TotalPopulation2018",width = 2),
-      ),graph2018()
-      
+        
+        radioGroupButtons(
+          inputId = "Month",
+          choices = c(
+            "January",
+            "February",
+            "March" ,
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+          ) ,
+          status = "success"
+        ),
+        radioGroupButtons(
+          inputId = "Year",
+          choices = c("2019", "2018") ,
+          status = "success"
+        ),
+        
+      ),
     ),
     
-    tabItem(
-      tabName = 'Statistics'
-      , 
-      statictics()
-
-    )
+    
+    tabItem(tabName = 'Statistics'
+            ,
+            statictics()),
+    tabItem(tabName = 'ComparableStatistics'
+            ,
+            staticticsComparable())
   )
 )
+
 
 
 

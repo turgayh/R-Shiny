@@ -16,6 +16,12 @@ shinyServer(function(input, output, session) {
   filteredStatisticsData <- reactive({
     data[data$Islands == input$statisticsDataIsland,]
   })
+  
+  
+  filteredComparableStatisticsData <- reactive({
+    input$CStatisticsDataIsland
+  })
+  
   #--------------------------------------------------------------------------------------------------
   #----------------------------    MAP  -------------------------------------------------------------
   #--------------------------------------------------------------------------------------------------
@@ -80,158 +86,8 @@ shinyServer(function(input, output, session) {
   }
 
 
-  #----------------------------    2019  -------------------------------------------------------------
-  output$BoatsArrived2019 <- renderValueBox({
-    valueBox(
-      yazi("Boats Arrived"),
-      BoatsArrived2019,
-      color = "purple"
-    )
-  })
-  output$TotalArrivals2019 <- renderValueBox({
-    valueBox(
-      yazi("Total Arrivals"),
-      TotalArrivals2019,
-      color = "purple"
-    )
-  })  
+  ################ [Start]  Statistics Tab ##############################################################
   
-  output$TransfersMainland2019 <- renderValueBox({
-    valueBox(
-      yazi("Transfers  to Mainland"),
-      TransfersMainland2019,
-      color = "purple"
-    )
-  })
-  output$TotalPopulation2019 <- renderValueBox({
-    valueBox(
-      yazi("Total Population"),
-      TotalPopulation2019,
-      color = "purple"
-    )
-  })
-  
-  #-------------------------------- 2018 -------------------------------------------------------------
-  
-  output$BoatsArrived2018 <- renderValueBox({
-    valueBox(
-      yazi("Boats Arrived"),
-      BoatsArrived2018,
-      color = "green"
-    )
-  })
-  output$TotalArrivals2018 <- renderValueBox({
-    valueBox(
-      yazi("Total Arrivals"),
-      TotalArrivals2018,
-      color = "green"
-    )
-  })
-  output$TransfersMainland2018 <- renderValueBox({
-    valueBox(
-      yazi("Transfers to Mainland"),
-      TransfersMainland2018,
-      color = "green"
-    )
-  }) 
-  output$TotalPopulation2018 <- renderValueBox({
-    valueBox(
-      yazi("Total Population"),
-      TotalPopulation2018,
-      color = "green"
-    )
-  })
-  
-  
-  #--------------------------------------------------------------------------------------------------
-  #----------------------------    Statistics Graph Implemantion  -----------------------------------
-  #--------------------------------------------------------------------------------------------------
-  #--------------------------------------------------------------------------------------------------
-  
-  filter2019 <-reactive({
-    data[data$Islands == input$Islands2019 & data$Year == "2019",]
-  })
-  filter2018 <-reactive({
-    data[data$Islands == input$Islands2018 & data$Year == "2018",]
-  })
-  #------------------------------------ 2019 ----------------------------------------------------------
-  
-    #2019 graph render
-  output$GraphBoatsArrived2019 <- renderPlot({
-    ggplot(data = filter2019(), 
-           aes(x=Month, y=`Boats Arrived`)) + 
-      geom_bar(stat="identity", fill = "#52de97") + ylab("Boats Arrived to Islands") + 
-      xlab("Month") +
-      theme(axis.title.x = element_text(colour = "black",size = "22"),
-            axis.title.y = element_text(colour = "black",size = "22"))
-  })
-  output$GraphTotalArrivals2019 <- renderPlot({
-    ggplot(data = filter2019(), 
-           aes(x=Month, y=`Total Arrivals`)) + 
-      geom_bar(stat="identity", fill = "#52de97") + ylab("Total Arrivals to Islands") + 
-      xlab("Month")  +
-      theme(axis.title.x = element_text(colour = "black",size = "22"),
-            axis.title.y = element_text(colour = "black",size = "22"))
-  })
-  output$GraphTransferMaindland2019 <- renderPlot({
-    ggplot(data = filter2019(), 
-           aes(x=Month, y=`Transfers to mainland`)) + 
-      geom_bar(stat="identity", fill = "#52de97") + ylab("Transfer to mainland") + 
-      xlab("Month")  +
-      theme(axis.title.x = element_text(colour = "black",size = "22"),
-            axis.title.y = element_text(colour = "black",size = "22"))
-  })
-  output$GraphTotalPopulation2019 <- renderPlot({
-    ggplot(data = filter2019(), 
-           aes(x=Month, y=`Total population`)) + 
-      geom_bar(stat="identity", fill = "#52de97") + ylab("Islands - Total Populations") + 
-      xlab("Month")  +
-      theme(axis.title.x = element_text(colour = "black",size = "22"),
-            axis.title.y = element_text(colour = "black",size = "22"))
-  })
-  
-  #------------------------------2018 ---------------------------------------------------------------
-  
-  #2018 graph render
-  output$GraphBoatsArrived2018 <- renderPlot({
-    ggplot(data = filter2018(), 
-           aes(x=Month, y=`Boats Arrived`)) + 
-      geom_line() +
-      geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
-      theme_ipsum() +
-      ggtitle("Boats Arrived to Islands")
-  }
-  )
-  output$GraphTotalArrivals2018 <- renderPlot({
-    ggplot(data = filter2018(), 
-           aes(x=Month, y=`Total Arrivals`)) + 
-      geom_line() +
-      geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
-      theme_ipsum() +
-      ggtitle("Total Arrivals to Islands")
-  }
-  )
-  output$GraphTransferMaindland2018 <- renderPlot({
-    ggplot(data = filter2018(), 
-           aes(x=Month, y=`Transfers to mainland`)) + 
-      geom_line() +
-      geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
-      theme_ipsum() +
-      ggtitle("Transfer to mainland")
-  }
-  )
-  
-  output$GraphTotalPopulation2018 <- renderPlot({
-    ggplot(data = filter2018(), 
-           aes(x=Month, y=`Total population`)) + 
-      geom_line() +
-      geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
-      theme_ipsum() +
-      ggtitle("Total population Islands")
-    }
-  )
-
-    
   
   output$BoatArrived <- renderDygraph({
     island <- filteredStatisticsData()
@@ -266,6 +122,31 @@ shinyServer(function(input, output, session) {
     dygraph(tseries, main = "Total Population ") %>%
       dyOptions(fillGraph = TRUE, fillAlpha = 0.4) %>%
       dyHighlight(highlightCircleSize = 5)
+  }
+  )
+  
+  ################ [Start] Comparable Statistics Tab ##############################################################
+  output$CTotalPopulation <- renderDygraph({
+    island <- filteredComparableStatisticsData()
+    x <- list()
+    ll <- list()
+    index <- 1
+    for (i in island){
+      ll[[index]] <- data[data$Islands == i,]
+      index <- index + 1
+    }
+    
+    index <- 1
+    
+    for (j in ll){
+      x[[index]] <- ts(j$`Total population`, start = c(2018,1), end = c(2020,0), frequency = 12)
+      index <- index + 1
+    }
+    
+    
+    
+    dygraph(x, main = "Deaths from Lung Disease (UK)") %>%
+      dyOptions(colors = RColorBrewer::brewer.pal(3, "Set2"))
   }
   )
 }
