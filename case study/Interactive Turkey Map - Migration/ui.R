@@ -84,14 +84,15 @@ body <- dashboardBody(
       ,
       absolutePanel(
         id = "controls",
-        class = "panel",
+        
         fixed = TRUE,
         draggable = TRUE,
+        class = "panel",
         top = "auto",
-        left = "20%",
+        left = "14%",
         right = "auto",
         bottom = "8%",
-        width = 820,
+        width = "80%",
         height = 20,
         
         

@@ -19,7 +19,7 @@ shinyServer(function(input, output, session) {
   
   
   filteredComparableStatisticsData <- reactive({
-    input$CStatisticsDataIsland
+    ISLANDS[ISLANDS == input$CStatisticsDataIsland,]
   })
   
   #--------------------------------------------------------------------------------------------------
@@ -130,17 +130,15 @@ shinyServer(function(input, output, session) {
     island <- filteredComparableStatisticsData()
     x <- list()
     ll <- list()
-    index <- 1
-    for (i in island){
-      ll[[index]] <- data[data$Islands == i,]
-      index <- index + 1
+    
+    for (i in ISLANDS){
+      ll <- data[data$Islands == i,]
+      
     }
     
-    index <- 1
-    
-    for (j in ll){
-      x[[index]] <- ts(j$`Total population`, start = c(2018,1), end = c(2020,0), frequency = 12)
-      index <- index + 1
+    for (j in ISLANDS){
+      x <- ts(j$`Total population`, start = c(2018,1), end = c(2020,0), frequency = 12)
+      
     }
     
     

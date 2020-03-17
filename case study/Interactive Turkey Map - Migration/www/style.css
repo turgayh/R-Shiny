@@ -44,9 +44,8 @@
   position:relative;
 }
 .panel {
-  background-color:black;
   text-align:center;
-
+  background-color:rgba(0,0,0,0);
 }
 .panel2 {
   text-align:center;

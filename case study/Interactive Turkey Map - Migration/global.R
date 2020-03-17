@@ -1,13 +1,14 @@
 library(readxl)
 
 data <- read_excel("./data/2018-2019_migdata.xlsx")
+ISLANDS <- c("Kos","Chios","Leros","Samos","Lesvos","Other")
 
 ################ [Start]  Statistics Tab ##############################################################
 
 statictics <- 
   function(){
   fluidRow(
-    radioGroupButtons(inputId = "statisticsDataIsland",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "s",status = "primary",justified = TRUE),
+    radioGroupButtons(inputId = "statisticsDataIsland",choices = ISLANDS ,size = "s",status = "primary",justified = TRUE),
     
     
     box(
@@ -42,7 +43,7 @@ staticticsComparable <- function(){
     verbatimTextOutput("   value1"),
     checkboxGroupButtons(
       inputId = "CStatisticsDataIsland", label = "Make a choice :", 
-      choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"), 
+      choices = ISLANDS, 
       justified = TRUE, status = "primary",
       checkIcon = list(yes = icon("ok", lib = "glyphicon"), no = icon("remove", lib = "glyphicon"))
     ),
