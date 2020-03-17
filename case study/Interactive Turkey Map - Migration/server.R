@@ -12,6 +12,10 @@ shinyServer(function(input, output, session) {
   filteredData <- reactive({
     data[data$Year == input$Year & data$Month == input$Month,]
   })
+  
+  filteredStatisticsData <- reactive({
+    data[data$Islands == input$statisticsDataIsland,]
+  })
   #--------------------------------------------------------------------------------------------------
   #----------------------------    MAP  -------------------------------------------------------------
   #--------------------------------------------------------------------------------------------------
@@ -226,18 +230,42 @@ shinyServer(function(input, output, session) {
       ggtitle("Total population Islands")
     }
   )
-    set.seed(12) %>%
-    dummy.df <- as.data.frame(matrix(ss$`Boats Arrived`), ncol = 12) %>%
-    rownames(dummy.df) <- seq(2018, 2019) %>%
-    colnames(dummy.df) <- month.abb %>%
-    datatimeSeries <- ts(as.vector(t(as.matrix(dummy.df))), %>%
-                         start=c(2018,1), end=c(2019,12), frequency=12) 
+
     
   
-  output$dygraphdeneme1 <- renderDygraph({
-    dygraph(datatimeSeries) %>%
-      dyOptions(stackedGraph = TRUE) %>%
-      dyRangeSelector(height = 20)
+  output$BoatArrived <- renderDygraph({
+    island <- filteredStatisticsData()
+    tseries <- ts(island$`Boats Arrived`, start = c(2018,1), end = c(2020,0), frequency = 12)
+    dygraph(tseries, main = "Boats Arrived ") %>%
+      dyOptions(fillGraph = TRUE, fillAlpha = 0.4) %>%
+      dyHighlight(highlightCircleSize = 5)
+  }
+  )
+  
+  output$TotalArrivals <- renderDygraph({
+    island <- filteredStatisticsData()
+    tseries <- ts(island$`Total Arrivals`, start = c(2018,1), end = c(2020,0), frequency = 12)
+    dygraph(tseries, main = "Total Arrivals ") %>%
+      dyOptions(fillGraph = TRUE, fillAlpha = 0.4) %>%
+      dyHighlight(highlightCircleSize = 5)
+  }
+  )
+  
+  output$TransferToMainland <- renderDygraph({
+    island <- filteredStatisticsData()
+    tseries <- ts(island$`Transfers to mainland`, start = c(2018,1), end = c(2020,0), frequency = 12)
+    dygraph(tseries, main = "Transfers to mainland ") %>%
+      dyOptions(fillGraph = TRUE, fillAlpha = 0.4) %>%
+      dyHighlight(highlightCircleSize = 5)
+  }
+  )
+  
+  output$TotalPopulation <- renderDygraph({
+    island <- filteredStatisticsData()
+    tseries <- ts(island$`Total population`, start = c(2018,1), end = c(2020,0), frequency = 12)
+    dygraph(tseries, main = "Total Population ") %>%
+      dyOptions(fillGraph = TRUE, fillAlpha = 0.4) %>%
+      dyHighlight(highlightCircleSize = 5)
   }
   )
 }

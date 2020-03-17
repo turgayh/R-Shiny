@@ -9,7 +9,6 @@ TransfersMainland2019 <- sum(as.numeric(data2019$`Transfers to mainland`), na.rm
 TotalPopulation2019 <- sum(as.numeric(data2019$`Total population`), na.rm = TRUE)
 
 ## 2018 Data
-ss <- data[data$Islands == "Kos",]
 
 data2018 <- data[data$Year == "2018",]
 BoatsArrived2018 <- sum(as.numeric(data2018$`Boats Arrived`), na.rm = TRUE)
@@ -30,15 +29,31 @@ graph2019 <-function(){
     )
   )
 }
-gr <- 
+
+statictics <- 
   function(){
   fluidRow(
-    box(dygraphOutput("dygraphdeneme",width = 4),collapsible = TRUE),
+    radioGroupButtons(inputId = "statisticsDataIsland",choices = c("Kos","Chios","Leros","Samos","Lesvos","Other"),size = "s",status = "primary",justified = TRUE),
+    
     
     box(
-      title = "Controls",
-      dygraphOutput("dygraphdeneme1" , width = 4),
-      collapsible = TRUE
+      status = 'success',
+      dygraphOutput("BoatArrived",height = "300px" ),
+    ),
+    
+    box(
+      status = 'success',
+      dygraphOutput("TotalArrivals" ,height = "300px"),
+    ),
+    
+    box(
+      status = 'success',
+      dygraphOutput("TransferToMainland" ,height = "300px"),
+    ),
+    
+    box(
+      status = 'success',
+      dygraphOutput("TotalPopulation" ,height = "300px"),
     )
   )
   

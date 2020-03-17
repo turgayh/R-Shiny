@@ -35,7 +35,7 @@ sidebar <- dashboardSidebar(
     , menuItem('Migration Map', tabName = 'MigrationMap')
     , menuItem('Statistics - 2019', tabName = '2019Statistics')
     , menuItem('Statistics - 2018', tabName = '2018Statistics')
-    , menuItem('deneme', tabName = 'deneme')
+    , menuItem('Statistics', tabName = 'Statistics')
 
   ) # Combine text with url variable
   
@@ -115,10 +115,9 @@ body <- dashboardBody(
     ),
     
     tabItem(
-      tabName = 'deneme'
+      tabName = 'Statistics'
       , 
-      
-      gr()
+      statictics()
 
     )
   )
