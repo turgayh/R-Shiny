@@ -1,5 +1,5 @@
 library(readxl)
-
+data_mig <- read.csv("./data/2018-2019_data.csv", header=T)[,1:7]
 data <- read_excel("./data/2018-2019_migdata.xlsx")
 data2 <- read_excel("./data/2018-2019_data.xlsx")
 ISLANDS <- c("Kos","Chios","Leros","Samos","Lesvos","Other")
@@ -40,15 +40,21 @@ statistics <-
 
 statisticsComparable <- function(){
   fluidRow(
-
     
-    checkboxGroupButtons(
-      inputId = "CStatisticsDataIsland", label = "Make a choice :", 
-      choices = ISLANDS, 
-      justified = TRUE, status = "primary",
-      checkIcon = list(yes = icon("ok", lib = "glyphicon"), no = icon("remove", lib = "glyphicon"))
+    box(
+      status = 'success',
+      dygraphOutput("CBoatArrived",height = "300px" ),
     ),
-
+    
+    box(
+      status = 'success',
+      dygraphOutput("CTotalArrivals" ,height = "300px"),
+    ),
+    
+    box(
+      status = 'success',
+      dygraphOutput("CTransferToMainland" ,height = "300px"),
+    ),
     
     box(
       status = 'success',

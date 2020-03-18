@@ -34,7 +34,7 @@ sidebar <- dashboardSidebar(
     id = 'menu_tabs'
     , menuItem('Migration Map', tabName = 'MigrationMap')
     , menuItem('Statistics', tabName = 'Statistics')
-    , menuItem('Comparable Statistics' , tabName = "ComparableStatistics")
+    , menuItem('Statistics Comparison' , tabName = "ComparableStatistics")
 
   ) # Combine text with url variable
   
@@ -65,7 +65,7 @@ body <- dashboardBody(
         HTML(
           '
       $(document).ready(function() {
-        $("header").find("nav").append(\'<span class="myClass"> Interactive Turkey Map - Migration </span>\');
+        $("header").find("nav").append(\'<span class="myClass"> Monitoring Refugee Crisis in the Aegean Sea </span>\');
       })
      '
         )
@@ -132,9 +132,6 @@ body <- dashboardBody(
             statisticsComparable())
   )
 )
-
-
-
 
 shinyUI(
   dashboardPage(
