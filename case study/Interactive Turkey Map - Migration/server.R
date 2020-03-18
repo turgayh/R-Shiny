@@ -19,7 +19,7 @@ shinyServer(function(input, output, session) {
   
   
   filteredComparableStatisticsData <- reactive({
-    ISLANDS[ISLANDS == input$CStatisticsDataIsland,]
+    data2[data2 == input$CStatisticsDataIsland,]
   })
   
   #--------------------------------------------------------------------------------------------------
@@ -127,25 +127,12 @@ shinyServer(function(input, output, session) {
   
   ################ [Start] Comparable Statistics Tab ##############################################################
   output$CTotalPopulation <- renderDygraph({
-    island <- filteredComparableStatisticsData()
-    x <- list()
-    ll <- list()
-    
-    for (i in ISLANDS){
-      ll <- data[data$Islands == i,]
-      
+      island <- filteredComparableStatisticsData()
+      tseries <- ts(island$`Total population`, start = c(2018,1), end = c(2020,0), frequency = 12)
+      dygraph(tseries, main = "Total Population ") %>%
+        dyOptions(fillGraph = TRUE, fillAlpha = 0.4) %>%
+        dyHighlight(highlightCircleSize = 5)
     }
-    
-    for (j in ISLANDS){
-      x <- ts(j$`Total population`, start = c(2018,1), end = c(2020,0), frequency = 12)
-      
-    }
-    
-    
-    
-    dygraph(x, main = "Deaths from Lung Disease (UK)") %>%
-      dyOptions(colors = RColorBrewer::brewer.pal(3, "Set2"))
-  }
-  )
+    )
 }
 )

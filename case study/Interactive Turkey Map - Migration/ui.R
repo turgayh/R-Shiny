@@ -126,10 +126,10 @@ body <- dashboardBody(
     
     tabItem(tabName = 'Statistics'
             ,
-            statictics()),
+            statistics()),
     tabItem(tabName = 'ComparableStatistics'
             ,
-            staticticsComparable())
+            statisticsComparable())
   )
 )
 
@@ -139,7 +139,7 @@ body <- dashboardBody(
 shinyUI(
   dashboardPage(
     skin = "black",
-    title = 'Interactive Turkey Map - Migration',
+    title = 'Monitoring Refugee Crisis in the Aegean Sea',
     header,
     sidebar,
     body
