@@ -64,6 +64,6 @@ statisticsComparable <- function(){
 }
 
 
-urlFacebook <- "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftaylanbt.shinyapps.io%2FInteractive-Turkey-Map-Migration%2F"
-urlTwitter <- "https://twitter.com/intent/tweet?url=https%3A%2F%2Ftaylanbt.shinyapps.io%2FInteractive-Turkey-Map-Migration%2F"
+urlFacebook <- "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftaylanbt.shinyapps.io%2Finteractive_turkey_map_-_migration%2F"
+urlTwitter <- "https://twitter.com/intent/tweet?url=https%3A%2F%2Ftaylanbt.shinyapps.io%2Finteractive_turkey_map_-_migration%2F"
 urlGithub <- "https://github.com/turgayh/R-Shiny"
