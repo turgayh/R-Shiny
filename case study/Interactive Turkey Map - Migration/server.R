@@ -57,7 +57,7 @@ shinyServer(function(input, output, session) {
     <br/> <h5  class=\"section\"> Boats Arrived  :    <span class=\"number\">%s</span></h5>
      <h5  class=\"section\"> Total Arrivals  :    <span class=\"number\">%s</span></h5>
      <h5  class=\"section\"> Transfers to mainland  :    <span class=\"number\">%s</span></h5>
-     <h5  class=\"section\"> Total population  :    <span class=\"number\">%s</span></h5>
+     <h5  class=\"section\"> Immigrant population  :    <span class=\"number\">%s</span></h5>
 
      ",
     islands,boatsArrived,totalArrivals,tranfersMainland,totalPopulation 
