@@ -56,8 +56,8 @@ shinyServer(function(input, output, session) {
     "<strong text-align=\"center\">%s</strong>
     <br/> <h5  class=\"section\"> Boats Arrived  :    <span class=\"number\">%s</span></h5>
      <h5  class=\"section\"> Total Arrivals  :    <span class=\"number\">%s</span></h5>
-     <h5  class=\"section\"> Transfers to mainland  :    <span class=\"number\">%s</span></h5>
-     <h5  class=\"section\"> Immigrant population  :    <span class=\"number\">%s</span></h5>
+     <h5  class=\"section\"> Transfers to Greece Mainland  :    <span class=\"number\">%s</span></h5>
+     <h5  class=\"section\"> Total Refugee Population  :    <span class=\"number\">%s</span></h5>
 
      ",
     islands,boatsArrived,totalArrivals,tranfersMainland,totalPopulation 
@@ -115,7 +115,7 @@ shinyServer(function(input, output, session) {
   output$TransferToMainland <- renderDygraph({
     island <- filteredStatisticsData()
     tseries <- ts(island$`Transfers to mainland`, start = c(2018,1), end = c(2020,0), frequency = 12)
-    dygraph(tseries, main = "Transfers to Mainland ") %>%
+    dygraph(tseries, main = "Transfers to Greece Mainland") %>%
       dyOptions(fillGraph = TRUE, fillAlpha = 0.4) %>%
       dyHighlight(highlightCircleSize = 5)
   }
@@ -124,7 +124,7 @@ shinyServer(function(input, output, session) {
   output$TotalPopulation <- renderDygraph({
     island <- filteredStatisticsData()
     tseries <- ts(island$`Total population`, start = c(2018,1), end = c(2020,0), frequency = 12)
-    dygraph(tseries, main = "Total Immigrant Population") %>%
+    dygraph(tseries, main = "Total Refugee Population") %>%
       dyOptions(fillGraph = TRUE, fillAlpha = 0.4) %>%
       dyHighlight(highlightCircleSize = 5)
   }
@@ -155,7 +155,7 @@ shinyServer(function(input, output, session) {
     ts_mainland <- lapply(1:6, function(i) ts(group_split(data_by_island)[[i]]$Transfers.to.mainland, start = c(2018,1), end = c(2020,0), frequency = 12) )
   #Excluding "5"th element.  It is "Other island"
     data_mainland  <- cbind("Chios"=ts_mainland [[1]],"Kos"=ts_mainland [[2]], "Leros"=ts_mainland [[3]], "Lesvos"=ts_mainland [[4]],"Samos"=ts_mainland [[6]])
-    dygraph(data_mainland, main = "Transfers to Mainland")
+    dygraph(data_mainland, main = "Transfers to Greece Mainland")
   
   #Total population
   
@@ -164,7 +164,7 @@ shinyServer(function(input, output, session) {
     ts_population <- lapply(1:6, function(i) ts(group_split(data_by_island)[[i]]$Total.population, start = c(2018,1), end = c(2020,0), frequency = 12) )
   #Excluding "5"th element.  It is "Other island"
     data_population  <- cbind("Chios"=ts_population[[1]],"Kos"=ts_population[[2]], "Leros"=ts_population[[3]], "Lesvos"=ts_population[[4]],"Samos"=ts_population[[6]])
-    dygraph(data_population, main = "Total Immigrant Population ")
+    dygraph(data_population, main = "Total Refugee Population ")
   })
 }
 )
