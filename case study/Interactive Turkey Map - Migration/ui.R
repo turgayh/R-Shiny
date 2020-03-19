@@ -34,7 +34,7 @@ sidebar <- dashboardSidebar(
     id = 'menu_tabs'
     , menuItem('Migration Map', tabName = 'MigrationMap')
     , menuItem('Statistics', tabName = 'Statistics')
-    , menuItem('Statistics Comparison' , tabName = "ComparableStatistics")
+    , menuItem('Comparative Statistics' , tabName = "ComparableStatistics")
 
   ) # Combine text with url variable
   
